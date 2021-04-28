@@ -7,6 +7,7 @@ use App\Http\Controllers\iniciarSesionController;
 use App\Http\Controllers\ChoferController;
 use App\Http\Controllers\CombiController;
 use App\Http\Controllers\InsumoController;
+use App\Http\Controllers\LugarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,3 +39,6 @@ Route::post('combi19/storeCombi', [CombiController::class, 'storeCombi'])->name(
 
 Route::get('combi19/altaInsumo', [InsumoController::class, 'altaInsumo'])->name('combi19.altaInsumo');
 Route::post('combi19/storeInsumo', [InsumoController::class, 'storeInsumo'])->name('combi19.storeInsumo');
+
+Route::get('combi19/altaLugar', [LugarController::class, 'altaLugar'])->name('combi19.altaLugar');
+Route::post('combi19/storeLugar', [LugarController::class, 'storeLugar'])->name('combi19.storeLugar');
