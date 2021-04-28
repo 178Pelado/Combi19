@@ -22,6 +22,6 @@ class ChoferController extends Controller
     	$chofer->contraseña = $request->clave;
 
     	$chofer->save();
-      return view('administrador.registroChofer');
+      return view('administrador.registroChofer'); //vuelve a listado de choferes
     }
 }

@@ -27,9 +27,9 @@
         {{ config('app.name', 'Laravel') }}
       </a> -->
       <a href=#>
-        <img src="../../img/logo_combi19.png" alt="logo_combi19" style="height: 50px">
+        <img src="../../img/logo_combi19.png" alt="logo_combi19" style="height: 50px; padding-right: 10px">
       </a>
-      <h1>Combi19</h1>
+      <h1 style="margin-bottom: 0px">Combi19</h1>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -43,14 +43,14 @@
         <!-- Right Side Of Navbar -->
         <ul class="navbar-nav ml-auto">
           <div class="form-group row">
-            <div class="col-md-6">
+            <div class="col-md-6" style="margin-top: 15px">
               <form method="get" action="/iniciarSesion">
               <a class="btn btn-primary" href="iniciarSesion">
                 {{ __('algun boton') }}
               </a>
             </form>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" style="margin-top: 15px">
               <a class="btn btn-primary" href="registro">
                 {{ __('algun boton') }}
               </a>
