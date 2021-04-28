@@ -17,7 +17,7 @@ class ChoferController extends Controller
 
     	$chofer->nombre = $request->nombre;
     	$chofer->apellido = $request->apellido;
-    	$chofer->dni = $request->dni;
+    	$chofer->telefono = $request->telefono;
     	$chofer->email = $request->email;
     	$chofer->contraseña = $request->clave;
 

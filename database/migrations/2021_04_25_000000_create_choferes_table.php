@@ -17,7 +17,7 @@ class CreateChoferesTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('apellido');
-            $table->integer('dni');
+            $table->integer('telefono');
             $table->string('email')->unique();
             $table->string('contraseña');
             $table->rememberToken();
