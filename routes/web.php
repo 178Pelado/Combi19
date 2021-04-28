@@ -3,6 +3,7 @@
 use App\Http\Controllers\PasajeroController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\iniciarSesionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,8 @@ Route::get('/', HomeController::class);
 Route::get('combi19/registro', [PasajeroController::class, 'registro'])->name('combi19.registro');
 
 Route::post('combi19/store', [PasajeroController::class, 'store'])->name('combi19.store');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('combi19/iniciarSesion', [iniciarSesionController::class, 'iniciarSesion'])->name('combi19.iniciarSesion');
