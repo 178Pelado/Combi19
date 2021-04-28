@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\iniciarSesionController;
 use App\Http\Controllers\ChoferController;
 use App\Http\Controllers\CombiController;
+use App\Http\Controllers\InsumoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,6 @@ Route::post('combi19/storeChofer', [ChoferController::class, 'storeChofer'])->na
 
 Route::get('combi19/altaCombi', [CombiController::class, 'altaCombi'])->name('combi19.altaCombi');
 Route::post('combi19/storeCombi', [CombiController::class, 'storeCombi'])->name('combi19.storeCombi');
+
+Route::get('combi19/altaInsumo', [InsumoController::class, 'altaInsumo'])->name('combi19.altaInsumo');
+Route::post('combi19/storeInsumo', [InsumoController::class, 'storeInsumo'])->name('combi19.storeInsumo');
