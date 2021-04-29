@@ -42,14 +42,13 @@ class AppServiceProvider extends ServiceProvider
       return preg_match('/^[a-zA-Z0-9\s]+$/', $value);
 
     });
-    Validator::extend('nombre_descripcion', function ($attribute, $value, $parametro) {
-      $insumo = Insumo::where('nombre', '=', $parametro)->where('descripcion', '=', $value)->get()->first();
-      if($insumo != null){
+    Validator::extend('nombre_descripcion', function ($attribute, $value, $parameters) {
+      $insumo = Insumo::where('nombre', '=', $parameters[0])->where('descripcion', '=', $value)->get()->first();
+      if(empty($insumo)){
         return true;
       }else{
         return false;
       }
-
     });
 
   }
