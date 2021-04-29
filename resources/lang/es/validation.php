@@ -92,7 +92,7 @@ return [
         'string'  => 'El campo :attribute debe contener al menos :min caracteres.',
         'array'   => 'El campo :attribute debe contener al menos :min elementos.',
     ],
-    'nombre_descripcion'   => 'El campo :attribute ya existe.',
+    'nombre_descripcion'   => 'El campo :attribute ya existe para ese nombre de insumo.',
     'not_in'               => 'El campo :attribute seleccionado es inválido.',
     'not_regex'            => 'El formato del campo :attribute es inválido.',
     'numeric'              => 'El campo :attribute debe ser un número.',

@@ -25,7 +25,7 @@ class StoreInsumos extends FormRequest
   {
     return [
       'nombre' => 'required',
-      'descripcion' => 'required|nombre_descripcion:nombre',
+      'descripcion' => 'required|nombre_descripcion:' . $this->nombre,
       'cantidad' => 'required|integer|gt:0',
       'precio' => 'required|numeric|gt:0',
     ];
