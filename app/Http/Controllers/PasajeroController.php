@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pasajero;
 use Illuminate\Http\Request;
+use App\Http\Requests\store;
 
 class PasajeroController extends Controller
 {
@@ -12,7 +13,8 @@ class PasajeroController extends Controller
     	return view('pasajeros.registro');
     }
 
-    public function store(Request $request){
+    public function store(store $request){
+
     	$pasajero = new Pasajero();
 
     	$pasajero->nombre = $request->nombre;
