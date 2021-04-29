@@ -16,7 +16,7 @@
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="nombre" value="{{old('nombre')}}">
 								@error('nombre')
-										<small>{{$message}}</small>
+								<small>{{$message}}</small>
 								@enderror
 							</div>
 						</div>
@@ -25,7 +25,7 @@
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="apellido" value="{{old('apellido')}}">
 								@error('apellido')
-										<small>{{$message}}</small>
+								<small>{{$message}}</small>
 								@enderror
 							</div>
 						</div>
@@ -34,7 +34,7 @@
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="dni" value="{{old('dni')}}">
 								@error('dni')
-										<small>{{$message}}</small>
+								<small>{{$message}}</small>
 								@enderror
 							</div>
 						</div>
@@ -43,7 +43,7 @@
 							<div class="col-md-6">
 								<input type="email" class="form-control" name="email" value="{{old('email')}}">
 								@error('email')
-										<small>{{$message}}</small>
+								<small>{{$message}}</small>
 								@enderror
 							</div>
 						</div>
@@ -52,7 +52,7 @@
 							<div class="col-md-6">
 								<input type="password" class="form-control" name="clave" value="{{old('clave')}}">
 								@error('clave')
-										<small>{{$message}}</small>
+								<small>{{$message}}</small>
 								@enderror
 							</div>
 						</div>
@@ -61,7 +61,7 @@
 							<div class="col-md-6">
 								<input type="date" class="form-control" name="fecha_nacimiento" value="{{old('fecha_nacimiento')}}">
 								@error('fecha_nacimiento')
-										<small>{{$message}}</small>
+								<small>{{$message}}</small>
 								@enderror
 							</div>
 						</div>
