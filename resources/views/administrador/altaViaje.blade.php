@@ -14,7 +14,7 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Combi:</label>
 							<div class="col-md-6">
-								<select name="combi_id">
+								<select name="combi_id" class="form-control">
 									@foreach($combis as $combi)
 									<option value={{$combi->id}}>
 										{{$combi->patente}}
@@ -26,7 +26,7 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Ruta:</label>
 							<div class="col-md-6">
-								<select name="ruta_id">
+								<select name="ruta_id" class="form-control">
 									@foreach($rutas as $ruta)
 									{{$lugarO = Lugar::where('id', '=', $ruta->origen_id)->get()->first()}}
 									{{$lugarD = Lugar::where('id', '=', $ruta->destino_id)->get()->first()}}
