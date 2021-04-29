@@ -2,6 +2,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
   <meta charset="utf-8">
+  <link rel="shortcut icon" href="../../img/logo_combi19.png" />
+  <title>@yield('title')</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- CSRF Token -->
