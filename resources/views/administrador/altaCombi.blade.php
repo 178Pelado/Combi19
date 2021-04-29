@@ -14,19 +14,28 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Patente:</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="patente" autofocus>
+                                <input type="text" class="form-control" name="patente" value="{{old('patente')}}">
+                                @error('patente')
+                									<small>{{$message}}</small>
+                								@enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Modelo:</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="modelo">
+                                <input type="text" class="form-control" name="modelo" value="{{old('modelo')}}">
+                                @error('modelo')
+                									<small>{{$message}}</small>
+                								@enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Cantidad de asientos:</label>
                             <div class="col-md-6">
-                                <input type="number" class="form-control" name="cantidad_asientos">
+                                <input type="number" class="form-control" name="cantidad_asientos" value="{{old('cantidad_asientos')}}">
+                                @error('cantidad_asientos')
+                									<small>{{$message}}</small>
+                								@enderror
                             </div>
                         </div>
                         <div class="form-group row">
@@ -39,13 +48,17 @@
                                 <label>
                                     <input type="radio" name="tipo" value="2"> Súper-Cómoda
                                 </label>
+                                <br>
+                                @error('tipo')
+                                  <small>{{$message}}</small>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Chofer:</label>
                             <div class="col-md-6">
-                                <select name="chofer_id">
-                                    @foreach($choferes as $chofer)  
+                                <select class="form-control" name="chofer_id">
+                                    @foreach($choferes as $chofer)
                                         <option value={{$chofer->id}}>
                                             {{$chofer->apellido}}
                                             {{$chofer->nombre}}
@@ -57,7 +70,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit"class="btn btn-primary">
-                                    {{ __('Registrar') }}
+                                    {{ __('Cargar') }}
                                 </button>
                             </div>
                         </div>

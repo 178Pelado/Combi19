@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Combi;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreCombis;
 
 class CombiController extends Controller
 {
@@ -16,7 +17,7 @@ class CombiController extends Controller
     	return view('administrador.altaCombi')->with('choferes', $choferes);
     }
 
-    public function storeCombi(Request $request){
+    public function storeCombi(StoreCombis $request){
     	$combi = new Combi();
 
     	$combi->patente = $request->patente;
