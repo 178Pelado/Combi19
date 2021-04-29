@@ -8,6 +8,8 @@ use App\Http\Controllers\ChoferController;
 use App\Http\Controllers\CombiController;
 use App\Http\Controllers\InsumoController;
 use App\Http\Controllers\LugarController;
+use App\Http\Controllers\RutaController;
+use App\Http\Controllers\ViajeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,3 +44,9 @@ Route::post('combi19/storeInsumo', [InsumoController::class, 'storeInsumo'])->na
 
 Route::get('combi19/altaLugar', [LugarController::class, 'altaLugar'])->name('combi19.altaLugar');
 Route::post('combi19/storeLugar', [LugarController::class, 'storeLugar'])->name('combi19.storeLugar');
+
+Route::get('combi19/altaRuta', [RutaController::class, 'altaRuta'])->name('combi19.altaRuta');
+Route::post('combi19/storeRuta', [RutaController::class, 'storeRuta'])->name('combi19.storeRuta');
+
+Route::get('combi19/altaViaje', [ViajeController::class, 'altaViaje'])->name('combi19.altaViaje');
+Route::post('combi19/storeViaje', [ViajeController::class, 'storeViaje'])->name('combi19.storeViaje');

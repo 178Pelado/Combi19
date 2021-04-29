@@ -10,7 +10,12 @@
   <!-- <title>{{ config('app.name', 'Laravel') }}</title> -->
 
   <!-- Scripts -->
-  <script src="{{ asset('js/app.js') }}" defer></script>
+  <!-- <script src="{{ asset('js/app.js') }}" defer></script> -->
+
+  <!-- select2 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" type="text/javascript"></script>
 
   <!-- Fonts -->
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -45,10 +50,10 @@
           <div class="form-group row">
             <div class="col-md-6" style="margin-top: 15px">
               <form method="get" action="/iniciarSesion">
-              <a class="btn btn-primary" href="iniciarSesion">
-                {{ __('algun boton') }}
-              </a>
-            </form>
+                <a class="btn btn-primary" href="iniciarSesion">
+                  {{ __('algun boton') }}
+                </a>
+              </form>
             </div>
             <div class="col-md-6" style="margin-top: 15px">
               <a class="btn btn-primary" href="registro">
@@ -97,5 +102,15 @@
   @yield('content')
 </main>
 </div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#e1").select2();
+    var date =   new Date().toISOString().
+      replace(/T/, ' ').
+      replace(/\..+/, '');
+    $("#fecha").val(date);
+    // $("#fecha").val(cTime);
+  });
+</script>
 </body>
 </html>
