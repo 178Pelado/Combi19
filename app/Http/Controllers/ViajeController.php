@@ -32,12 +32,15 @@ class ViajeController extends Controller
     $viaje->fecha = $request->fecha;
 
     $viaje->save();
-    $insumo_viaje = new Insumos_viaje();
 
-    $insumo_viaje->viaje_id = $viaje->id;
-    $insumo_viaje->insumo_id = $request->insumo_id;
-
-    $insumo_viaje->save();
+    $cant = count($request['insumo_id']);
+    $i = 0;
+    for ($i; $i<$cant; $i++){
+      $insumo_viaje = new Insumos_viaje();
+      $insumo_viaje->viaje_id = $viaje->id;
+      $insumo_viaje->insumo_id = $request->insumo_id[$i];
+      $insumo_viaje->save();
+    }
     return view('administrador.registroChofer');
   }
 }
