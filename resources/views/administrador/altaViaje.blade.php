@@ -1,5 +1,7 @@
 @extends('layouts.vistaAdministrador')
-<?php use App\Models\Lugar?>
+<?php
+	use App\Models\Lugar
+?>
 @section('title', 'Alta de viaje')
 
 @section('content')

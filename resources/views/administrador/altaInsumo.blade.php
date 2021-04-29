@@ -14,25 +14,37 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Nombre:</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="nombre" autofocus>
+								<input type="text" class="form-control" name="nombre" value="{{old('nombre')}}" autofocus>
+								@error('nombre')
+									<small>{{$message}}</small>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Descripción:</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="descripcion">
+								<input type="text" class="form-control" name="descripcion" value="{{old('descripcion')}}">
+								@error('descripcion')
+									<small>{{$message}}</small>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Cantidad:</label>
 							<div class="col-md-6">
-								<input type="number" class="form-control" name="cantidad">
+								<input type="number" class="form-control" name="cantidad" value="{{old('cantidad')}}">
+								@error('cantidad')
+									<small>{{$message}}</small>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Precio:</label>
 							<div class="col-md-6">
-								<input type="number" step="any" class="form-control" name="precio">
+								<input type="number" step="any" class="form-control" name="precio" value="{{old('precio')}}">
+								@error('precio')
+									<small>{{$message}}</small>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row mb-0">

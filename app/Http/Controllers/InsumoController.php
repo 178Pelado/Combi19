@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Insumo;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreInsumos;
 
 class InsumoController extends Controller
 {
@@ -12,7 +13,7 @@ class InsumoController extends Controller
     	return view('administrador.altaInsumo');
     }
 
-    public function storeInsumo(Request $request){
+    public function storeInsumo(StoreInsumos $request){
     	$insumo = new Insumo();
 
     	$insumo->nombre = $request->nombre;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lugar;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreLugares;
 
 class LugarController extends Controller
 {
@@ -12,12 +13,12 @@ class LugarController extends Controller
     	return view('administrador.altaLugar');
     }
 
-    public function storeLugar(Request $request){
+    public function storeLugar(StoreLugares $request){
     	$lugar = new Lugar();
 
     	$lugar->nombre = $request->nombre;
 
     	$lugar->save();
-      return view('administrador.altaLugar'); //vuelve a listado de choferes
+      return view('administrador.altaLugar');
     }
 }

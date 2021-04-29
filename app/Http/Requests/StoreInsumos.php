@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Carbon\Carbon;
 
-class StorePasajeros extends FormRequest
+class StoreInsumos extends FormRequest
 {
   /**
   * Determine if the user is authorized to make this request.
@@ -24,15 +23,12 @@ class StorePasajeros extends FormRequest
   */
   public function rules()
   {
-    $dt = new Carbon();
-    $before = $dt->subYears(18)->format("Y-m-d");
     return [
-      'nombre' => 'required|alpha_spaces',
-      'apellido' => 'required|alpha_spaces',
-      'dni' => 'required|integer|gt:0',
-      'email' => 'required|unique:pasajeros|email',
-      'clave' => 'required|min:6',
-      'fecha_nacimiento' => 'required|before_or_equal:' . $before,
+      'nombre' => 'required',
+      'descripcion' => 'required',
+      'cantidad' => 'required|integer|gt:0',
+      'precio' => 'required|numeric|gt:0',
     ];
   }
+
 }

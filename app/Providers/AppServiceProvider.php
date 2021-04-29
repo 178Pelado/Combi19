@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Validator;
+use App\Models\Insumo;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,6 +31,12 @@ class AppServiceProvider extends ServiceProvider
       // This will only accept alpha and spaces.
       // If you want to accept hyphens use: /^[\pL\s-]+$/u.
       return preg_match('/^[\pL\s]+$/u', $value);
+
+    });
+
+    Validator::extend('nombre_descripcion', function ($attribute, $value, $parametro) {
+      $insumo = Insumo::where('nombre', '=', $parametro)->get()->first();
+      if($parametro)
 
     });
 
