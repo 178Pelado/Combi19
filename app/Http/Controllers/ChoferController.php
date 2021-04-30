@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chofer;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreChoferes;
 
 class ChoferController extends Controller
 {
@@ -12,7 +13,7 @@ class ChoferController extends Controller
     	return view('administrador.registroChofer');
     }
 
-    public function storeChofer(Request $request){
+    public function storeChofer(StoreChoferes $request){
     	$chofer = new Chofer();
 
     	$chofer->nombre = $request->nombre;

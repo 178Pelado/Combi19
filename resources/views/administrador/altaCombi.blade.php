@@ -16,8 +16,8 @@
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="patente" value="{{old('patente')}}">
                                 @error('patente')
-                									<small>{{$message}}</small>
-                								@enderror
+                					<small>{{$message}}</small>
+                				@enderror
                             </div>
                         </div>
                         <div class="form-group row">
@@ -25,8 +25,8 @@
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="modelo" value="{{old('modelo')}}">
                                 @error('modelo')
-                									<small>{{$message}}</small>
-                								@enderror
+                				    <small>{{$message}}</small>
+                				@enderror
                             </div>
                         </div>
                         <div class="form-group row">
@@ -34,8 +34,8 @@
                             <div class="col-md-6">
                                 <input type="number" class="form-control" name="cantidad_asientos" value="{{old('cantidad_asientos')}}">
                                 @error('cantidad_asientos')
-                									<small>{{$message}}</small>
-                								@enderror
+                				    <small>{{$message}}</small>
+                				@enderror
                             </div>
                         </div>
                         <div class="form-group row">

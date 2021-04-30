@@ -14,31 +14,46 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Nombre:</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="nombre" autofocus>
+								<input type="text" class="form-control" name="nombre" autofocus value="{{old('nombre')}}">
+								@error('nombre')
+                                  <small>{{$message}}</small>
+                                @enderror
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Apellido:</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="apellido">
+								<input type="text" class="form-control" name="apellido" value="{{old('apellido')}}">
+								@error('apellido')
+                                  <small>{{$message}}</small>
+                                @enderror
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Teléfono:</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="telefono">
+								<input type="text" class="form-control" name="telefono" value="{{old('telefono')}}">
+								@error('telefono')
+                                  <small>{{$message}}</small>
+                                @enderror
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Email:</label>
 							<div class="col-md-6">
-								<input type="email" class="form-control" name="email">
+								<input type="email" class="form-control" name="email" value="{{old('email')}}">
+								@error('email')
+                                  <small>{{$message}}</small>
+                                @enderror
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Clave:</label>
 							<div class="col-md-6">
 								<input type="password" class="form-control" name="clave">
+								@error('clave')
+                                  <small>{{$message}}</small>
+                                @enderror
 							</div>
 						</div>
 						<div class="form-group row mb-0">
