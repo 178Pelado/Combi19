@@ -23,6 +23,16 @@ class ChoferController extends Controller
     	$chofer->contraseña = $request->clave;
 
     	$chofer->save();
-      return view('administrador.registroChofer'); //vuelve a listado de choferes
+        return redirect()->route('combi19.listarChoferes'); //vuelve a listado de choferes
+    }
+
+    public function listarChoferes(){
+        $choferes = Chofer::paginate();
+      return view('administrador.listarChoferes', compact('choferes'));
+    }
+
+    public function eliminarChofer(Chofer $chofer){
+        $chofer->delete();
+        return redirect()->route('combi19.listarChoferes');
     }
 }

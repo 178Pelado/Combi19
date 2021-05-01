@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreCombis extends FormRequest
+class StoreViajes extends FormRequest
 {
   /**
   * Determine if the user is authorized to make this request.
@@ -24,11 +24,11 @@ class StoreCombis extends FormRequest
   public function rules()
   {
     return [
-      'patente' => 'required|alpha_num_spaces|unique:combis',
-      'modelo' => 'required|alpha_num_spaces',
-      'cantidad_asientos' => 'required|integer|gt:0',
-      'tipo' => 'required',
-      'chofer_id' => 'required',
+      'combi_id' => 'required|',
+      'ruta_id' => 'required|',
+      'insumo_id[]' => 'required|',
+      'precio' => 'required|',
+      'fecha' => 'required|',
     ];
   }
 }

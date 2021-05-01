@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInsumossViajessTable extends Migration
+class CreateRutasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateInsumossViajessTable extends Migration
      */
     public function up()
     {
-        Schema::create('insumos_viaje', function (Blueprint $table) {
-            $table->foreignId('viaje_id')->constrained('viajes');
-            $table->foreignId('insumo_id')->constrained('insumos');
+        Schema::create('rutas', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('origen_id')->constrained('lugares');
+            $table->foreignId('destino_id')->constrained('lugares');
+            $table->string('descripcion');
+            $table->double('distancia_km');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -28,6 +31,6 @@ class CreateInsumossViajessTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('insumos_viajes');
+        Schema::dropIfExists('rutas');
     }
 }

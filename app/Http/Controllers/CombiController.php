@@ -29,7 +29,7 @@ class CombiController extends Controller
     	$combi->chofer_id = $request->chofer_id;
 
     	$combi->save();
-        return view('administrador.registroChofer'); //vuelve a listado de combis
+      return redirect()->route('combi19.listarCombis'); //vuelve a listado de combis
     }
 
     public function listarCombis(){
