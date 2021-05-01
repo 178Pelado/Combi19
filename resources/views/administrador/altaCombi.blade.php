@@ -42,11 +42,11 @@
                             <label class="col-md-4 col-form-label text-md-right">Tipo:</label>
                             <div class="col-md-6">
                                 <label>
-                                    <input type="radio" name="tipo" value="1"> Cómoda
+                                    <input type="radio" name="tipo" value="Cómoda"> Cómoda
                                 </label>
                                 <br>
                                 <label>
-                                    <input type="radio" name="tipo" value="2"> Súper-Cómoda
+                                    <input type="radio" name="tipo" value="Super Cómoda"> Súper-Cómoda
                                 </label>
                                 <br>
                                 @error('tipo')

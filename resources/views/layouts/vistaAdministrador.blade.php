@@ -101,7 +101,6 @@ table.table td .add {
     display: none;
 }
 </style>
-<script>
 
   <!-- <title>{{ config('app.name', 'Laravel') }}</title> -->
 

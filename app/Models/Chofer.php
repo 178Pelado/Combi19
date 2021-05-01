@@ -10,4 +10,8 @@ class Chofer extends Model
     use HasFactory;
 
     protected $table = "choferes";
+
+    public function combi(){
+      return $this->hasMany('App\Models\Combi');
+    }
 }

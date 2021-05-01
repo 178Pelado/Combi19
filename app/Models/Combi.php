@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Combi extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    protected $table = "combis";
+  protected $table = "combis";
+
+  public function chofer(){
+    return $this->belongsTo('App\Models\Chofer', 'chofer_id');
+  }
 }
