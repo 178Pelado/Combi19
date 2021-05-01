@@ -21,4 +21,9 @@ class LugarController extends Controller
     	$lugar->save();
       return view('administrador.altaLugar');
     }
+
+    public function listarLugares(){
+    	$lugares = Lugar::paginate();
+      return view('administrador.listarLugares', compact('lugares'));
+    }
 }

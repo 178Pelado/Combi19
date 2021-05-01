@@ -38,12 +38,15 @@ Route::post('combi19/storeChofer', [ChoferController::class, 'storeChofer'])->na
 
 Route::get('combi19/altaCombi', [CombiController::class, 'altaCombi'])->name('combi19.altaCombi');
 Route::post('combi19/storeCombi', [CombiController::class, 'storeCombi'])->name('combi19.storeCombi');
+Route::get('combi19/listarCombis', [CombiController::class, 'listarCombis'])->name('combi19.listarCombis');
+Route::delete('combi19/eliminarCombi{combi}', [CombiController::class, 'eliminarCombi'])->name('combi19.eliminarCombi');
 
 Route::get('combi19/altaInsumo', [InsumoController::class, 'altaInsumo'])->name('combi19.altaInsumo');
 Route::post('combi19/storeInsumo', [InsumoController::class, 'storeInsumo'])->name('combi19.storeInsumo');
 
 Route::get('combi19/altaLugar', [LugarController::class, 'altaLugar'])->name('combi19.altaLugar');
 Route::post('combi19/storeLugar', [LugarController::class, 'storeLugar'])->name('combi19.storeLugar');
+Route::get('combi19/listarLugares', [LugarController::class, 'listarLugares'])->name('combi19.listarLugares');
 
 Route::get('combi19/altaRuta', [RutaController::class, 'altaRuta'])->name('combi19.altaRuta');
 Route::post('combi19/storeRuta', [RutaController::class, 'storeRuta'])->name('combi19.storeRuta');
