@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInsumosViajessTable extends Migration
+class CreateInsumossViajessTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,6 +16,7 @@ class CreateInsumosViajessTable extends Migration
         Schema::create('insumos_viaje', function (Blueprint $table) {
             $table->foreignId('viaje_id')->constrained('viajes');
             $table->foreignId('insumo_id')->constrained('insumos');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

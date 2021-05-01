@@ -16,6 +16,7 @@ class CreateLugaresTable extends Migration
         Schema::create('lugares', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

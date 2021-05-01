@@ -19,6 +19,7 @@ class CreateInsumosTable extends Migration
             $table->string('descripcion');
             $table->integer('cantidad');
             $table->double('precio');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

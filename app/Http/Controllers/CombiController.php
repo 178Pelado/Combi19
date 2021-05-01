@@ -38,9 +38,13 @@ class CombiController extends Controller
     }
 
     public function eliminarCombi(Combi $combi){
-      $viaje = Viaje::where('combi_id', '=', $combi->id)->get()->first();
-      Insumos_viaje::where('viaje_id', '=', $viaje->id)->delete();
-      $viaje->delete();
+      // $viaje = Viaje::where('combi_id', '=', $combi->id)->get()->first();
+      // if(!empty($viaje)){
+      //   $insumos_viaje = Insumos_viaje::where('viaje_id', '=', $viaje->id);
+      //   if(!empty($insumos_viaje))
+      //     $insumos_viaje->delete();
+      //   $viaje->delete();
+      // }
     	$combi->delete();
       return redirect()->route('combi19.listarCombis');
     }

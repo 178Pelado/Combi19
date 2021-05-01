@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateViajessTable extends Migration
+class CreateViajesssTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,6 +17,7 @@ class CreateViajessTable extends Migration
             $table->id();
             $table->foreignId('combi_id')->constrained('combis');
             $table->foreignId('ruta_id')->constrained('rutas');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

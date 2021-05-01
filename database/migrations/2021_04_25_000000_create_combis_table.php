@@ -20,6 +20,7 @@ class CreateCombisTable extends Migration
             $table->integer('cantidad_asientos');
             $table->string('tipo');
             $table->foreignId('chofer_id')->constrained('choferes');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -22,6 +22,7 @@ class CreatePasajerosTable extends Migration
             $table->string('contraseña');
             $table->date('fecha_de_nacimiento');
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -9,12 +9,21 @@
 			<div class="card">
 				<div class="card-header">{{ __('Lista de Lugares') }}</div>
 				<div class="card-body">
-					@csrf
-					<ul>
-						@foreach ($lugares as $lugar)
-						<li>{{$lugar->nombre}}</li>
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Nombre</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($lugares as $lugar)
+					<tr>
+
+						<td>{{$lugar->nombre}}</td>
 						@endforeach
-					</ul>
+					</tr>
+					</tbody>
+				</table>
 					<a href="{{route('combi19.altaLugar')}}">Alta lugar</a>
 					{{$lugares->links()}}
 				</div>

@@ -21,6 +21,7 @@ class CreateChoferesTable extends Migration
             $table->string('email')->unique();
             $table->string('contraseña');
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

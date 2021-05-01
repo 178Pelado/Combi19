@@ -19,6 +19,7 @@ class CreateRutassTable extends Migration
             $table->foreignId('destino_id')->constrained('lugares');
             $table->string('descripcion');
             $table->double('distancia_km');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
