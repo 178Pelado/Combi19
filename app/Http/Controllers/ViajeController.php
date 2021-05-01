@@ -10,16 +10,9 @@ class ViajeController extends Controller
 {
 
   public function altaViaje(){
-    $combis = \DB::table('combis')
-    ->select('combis.*')
-    ->orderBy('patente')
-    ->get();
-    $rutas = \DB::table('rutas')
-    ->select('rutas.*')
-    ->get();
-    $insumos = \DB::table('insumos')
-    ->select('insumos.*')
-    ->get();
+    $combis = \App\Models\Combi::all();
+    $rutas = \App\Models\Ruta::all();
+    $insumos = \App\Models\Insumo::all();
     return view('administrador.altaViaje')->with('combis', $combis)->with('rutas', $rutas)->with('insumos', $insumos);
   }
 
