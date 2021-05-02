@@ -15,4 +15,8 @@ class Chofer extends Model
 
   	protected $dates = ['deleted_at'];
   	protected $table = "choferes";
+
+    public function combi(){
+      return $this->belongsTo('App\Models\Chofer', 'chofer_id');
+    }
 }

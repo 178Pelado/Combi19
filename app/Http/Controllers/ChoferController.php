@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chofer;
 use App\Models\Combi;
+use Session;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreChoferes;
 
@@ -34,8 +35,10 @@ class ChoferController extends Controller
 
     public function eliminarChofer(Chofer $chofer){
         $combi = Combi::where('chofer_id', '=', $chofer->id)->get()->first();
-        if (!empty($combi))
+        if (!empty($combi)){
+          Session::flash('message','El chofer se encuentra asignado a una combi');
           return redirect()->route('combi19.listarChoferes');
+        }
         $chofer->delete();
         return redirect()->route('combi19.listarChoferes');
     }
