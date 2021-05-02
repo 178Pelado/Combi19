@@ -13,10 +13,7 @@ class CombiController extends Controller
 {
 
   public function altaCombi(){
-    $choferes = \DB::table('choferes')
-    ->select('choferes.*')
-    ->orderBy('apellido')
-    ->get();
+    $choferes = \App\Models\Chofer::all();
     return view('administrador.altaCombi')->with('choferes', $choferes);
   }
 

@@ -10,10 +10,7 @@ class RutaController extends Controller
 {
 
   public function altaRuta(){
-    $lugares = \DB::table('lugares')
-    ->select('lugares.*')
-    ->orderBy('nombre')
-    ->get();
+    $lugares = \App\Models\Lugar::all();
     return view('administrador.altaRuta')->with('lugares', $lugares);
   }
 
