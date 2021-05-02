@@ -49,6 +49,7 @@ Route::post('combi19/storeInsumo', [InsumoController::class, 'storeInsumo'])->na
 Route::get('combi19/altaLugar', [LugarController::class, 'altaLugar'])->name('combi19.altaLugar');
 Route::post('combi19/storeLugar', [LugarController::class, 'storeLugar'])->name('combi19.storeLugar');
 Route::get('combi19/listarLugares', [LugarController::class, 'listarLugares'])->name('combi19.listarLugares');
+Route::delete('combi19/eliminarLugar{lugar}', [LugarController::class, 'eliminarLugar'])->name('combi19.eliminarLugar');
 
 Route::get('combi19/altaRuta', [RutaController::class, 'altaRuta'])->name('combi19.altaRuta');
 Route::post('combi19/storeRuta', [RutaController::class, 'storeRuta'])->name('combi19.storeRuta');

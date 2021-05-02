@@ -13,6 +13,7 @@
 						<thead>
 							<tr>
 								<th>Nombre</th>
+								<th>Acciones</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -20,6 +21,14 @@
 					<tr>
 
 						<td>{{$lugar->nombre}}</td>
+						<td>
+							<a href="{{route('combi19.altaLugar')}}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+							<form action="{{route('combi19.eliminarLugar', $lugar)}}" method="POST">
+								@csrf
+								@method('delete')
+								<button class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></button>
+							</form>
+						</td>
 						@endforeach
 					</tr>
 					</tbody>

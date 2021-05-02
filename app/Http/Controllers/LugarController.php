@@ -26,4 +26,9 @@ class LugarController extends Controller
     	$lugares = Lugar::paginate();
       return view('administrador.listarLugares', compact('lugares'));
     }
+
+    public function eliminarLugar(Lugar $lugar){
+      $lugar->delete();
+      return redirect()->route('combi19.listarLugares');
+    }
 }
