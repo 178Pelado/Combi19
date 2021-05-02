@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Combi;
+use App\Models\Viaje;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCombis;
+use DateTime;
 
 class CombiController extends Controller
 {
@@ -36,6 +38,14 @@ class CombiController extends Controller
   }
 
   public function eliminarCombi(Combi $combi){
+    $viaje = Viaje::where('combi_id', '=', $combi->id)->get();
+    for ($i=0;$i<sizeOf($viaje);$i++){
+      date_default_timezone_set('America/Argentina/Buenos_Aires');
+      $dt = new \DateTime();
+      $dt= $dt->format('Y-m-d H:i:s');
+      if ($viaje[$i]->fecha > $dt)
+        return redirect()->route('combi19.listarCombis');
+    }
     $combi->delete();
     return redirect()->route('combi19.listarCombis');
   }
