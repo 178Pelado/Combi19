@@ -52,6 +52,8 @@ Route::get('combi19/listarLugares', [LugarController::class, 'listarLugares'])->
 
 Route::get('combi19/altaRuta', [RutaController::class, 'altaRuta'])->name('combi19.altaRuta');
 Route::post('combi19/storeRuta', [RutaController::class, 'storeRuta'])->name('combi19.storeRuta');
+Route::get('combi19/listarRutas', [RutaController::class, 'listarRutas'])->name('combi19.listarRutas');
+Route::delete('combi19/eliminarRuta{ruta}', [RutaController::class, 'eliminarRuta'])->name('combi19.eliminarRuta');
 
 Route::get('combi19/altaViaje', [ViajeController::class, 'altaViaje'])->name('combi19.altaViaje');
 Route::post('combi19/storeViaje', [ViajeController::class, 'storeViaje'])->name('combi19.storeViaje');
