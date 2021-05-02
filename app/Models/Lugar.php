@@ -16,6 +16,10 @@ class Lugar extends Model
     protected $table = "lugares";
     protected $softCascade = ['rutas', 'rutas2'];
 
+    protected $fillable = [
+        'nombre'
+    ];
+
     public function rutas(){
       return $this->hasMany('App\Models\Ruta', 'origen_id');
     }

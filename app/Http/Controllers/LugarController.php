@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Lugar;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreLugares;
+use App\Http\Requests\UpdateLugares;
 
 class LugarController extends Controller
 {
@@ -29,6 +30,11 @@ class LugarController extends Controller
 
     public function eliminarLugar(Lugar $lugar){
       $lugar->delete();
+      return redirect()->route('combi19.listarLugares');
+    }
+
+    public function updateLugar(UpdateLugares $request, Lugar $lugar){
+      $lugar->update($request->all());
       return redirect()->route('combi19.listarLugares');
     }
 }
