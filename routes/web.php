@@ -45,6 +45,8 @@ Route::delete('combi19/eliminarCombi{combi}', [CombiController::class, 'eliminar
 
 Route::get('combi19/altaInsumo', [InsumoController::class, 'altaInsumo'])->name('combi19.altaInsumo');
 Route::post('combi19/storeInsumo', [InsumoController::class, 'storeInsumo'])->name('combi19.storeInsumo');
+Route::get('combi19/listarInsumosTotal', [InsumoController::class, 'listarInsumosTotal'])->name('combi19.listarInsumosTotal');
+Route::delete('combi19/eliminarInsumo{insumo}', [InsumoController::class, 'eliminarInsumo'])->name('combi19.eliminarInsumo');
 
 Route::get('combi19/altaLugar', [LugarController::class, 'altaLugar'])->name('combi19.altaLugar');
 Route::post('combi19/storeLugar', [LugarController::class, 'storeLugar'])->name('combi19.storeLugar');
