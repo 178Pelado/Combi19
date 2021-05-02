@@ -19,7 +19,7 @@ class LugarController extends Controller
     	$lugar->nombre = $request->nombre;
 
     	$lugar->save();
-      return view('administrador.altaLugar');
+      return redirect()->route('combi19.listarLugares');
     }
 
     public function listarLugares(){

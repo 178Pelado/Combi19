@@ -15,9 +15,4 @@ class Chofer extends Model
 
   	protected $dates = ['deleted_at'];
   	protected $table = "choferes";
-  	protected $softCascade = ['combis'];
-
-    public function combis(){
-      return $this->hasMany('App\Models\Combi');
-    }
 }

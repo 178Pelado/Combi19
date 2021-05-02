@@ -17,6 +17,8 @@ class CreateViajesTable extends Migration
             $table->id();
             $table->foreignId('combi_id')->constrained('combis');
             $table->foreignId('ruta_id')->constrained('rutas');
+            $table->double('precio');
+            $table->date('fecha');
             $table->softDeletes();
             $table->timestamps();
         });

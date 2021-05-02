@@ -14,13 +14,8 @@ class Combi extends Model
   use SoftCascadeTrait;
   protected $dates = ['deleted_at'];
   protected $table = "combis";
-  protected $softCascade = ['viajes'];
 
   public function chofer(){
     return $this->belongsTo('App\Models\Chofer', 'chofer_id');
-  }
-
-  public function viajes(){
-    return $this->hasMany('App\Models\Viaje');
   }
 }

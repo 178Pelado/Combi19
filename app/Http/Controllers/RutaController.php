@@ -26,7 +26,7 @@ class RutaController extends Controller
     $ruta->distancia_km = $request->distancia;
 
     $ruta->save();
-    return view('administrador.registroChofer');
+    return redirect()->route('combi19.listarRutas');
   }
 
   public function listarRutas(){

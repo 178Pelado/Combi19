@@ -24,11 +24,11 @@ class StoreViajes extends FormRequest
   public function rules()
   {
     return [
-      'combi_id' => 'required|',
-      'ruta_id' => 'required|',
-      'insumo_id[]' => 'required|',
-      'precio' => 'required|',
-      'fecha' => 'required|',
+      'combi_id' => 'required',
+      'ruta_id' => 'required',
+      'insumo_id[]' => 'required',
+      'precio' => 'required|numeric|gt:0',
+      'fecha' => 'required',
     ];
   }
 }
