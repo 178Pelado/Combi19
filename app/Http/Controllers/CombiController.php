@@ -41,9 +41,10 @@ class CombiController extends Controller
       date_default_timezone_set('America/Argentina/Buenos_Aires');
       $dt = new \DateTime();
       $dt= $dt->format('Y-m-d H:i:s');
-      if ($viaje[$i]->fecha > $dt)
+      if ($viaje[$i]->fecha > $dt) {
         Session::flash('message','La combi está asignada a un futuro viaje');
         return redirect()->route('combi19.listarCombis');
+      }
     }
     $combi->delete();
     return redirect()->route('combi19.listarCombis');
