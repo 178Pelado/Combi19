@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Validator;
 use App\Models\Insumo;
 use App\Models\Viaje;
+use Carbon\Carbon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -53,10 +54,14 @@ class AppServiceProvider extends ServiceProvider
     });
 
     Validator::extend('viaje_distinto_fecha', function ($attribute, $value, $parameters) {
-      $viaje = Viaje::where('combi_id', '=', $value)->where('fecha', '=', $parameters[0])->get()->first();
-      if(empty($viaje)){
+      $fecha = Carbon::parse($value);
+      $antes = $fecha->subHours(6)->format('Y-m-d H:i:s');
+      $despues = $fecha->addHours(12)->format('Y-m-d H:i:s');
+      $viaje = Viaje::where('combi_id', '=', $parameters[0])->whereBetween('fecha', [$antes, $despues])->get();
+      if(count($viaje) == 0){
         return true;
-      }else{
+      }
+      else{
         return false;
       }
     });

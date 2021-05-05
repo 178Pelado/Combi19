@@ -77,6 +77,9 @@
 								$dt= $dt->format('Y-m-d\TH:i');
 								?>
 								<input type="datetime-local" min="<?php echo $dt_min; ?>" class="form-control" value="<?php echo $dt;?>" name="fecha">
+								@error('fecha')
+									<small>{{$message}}</small>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row mb-0">

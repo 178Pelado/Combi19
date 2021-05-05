@@ -25,11 +25,11 @@ class StoreViajes extends FormRequest
   public function rules()
   {
     return [
-      'combi_id' => 'required|viaje_distinto_fecha:' . $this->fecha,
+      'combi_id' => 'required',
       'ruta_id' => 'required',
       // 'insumo_id[]' => 'required',
       'precio' => 'required|numeric|gt:0',
-      'fecha' => 'required',
+      'fecha' => 'required|viaje_distinto_fecha:' . $this->combi_id,
     ];
   }
 
