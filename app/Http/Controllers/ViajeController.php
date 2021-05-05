@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Viaje;
 use App\Models\Insumos_viaje;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreViajes;
 
 class ViajeController extends Controller
 {
@@ -16,7 +17,7 @@ class ViajeController extends Controller
     return view('administrador.altaViaje')->with('combis', $combis)->with('rutas', $rutas)->with('insumos', $insumos);
   }
 
-  public function storeViaje(Request $request){
+  public function storeViaje(StoreViajes $request){
     $viaje = new Viaje();
 
     $viaje->combi_id = $request->combi_id;

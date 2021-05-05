@@ -15,7 +15,7 @@ class LugarController extends Controller
     }
 
     public function storeLugar(StoreLugares $request){
-      // return $request;
+      return $request;
       // if ($request) {
       //   Session::flash('malCargado');
       // }

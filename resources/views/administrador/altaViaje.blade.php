@@ -23,6 +23,9 @@
 									</option>
 									@endforeach
 								</select>
+								@error('combi_id')
+									<small>{{$message}}</small>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row">

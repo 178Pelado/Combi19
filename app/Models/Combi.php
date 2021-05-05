@@ -18,4 +18,8 @@ class Combi extends Model
   public function chofer(){
     return $this->belongsTo('App\Models\Chofer', 'chofer_id');
   }
+
+  public function viajes(){
+    return $this->hasMany('App\Models\Chofer', 'combi_id');
+  }
 }

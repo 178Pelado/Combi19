@@ -28,7 +28,7 @@
 										<button class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></button>
 									</form>
 								</td>
-								
+
 							</tr>
 
 				<!-- Modal -->

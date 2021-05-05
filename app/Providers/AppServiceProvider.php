@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Validator;
 use App\Models\Insumo;
+use App\Models\Viaje;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -45,6 +46,15 @@ class AppServiceProvider extends ServiceProvider
     Validator::extend('nombre_descripcion', function ($attribute, $value, $parameters) {
       $insumo = Insumo::where('nombre', '=', $parameters[0])->where('descripcion', '=', $value)->get()->first();
       if(empty($insumo)){
+        return true;
+      }else{
+        return false;
+      }
+    });
+
+    Validator::extend('viaje_distinto_fecha', function ($attribute, $value, $parameters) {
+      $viaje = Viaje::where('combi_id', '=', $value)->where('fecha', '=', $parameters[0])->get()->first();
+      if(empty($viaje)){
         return true;
       }else{
         return false;
