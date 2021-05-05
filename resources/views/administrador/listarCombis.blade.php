@@ -29,7 +29,7 @@
 								<td>{{$combi->tipo}}</td>
 								<td>{{$combi->chofer->nombre}}</td>
 								<td>
-									<a href="{{route('combi19.altaCombi')}}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+									<a href="{{route('combi19.modificarCombi', $combi)}}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
 									<form action="{{route('combi19.eliminarCombi', $combi)}}" method="POST">
 										@csrf
 										@method('delete')

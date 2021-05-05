@@ -49,4 +49,13 @@ class CombiController extends Controller
     $combi->delete();
     return redirect()->route('combi19.listarCombis');
   }
+
+  public function modificarCombi(Combi $combi){
+    $choferes = \App\Models\Chofer::all();
+    return view('administrador.modificarCombi', compact('combi'))->with('choferes', $choferes);
+  }
+  public function updateCombi(UpdateLugares $request, Combi $combi){
+    $combi->update($request->all());
+    return redirect()->route('combi19.listarLugares');
+  }
 }

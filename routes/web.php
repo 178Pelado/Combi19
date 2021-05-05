@@ -42,6 +42,8 @@ Route::get('combi19/altaCombi', [CombiController::class, 'altaCombi'])->name('co
 Route::post('combi19/storeCombi', [CombiController::class, 'storeCombi'])->name('combi19.storeCombi');
 Route::get('combi19/listarCombis', [CombiController::class, 'listarCombis'])->name('combi19.listarCombis');
 Route::delete('combi19/eliminarCombi{combi}', [CombiController::class, 'eliminarCombi'])->name('combi19.eliminarCombi');
+Route::get('combi19/modificarCombi{combi}', [CombiController::class, 'modificarCombi'])->name('combi19.modificarCombi');
+Route::put('combi19/updateCombi{combi}', [CombiController::class, 'updateCombi'])->name('combi19.updateCombi');
 
 Route::get('combi19/altaInsumo', [InsumoController::class, 'altaInsumo'])->name('combi19.altaInsumo');
 Route::post('combi19/storeInsumo', [InsumoController::class, 'storeInsumo'])->name('combi19.storeInsumo');
