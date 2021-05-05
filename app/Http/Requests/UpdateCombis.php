@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateLugares extends FormRequest
+class UpdateCombis extends FormRequest
 {
-
   /**
   * Determine if the user is authorized to make this request.
   *
@@ -25,7 +24,11 @@ class UpdateLugares extends FormRequest
   public function rules()
   {
     return [
-      'nombre' => 'required|unique:lugares',
+      'patente' => 'required|alpha_num_spaces|unique:combis',
+      'modelo' => 'required|alpha_num_spaces',
+      'cantidad_asientos' => 'required|integer|gt:0',
+      'tipo' => 'required',
+      'chofer_id' => 'required',
     ];
   }
 }

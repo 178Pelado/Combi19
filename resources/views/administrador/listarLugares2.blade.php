@@ -10,6 +10,7 @@
 				<div class="card-header">{{ __('Lista de Lugares 2') }}</div>
 				<div class="card-body">
 					<table class="table table-bordered">
+<<<<<<< HEAD
 						@if($lugares[0] !== null)
 							<thead>
 								<tr>
@@ -30,6 +31,28 @@
 										</form>
 									</td>
 								</tr>
+=======
+						<thead>
+							<tr>
+								<th>Nombre</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($lugares as $lugar)
+							<tr>
+								<td>{{$lugar->nombre}}</td>
+								<td>
+									<button type="button" data-toggle="modal" data-target="#exampleModal{{$lugar->id}}"><i class="material-icons">&#xE254;</i></button>
+									<form action="{{route('combi19.eliminarLugar', $lugar)}}" method="POST">
+										@csrf
+										@method('delete')
+										<button class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></button>
+									</form>
+								</td>
+
+							</tr>
+>>>>>>> a08901bc91ead727633a1225cfd917aa2217aaa6
 
 								<!-- Modal -->
 								<div class="modal fade" id="exampleModal{{$lugar->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

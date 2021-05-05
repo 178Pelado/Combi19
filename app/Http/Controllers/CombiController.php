@@ -7,6 +7,7 @@ use App\Models\Viaje;
 use Session;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCombis;
+use App\Http\Requests\UpdateCombis;
 use DateTime;
 
 class CombiController extends Controller
@@ -47,6 +48,15 @@ class CombiController extends Controller
       }
     }
     $combi->delete();
+    return redirect()->route('combi19.listarCombis');
+  }
+
+  public function modificarCombi(Combi $combi){
+    $choferes = \App\Models\Chofer::all();
+    return view('administrador.modificarCombi', compact('combi'))->with('choferes', $choferes);
+  }
+  public function updateCombi(UpdateCombis $request, Combi $combi){
+    $combi->update($request->all());
     return redirect()->route('combi19.listarCombis');
   }
 }

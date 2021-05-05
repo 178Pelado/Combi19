@@ -15,7 +15,7 @@ class LugarController extends Controller
     }
 
     public function storeLugar(StoreLugares $request){
-      $lugar = new Lugar();
+    	$lugar = new Lugar();
     	$lugar->nombre = $request->nombre;
     	$lugar->save();
       return redirect()->route('combi19.listarLugares');
@@ -23,7 +23,7 @@ class LugarController extends Controller
 
     public function listarLugares(){
     	$lugares = Lugar::paginate();
-      return view('administrador.listarLugares2', compact('lugares'));
+      return view('administrador.listarLugares', compact('lugares'));
     }
 
     public function eliminarLugar(Lugar $lugar){
@@ -31,6 +31,9 @@ class LugarController extends Controller
       return redirect()->route('combi19.listarLugares');
     }
 
+    public function modificarLugar(Lugar $lugar){
+      return view('administrador.modificarLugar', compact('lugar'));
+    }
     public function updateLugar(UpdateLugares $request, Lugar $lugar){
       $lugar->update($request->all());
       return redirect()->route('combi19.listarLugares');
