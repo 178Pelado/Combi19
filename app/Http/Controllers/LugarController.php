@@ -15,11 +15,7 @@ class LugarController extends Controller
     }
 
     public function storeLugar(StoreLugares $request){
-      // return $request;
-      // if ($request) {
-      //   Session::flash('malCargado');
-      // }
-    	$lugar = new Lugar();
+      $lugar = new Lugar();
     	$lugar->nombre = $request->nombre;
     	$lugar->save();
       return redirect()->route('combi19.listarLugares');
