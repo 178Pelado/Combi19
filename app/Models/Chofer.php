@@ -13,6 +13,14 @@ class Chofer extends Model
     use SoftDeletes;
   	use SoftCascadeTrait;
 
+  	protected $fillable = [
+        'nombre',
+        'apellido',
+        'telefono',
+        'email',
+        'contraseña'
+    ];
+
   	protected $dates = ['deleted_at'];
   	protected $table = "choferes";
 }

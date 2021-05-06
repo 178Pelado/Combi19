@@ -28,7 +28,7 @@
 										<td>{{$chofer->telefono}}</td>
 										<td>{{$chofer->email}}</td>
 										<td>
-											<a href="{{route('combi19.registroChofer')}}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+											<a href="{{route('combi19.modificarChofer', $chofer)}}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
 											<form action="{{route('combi19.eliminarChofer', $chofer)}}" method="POST">
 												@csrf
 												@method('delete')
