@@ -14,7 +14,7 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Nombre:</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="nombre" value="{{$lugar->nombre}}">
+								<input type="text" class="form-control" name="nombre" value="{{old('nombre', $lugar->nombre)}}">
 								@error('nombre')
 									<small>{{$message}}</small>
 								@enderror

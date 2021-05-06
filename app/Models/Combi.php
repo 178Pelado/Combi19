@@ -18,10 +18,10 @@ class Combi extends Model
 
   protected $fillable = [
     'patente',
-      'modelo',
-      'cantidad_asientos',
-      'tipo',
-      'chofer_id'
+    'modelo',
+    'cantidad_asientos',
+    'tipo',
+    'chofer_id'
   ];
 
   public function chofer(){
