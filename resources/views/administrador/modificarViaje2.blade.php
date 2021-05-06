@@ -1,6 +1,6 @@
 @extends('layouts.vistaAdministrador')
 <?php
-use App\Models\Lugar
+	use App\Models\Lugar
 ?>
 @section('title', 'Modificar viaje')
 
@@ -19,9 +19,9 @@ use App\Models\Lugar
 								<select name="combi_id" class="form-control">
 									@foreach($combis as $combi)
 									@if ($combi->id == $viaje->combi_id)
-									<option value={{$combi->id}} selected>
-										{{$combi->patente}}
-									</option>
+										<option value={{$combi->id}} selected>
+											{{$combi->patente}}
+										</option>
 									@else
 									<option value={{$combi->id}}>
 										{{$combi->patente}}
@@ -30,22 +30,22 @@ use App\Models\Lugar
 									@endforeach
 								</select>
 								@error('combi_id')
-								<small>{{$message}}</small>
+									<small>{{$message}}</small>
 								@enderror
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Ruta:</label>
 							<div class="col-md-6">
-								<select name="ruta_id" class="form-control" disabled>
+								<select name="ruta_id" class="form-control">
 									@foreach($rutas as $ruta)
 									{{$lugarO = Lugar::where('id', '=', $ruta->origen_id)->get()->first()}}
 									{{$lugarD = Lugar::where('id', '=', $ruta->destino_id)->get()->first()}}
 									@if ($ruta->id == $viaje->ruta_id)
-									<option value={{$ruta->id}} selected>
-										{{$lugarO->nombre}} -
-										{{$lugarD->nombre}}
-									</option>
+										<option value={{$ruta->id}} selected>
+											{{$lugarO->nombre}} -
+											{{$lugarD->nombre}}
+										</option>
 									@else
 									<option value={{$ruta->id}}>
 										{{$lugarO->nombre}} -
@@ -59,10 +59,10 @@ use App\Models\Lugar
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Insumos:</label>
 							<div class="col-md-6">
-								<select class="form-control" id="e1" multiple="multiple" name="insumo_id[]" disabled>
-									@foreach($insumos_viaje as $insumo)
-									<option value={{$insumo->id}} selected>
-										{{$insumo->insumo->nombre}}
+								<select class="form-control" id="e1" multiple="multiple" name="insumo_id[]">
+									@foreach($insumos as $insumo)
+									<option value={{$insumo->id}}>
+										{{$insumo->nombre}}
 									</option>
 									@endforeach
 								</select>
@@ -72,9 +72,9 @@ use App\Models\Lugar
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Precio:</label>
 							<div class="col-md-6">
-								<input type="number" step="any" class="form-control" name="precio" value="{{$viaje->precio}}" disabled>
+								<input type="number" step="any" class="form-control" name="precio" value="{{$viaje->precio}}">
 								@error('precio')
-								<small>{{$message}}</small>
+									<small>{{$message}}</small>
 								@enderror
 							</div>
 						</div>
@@ -89,16 +89,16 @@ use App\Models\Lugar
 								$dt = new DateTime(); // Date object using current date and time
 								$dt= $dt->format('Y-m-d\TH:i');
 								?>
-								<input type="datetime-local" min="<?php echo $dt_min; ?>" class="form-control" value="<?php echo $dt;?>" name="fecha" disabled>
+								<input type="datetime-local" min="<?php echo $dt_min; ?>" class="form-control" value="<?php echo $dt;?>" name="fecha">
 								@error('fecha')
-								<small>{{$message}}</small>
+									<small>{{$message}}</small>
 								@enderror
 							</div>
 						</div>
 						<div class="form-group row mb-0">
 							<div class="col-md-8 offset-md-4">
 								<button type="submit"class="btn btn-primary">
-									{{ __('Actualizar') }}
+									{{ __('Cargar') }}
 								</button>
 							</div>
 						</div>

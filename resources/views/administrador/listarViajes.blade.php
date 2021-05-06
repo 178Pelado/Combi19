@@ -30,16 +30,16 @@
 								<td>
 									<ul>
 										<?php
-											$insumos = (App\Models\Insumos_viaje::where('viaje_id', '=', $viaje->id)->get());
+										$insumos = (App\Models\Insumos_viaje::where('viaje_id', '=', $viaje->id)->get());
 										?>
 										@foreach ($insumos as $insumo)
-											<li>{{$insumo->insumo->nombre}}</li>
+										<li>{{$insumo->insumo->nombre}} {{$insumo->insumo->descripcion}}</li>
 										@endforeach
 									</ul>
 								</td>
 								<td>{{$viaje->fecha}}</td>
 								<td>
-									<a href="{{route('combi19.modificarChofer', $viaje)}}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+									<a href="{{route('combi19.modificarViaje', $viaje)}}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
 									<form action="{{route('combi19.eliminarChofer', $viaje)}}" method="POST">
 										@csrf
 										@method('delete')
