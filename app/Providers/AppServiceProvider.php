@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Validator;
 use App\Models\Insumo;
 use App\Models\Viaje;
+use App\Models\Combi;
 use Carbon\Carbon;
 
 class AppServiceProvider extends ServiceProvider
@@ -48,7 +49,8 @@ class AppServiceProvider extends ServiceProvider
       $insumo = Insumo::where('nombre', '=', $parameters[0])->where('descripcion', '=', $value)->get()->first();
       if(empty($insumo)){
         return true;
-      }else{
+      }
+      else{
         return false;
       }
     });
@@ -65,6 +67,6 @@ class AppServiceProvider extends ServiceProvider
         return false;
       }
     });
-
+    
   }
 }

@@ -17,15 +17,15 @@
 							<label class="col-md-4 col-form-label text-md-right">Combi:</label>
 							<div class="col-md-6">
 								<select name="combi_id" class="form-control">
-									@foreach($combis as $combi)
-									<option value={{$combi->id}}>
-										{{$combi->patente}}
-									</option>
-									@endforeach
-								</select>
-								@error('combi_id')
-									<small>{{$message}}</small>
-								@enderror
+                                    @foreach($combis as $combi)
+                                    <option value={{$combi->id}}>
+                                        {{$combi->patente . ' - ' . $combi->modelo . ' - ' . $combi->tipo}}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @error('combi_id')
+                                    <small>{{$message}}</small>
+                                @enderror
 							</div>
 						</div>
 						<div class="form-group row">

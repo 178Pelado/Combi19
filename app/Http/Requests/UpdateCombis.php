@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateCombis extends FormRequest
 {
@@ -24,7 +25,7 @@ class UpdateCombis extends FormRequest
   public function rules()
   {
     return [
-      'patente' => 'required|alpha_num_spaces|unique:combis',
+      'patente' => 'required|alpha_num_spaces|unique:combis,patente,'.$this->id,
       'modelo' => 'required|alpha_num_spaces',
       'cantidad_asientos' => 'required|integer|gt:0',
       'tipo' => 'required',

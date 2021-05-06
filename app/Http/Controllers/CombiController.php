@@ -55,6 +55,7 @@ class CombiController extends Controller
     $choferes = \App\Models\Chofer::all();
     return view('administrador.modificarCombi', compact('combi'))->with('choferes', $choferes);
   }
+
   public function updateCombi(UpdateCombis $request, Combi $combi){
     $combi->update($request->all());
     return redirect()->route('combi19.listarCombis');

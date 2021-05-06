@@ -11,6 +11,7 @@
 				<div class="card-body">
 					<form action="{{route('combi19.updateChofer', $chofer)}}" method="POST">
 						@csrf @method('PUT')
+						<input type="hidden" name="id" value="{{$chofer->id}}">
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Nombre:</label>
 							<div class="col-md-6">
@@ -38,7 +39,6 @@
                                 @enderror
 							</div>
 						</div>
-						<!-- 
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Email:</label>
 							<div class="col-md-6">
@@ -48,7 +48,7 @@
                                 @enderror
 							</div>
 						</div>
-						
+						<!-- 
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Clave:</label>
 							<div class="col-md-6">

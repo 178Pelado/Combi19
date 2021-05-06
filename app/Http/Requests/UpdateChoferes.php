@@ -27,6 +27,7 @@ class UpdateChoferes extends FormRequest
       'nombre' => 'required|alpha_spaces',
       'apellido' => 'required|alpha_spaces',
       'telefono' => 'required|integer|gt:0',
+      'email' => 'required|email|unique:choferes,email,'.$this->id,
     ];
   }
 }

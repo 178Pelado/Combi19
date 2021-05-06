@@ -57,6 +57,7 @@ class ViajeController extends Controller
     $insumos_viaje = \App\Models\Insumos_viaje::where('viaje_id', '=', $viaje->id)->get();
     return view('administrador.modificarViaje', compact('viaje'))->with('combis', $combis)->with('rutas', $rutas)->with('insumos_viaje', $insumos_viaje);
   }
+  
   public function updateViaje(UpdateViajes $request, Viaje $viaje){
     $viaje->update($request->all());
     return redirect()->route('combi19.listarViajes');
