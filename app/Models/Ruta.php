@@ -15,6 +15,14 @@ class Ruta extends Model
     protected $dates = ['deleted_at'];
     protected $table = "rutas";
 
+    protected $fillable = [
+      'distancia_km',
+        'origen_id',
+
+        'descripcion',
+        'destino_id',
+    ];
+
     public function origen(){
       return $this->belongsTo('App\Models\Lugar', 'origen_id');
     }

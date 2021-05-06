@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ruta;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreRutas;
+use App\Http\Requests\UpdateRutas;
 
 class RutaController extends Controller
 {
@@ -33,6 +34,15 @@ class RutaController extends Controller
 
   public function eliminarRuta(Ruta $ruta){
     $ruta->delete();
+    return redirect()->route('combi19.listarRutas');
+  }
+
+  public function modificarRuta(Ruta $ruta){
+    $lugares = \App\Models\Lugar::all();
+    return view('administrador.modificarRuta', compact('ruta'))->with('lugares', $lugares);
+  }
+  public function updateRuta(UpdateRutas $request, Ruta $ruta){
+    $ruta->update($request->all());
     return redirect()->route('combi19.listarRutas');
   }
 }

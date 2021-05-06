@@ -28,7 +28,7 @@
 									<td>{{$ruta->descripcion}}</td>
 									<td>{{$ruta->distancia_km}}</td>
 									<td>
-										<a href="{{route('combi19.altaCombi')}}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+										<a href="{{route('combi19.modificarRuta', $ruta)}}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
 										<form action="{{route('combi19.eliminarRuta', $ruta)}}" method="POST">
 											@csrf
 											@method('delete')
