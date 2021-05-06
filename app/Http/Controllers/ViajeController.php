@@ -6,6 +6,7 @@ use App\Models\Viaje;
 use App\Models\Insumos_viaje;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreViajes;
+use App\Http\Requests\UpdateViajes;
 
 class ViajeController extends Controller
 {
@@ -47,7 +48,11 @@ class ViajeController extends Controller
   }
 
   public function modificarViaje(Viaje $viaje){
-    $combis = \App\Models\Combi::all();
+    if ($viaje->combi->tipo == 'Cómoda') {
+      $combis = \App\Models\Combi::where('cantidad_asientos', '>=', $viaje->combi->cantidad_asientos)->get();
+    }else {
+      $combis = \App\Models\Combi::where('cantidad_asientos', '>=', $viaje->combi->cantidad_asientos)->where('tipo', '=', 'Super Cómoda')->get();
+    }
     $rutas = \App\Models\Ruta::all();
     $insumos_viaje = \App\Models\Insumos_viaje::where('viaje_id', '=', $viaje->id)->get();
     return view('administrador.modificarViaje', compact('viaje'))->with('combis', $combis)->with('rutas', $rutas)->with('insumos_viaje', $insumos_viaje);

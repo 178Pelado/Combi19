@@ -29,9 +29,6 @@ use App\Models\Lugar
 									@endif
 									@endforeach
 								</select>
-								@error('combi_id')
-								<small>{{$message}}</small>
-								@enderror
 							</div>
 						</div>
 						<div class="form-group row">
@@ -68,28 +65,17 @@ use App\Models\Lugar
 								</select>
 							</div>
 						</div>
-
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Precio:</label>
 							<div class="col-md-6">
 								<input type="number" step="any" class="form-control" name="precio" value="{{$viaje->precio}}" disabled>
-								@error('precio')
-								<small>{{$message}}</small>
-								@enderror
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Fecha:</label>
 							<div class="col-md-6">
-								<?php
-								date_default_timezone_set('America/Argentina/Buenos_Aires');
-								$dt_min = new DateTime();
-								$dt_min= $dt_min->format('Y-m-d\TH:i');
-
-								$dt = new DateTime(); // Date object using current date and time
-								$dt= $dt->format('Y-m-d\TH:i');
-								?>
-								<input type="datetime-local" min="<?php echo $dt_min; ?>" class="form-control" value="<?php echo $dt;?>" name="fecha" disabled>
+								<input type="text" class="form-control" value="{{$viaje->fecha}}" disabled>
+								<input type="hidden" class="form-control" value="{{$viaje->fecha}}" name="fecha">
 								@error('fecha')
 								<small>{{$message}}</small>
 								@enderror

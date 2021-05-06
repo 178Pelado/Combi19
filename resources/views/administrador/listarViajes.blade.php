@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
 	<div class="row justify-content-center">
-		<div class="col-md-8">
+		<div class="col-md-20">
 			<div class="card">
 				<div class="card-header">{{ __('Lista de viajes') }}</div>
 				<div class="card-body">
@@ -28,14 +28,15 @@
 								<td>{{$viaje->precio}}</td>
 								<td>{{$viaje->combi->patente}}</td>
 								<td>
-									<ul>
+									<dl class="dl-horizontal">
 										<?php
 										$insumos = (App\Models\Insumos_viaje::where('viaje_id', '=', $viaje->id)->get());
 										?>
 										@foreach ($insumos as $insumo)
-										<li>{{$insumo->insumo->nombre}} {{$insumo->insumo->descripcion}}</li>
+										<dt>{{$insumo->insumo->nombre}}</dt>
+										<dd>{{$insumo->insumo->descripcion}}</dd>
 										@endforeach
-									</ul>
+									</dl>
 								</td>
 								<td>{{$viaje->fecha}}</td>
 								<td>

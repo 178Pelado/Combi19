@@ -17,6 +17,10 @@ class Viaje extends Model
 
     protected $table = "viajes";
 
+    protected $fillable = [
+      'combi_id',
+    ];
+    
     public function combi(){
       return $this->belongsTo('App\Models\Combi', 'combi_id')->withTrashed();
     }
