@@ -37,6 +37,8 @@ Route::get('combi19/registroChofer', [ChoferController::class, 'registroChofer']
 Route::post('combi19/storeChofer', [ChoferController::class, 'storeChofer'])->name('combi19.storeChofer');
 Route::get('combi19/listarChoferes', [ChoferController::class, 'listarChoferes'])->name('combi19.listarChoferes');
 Route::delete('combi19/eliminarChofer{chofer}', [ChoferController::class, 'eliminarChofer'])->name('combi19.eliminarChofer');
+Route::get('combi19/modificarChofer{chofer}', [ChoferController::class, 'modificarChofer'])->name('combi19.modificarChofer');
+Route::put('combi19/updateChofer{chofer}', [ChoferController::class, 'updateChofer'])->name('combi19.updateChofer');
 
 Route::get('combi19/altaCombi', [CombiController::class, 'altaCombi'])->name('combi19.altaCombi');
 Route::post('combi19/storeCombi', [CombiController::class, 'storeCombi'])->name('combi19.storeCombi');

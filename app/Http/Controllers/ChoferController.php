@@ -7,6 +7,7 @@ use App\Models\Combi;
 use Session;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreChoferes;
+use App\Http\Requests\UpdateChoferes;
 
 class ChoferController extends Controller
 {
@@ -40,6 +41,15 @@ class ChoferController extends Controller
           return redirect()->route('combi19.listarChoferes');
         }
         $chofer->delete();
+        return redirect()->route('combi19.listarChoferes');
+    }
+
+    public function modificarChofer(Chofer $chofer){
+        return view('administrador.modificarChofer', compact('chofer'));
+    }
+
+    public function updateChofer(UpdateChoferes $request, Chofer $chofer){
+        $chofer->update($request->all());
         return redirect()->route('combi19.listarChoferes');
     }
 }
