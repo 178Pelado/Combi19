@@ -37,7 +37,8 @@ class ViajeController extends Controller
         $insumo_viaje->save();
       }
     }
-    return view('administrador.registroChofer');
+    $viajes = Viaje::paginate();
+    return view('administrador.listarViajes', compact('viajes'));
   }
 
   public function listarViajes(){

@@ -22,7 +22,7 @@ class Viaje extends Model
     }
 
     public function insumos_viaje(){
-      return $this->belongsTo('App\Models\Insumos_viaje', 'id')->withTrashed();
+      return $this->hasMany('App\Models\Insumos_viaje', 'id')->withTrashed();
     }
 
     public function ruta(){

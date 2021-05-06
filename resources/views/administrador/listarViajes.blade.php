@@ -29,8 +29,12 @@
 								<td>{{$viaje->combi->patente}}</td>
 								<td>
 									<ul>
-										<!-- {{$insumos = $viaje->insumos_viaje->insumo}} -->
-										<li>{{$viaje->insumos_viaje->insumo->nombre}}</li>
+										<?php
+											$insumos = (App\Models\Insumos_viaje::where('viaje_id', '=', $viaje->id)->get());
+										?>
+										@foreach ($insumos as $insumo)
+											<li>{{$insumo->insumo->nombre}}</li>
+										@endforeach
 									</ul>
 								</td>
 								<td>{{$viaje->fecha}}</td>
