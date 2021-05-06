@@ -15,6 +15,10 @@ class Insumos_viaje extends Model
     protected $table = "Insumos_viaje";
 
     public function viaje(){
-      return $this->belongsTo('App\Models\Viaje', 'id');
+      return $this->belongsTo('App\Models\Viaje', 'viaje_id');
+    }
+
+    public function insumo(){
+      return $this->belongsTo('App\Models\Insumo', 'insumo_id');
     }
 }

@@ -18,10 +18,14 @@ class Viaje extends Model
     protected $table = "viajes";
 
     public function combi(){
-      return $this->belongsTo('App\Models\Combi', 'id');
+      return $this->belongsTo('App\Models\Combi', 'combi_id')->withTrashed();
     }
 
     public function insumos_viaje(){
-      return $this->hasMany('App\Models\Insumos_viaje');
+      return $this->belongsTo('App\Models\Insumos_viaje', 'id')->withTrashed();
+    }
+
+    public function ruta(){
+      return $this->belongsTo('App\Models\Ruta', 'ruta_id')->withTrashed();
     }
 }

@@ -68,3 +68,4 @@ Route::put('combi19/updateRuta{ruta}', [RutaController::class, 'updateRuta'])->n
 
 Route::get('combi19/altaViaje', [ViajeController::class, 'altaViaje'])->name('combi19.altaViaje');
 Route::post('combi19/storeViaje', [ViajeController::class, 'storeViaje'])->name('combi19.storeViaje');
+Route::get('combi19/listarViajes', [ViajeController::class, 'listarViajes'])->name('combi19.listarViajes');

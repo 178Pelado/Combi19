@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Chofer;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \Askedio\SoftCascade\Traits\SoftCascadeTrait;
 
@@ -24,7 +25,7 @@ class Combi extends Model
   ];
 
   public function chofer(){
-    return $this->belongsTo('App\Models\Chofer', 'chofer_id');
+    return $this->belongsTo('App\Models\Chofer', 'chofer_id')->withTrashed();
   }
 
   public function viajes(){

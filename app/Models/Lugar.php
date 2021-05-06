@@ -20,9 +20,9 @@ class Lugar extends Model
         'nombre'
     ];
 
-    public function rutas(){
-      return $this->hasMany('App\Models\Ruta', 'origen_id');
-    }
+    // public function rutas(){
+    //   return $this->hasMany('App\Models\Ruta', 'origen_id');
+    // }
 
     public function rutas2(){
       return $this->hasMany('App\Models\Ruta', 'destino_id');

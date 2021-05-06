@@ -29,4 +29,8 @@ class Ruta extends Model
   public function destino(){
     return $this->belongsTo('App\Models\Lugar', 'destino_id');
   }
+
+  // public function viajes(){
+  //   return $this->hasMany('App\Models\Viaje', 'id');
+  // }
 }
