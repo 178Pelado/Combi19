@@ -14,7 +14,7 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Nombre:</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="nombre" autofocus value="{{$chofer->nombre}}">
+								<input type="text" class="form-control" name="nombre" autofocus value="{{old('nombre', $chofer->nombre)}}">
 								@error('nombre')
                                   <small>{{$message}}</small>
                                 @enderror
@@ -23,7 +23,7 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Apellido:</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="apellido" value="{{$chofer->apellido}}">
+								<input type="text" class="form-control" name="apellido" value="{{old('apellido', $chofer->apellido)}}">
 								@error('apellido')
                                   <small>{{$message}}</small>
                                 @enderror
@@ -32,7 +32,7 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Teléfono:</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="telefono" value="{{$chofer->telefono}}">
+								<input type="text" class="form-control" name="telefono" value="{{old('telefono', $chofer->telefono)}}">
 								@error('telefono')
                                   <small>{{$message}}</small>
                                 @enderror
@@ -42,7 +42,7 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Email:</label>
 							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{$chofer->email}}">
+								<input type="email" class="form-control" name="email" value="{{old('email', $chofer->email)}}">
 								@error('email')
                                   <small>{{$message}}</small>
                                 @enderror

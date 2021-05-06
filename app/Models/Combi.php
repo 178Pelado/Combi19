@@ -15,6 +15,14 @@ class Combi extends Model
   protected $dates = ['deleted_at'];
   protected $table = "combis";
 
+  protected $fillable = [
+    'patente',
+    'modelo',
+    'cantidad_asientos',
+    'tipo',
+    'chofer_id'
+  ];
+
   public function chofer(){
     return $this->belongsTo('App\Models\Chofer', 'chofer_id');
   }

@@ -16,9 +16,15 @@
 							<div class="col-md-6">
 								<select class="form-control" name="origen_id">
 									@foreach($lugares as $origen)
-									<option value={{$origen->id}} selected='selected'>
-										{{$origen->nombre}}
-									</option>
+										@if ($origen->id == $ruta->origen_id)
+											<option value={{$origen->id}} selected>
+												{{$origen->nombre}}
+											</option>
+										@else
+											<option value={{$origen->id}}>
+												{{$origen->nombre}}
+											</option>
+										@endif
 									@endforeach
 								</select>
 							</div>
@@ -28,9 +34,15 @@
 							<div class="col-md-6">
 								<select class="form-control" name="destino_id">
 									@foreach($lugares as $destino)
-									<option value={{$destino->id}} selected='selected'>
-										{{$destino->nombre}}
-									</option>
+										@if ($destino->id == $ruta->destino_id)
+											<option value={{$destino->id}} selected>
+												{{$destino->nombre}}
+											</option>
+										@else
+											<option value={{$destino->id}}>
+												{{$destino->nombre}}
+											</option>
+										@endif
 									@endforeach
 								</select>
 								@error('destino_id')
@@ -41,7 +53,7 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Descripción:</label>
 							<div class="col-md-6">
-								<textarea class="form-control" name="descripcion" rows="4" cols="20" maxlength="140" style="resize: none"> {{$ruta->descripcion}}</textarea>
+								<textarea class="form-control" name="descripcion" rows="4" cols="20" maxlength="140" style="resize: none"> {{old('descripcion', $ruta->descripcion)}}</textarea>
 								@error('descripcion')
 									<small>{{$message}}</small>
 								@enderror
@@ -50,7 +62,7 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Distancia:</label>
 							<div class="col-md-6">
-								<input type="number" class="form-control" name="distancia_km" value="{{$ruta->distancia_km}}">
+								<input type="number" class="form-control" name="distancia_km" value="{{old('distancia_km', $ruta->distancia_km)}}">
 								@error('distancia_km')
 									<small>{{$message}}</small>
 								@enderror
@@ -61,6 +73,9 @@
 								<button type="submit"class="btn btn-primary">
 									{{ __('Actualizar') }}
 								</button>
+								<a type="button" href="{{route('combi19.listarRutas')}}" class="btn btn-secondary">
+									{{ __('Cancelar') }}
+								</a>
 							</div>
 						</div>
 					</form>
