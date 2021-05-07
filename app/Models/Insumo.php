@@ -11,6 +11,14 @@ class Insumo extends Model
 
     protected $table = "insumos";
 
+    //define los únicos campos que un form puede modificar
+    protected $fillable = [ 
+      'nombre',
+      'descripcion',
+      'cantidad',
+      'precio',
+    ];
+
     public function insumo_viaje(){
       return $this->belongsTo('App\Models\Insumos_viaje', 'insumo_id');
     }

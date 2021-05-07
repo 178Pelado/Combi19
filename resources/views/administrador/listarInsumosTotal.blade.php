@@ -28,7 +28,7 @@
 									<td>{{$insumo->cantidad}}</td>
 									<td>{{$insumo->precio}}</td>
 									<td>
-										<a href="{{route('combi19.altaInsumo')}}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+										<a href="{{route('combi19.modificarInsumo', $insumo)}}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
 										<form action="{{route('combi19.eliminarInsumo', $insumo)}}" method="POST">
 											@csrf
 											@method('delete')

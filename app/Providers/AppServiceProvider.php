@@ -55,6 +55,17 @@ class AppServiceProvider extends ServiceProvider
       }
     });
 
+    Validator::extend('nombre_descripcion_upd', function ($attribute, $value, $parameters) {  
+      $aux = Insumo::where('id', '=', $parameters[0])->get()->first();
+      $insumo = Insumo::where('id', '<>', $parameters[0])->where('nombre', '=', $aux->nombre)->where('descripcion', '=', $value)->get()->first();
+      if(empty($insumo)){
+        return true;
+      }
+      else{
+        return false;
+      }
+    });
+
     Validator::extend('viaje_distinto_fecha', function ($attribute, $value, $parameters) {
       $fecha = Carbon::parse($value);
       $antes = $fecha->subHours(6)->format('Y-m-d H:i:s');

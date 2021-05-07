@@ -72,6 +72,10 @@
                                 <button type="submit"class="btn btn-primary">
                                     {{ __('Cargar') }}
                                 </button>
+                                </button>
+                                <a type="button" href="{{route('combi19.listarCombis')}}" class="btn btn-secondary">
+                                    {{ __('Cancelar') }}
+                                </a>
                             </div>
                         </div>
                     </form>

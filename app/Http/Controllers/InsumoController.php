@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Insumo;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreInsumos;
+use App\Http\Requests\UpdateInsumos;
 
 class InsumoController extends Controller
 {
@@ -22,7 +23,7 @@ class InsumoController extends Controller
     	$insumo->precio = $request->precio;
 
     	$insumo->save();
-      return view('administrador.altaInsumo'); //vuelve a listado de insumos
+      return redirect()->route('combi19.listarInsumosTotal'); //vuelve a listado de insumos
     }
 
     public function listarInsumosTotal(){
@@ -34,4 +35,13 @@ class InsumoController extends Controller
       $insumo->delete();
       return redirect()->route('combi19.listarInsumosTotal');
     }
+
+    public function modificarInsumo(Insumo $insumo){
+      return view('administrador.modificarInsumo', compact('insumo'));
+  }
+
+  public function updateInsumo(UpdateInsumos $request, Insumo $insumo){
+    $insumo->update($request->all());
+    return redirect()->route('combi19.listarInsumosTotal');
+  }
 }
