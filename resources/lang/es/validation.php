@@ -93,6 +93,7 @@ return [
         'array'   => 'El campo :attribute debe contener al menos :min elementos.',
     ],
     'nombre_descripcion'   => 'Esta descripción ya existe para ese nombre de insumo.',
+    'nombre_descripcion2'   => 'Ya existe este insumo con esta misma descripción.',
     'nombre_descripcion_upd'   => 'Esta descripción ya existe para ese nombre de insumo.',
     'not_in'               => 'El campo :attribute seleccionado es inválido.',
     'not_regex'            => 'El formato del campo :attribute es inválido.',
