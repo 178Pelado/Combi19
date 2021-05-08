@@ -67,7 +67,7 @@ class AppServiceProvider extends ServiceProvider
 
     Validator::extend('nombre_descripcion_upd', function ($attribute, $value, $parameters) {  
       $aux = Insumo::where('id', '=', $parameters[0])->get()->first();
-      $insumo = Insumo::where('id', '<>', $parameters[0])->where('nombre', '=', $aux->nombre)->where('descripcion', '=', $value)->get()->first();
+      $insumo = Insumo::where('id', '<>', $parameters[0])->where('nombre', '=', $parameters[1])->where('descripcion', '=', $value)->get()->first();
       if(empty($insumo)){
         return true;
       }
