@@ -20,7 +20,7 @@ class PasajeroSeeder extends Seeder
         	'dni' => '123456',
         	'email' => 'fm@gmail.com',
         	'contraseña' => '123456',
-        	'fecha_de_nacimiento' => ''
+        	'fecha_de_nacimiento' => '2000-08-17'
         ]);
     }
 }

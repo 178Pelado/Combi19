@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Admini; //todavía no está hecha la tabla
+use App\Models\Admin;
 
 class AdminSeeder extends Seeder
 {
@@ -14,6 +14,17 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Admin::create([
+        	'nombre_de_usuario' => 'felipe.mosqueira',
+        	'contraseña' => '123456',
+        ]);
+        Admin::create([
+        	'nombre_de_usuario' => 'benjamin.freccero',
+        	'contraseña' => '123456',
+        ]);
+        Admin::create([
+        	'nombre_de_usuario' => 'geronimo.vega',
+        	'contraseña' => '123456',
+        ]);
     }
 }
