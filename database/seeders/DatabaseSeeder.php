@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ChoferSeeder::class);
         $this->call(PasajeroSeeder::class);
         $this->call(AdminSeeder::class);
+        $this->call(UserSeeder::class);
     }
 }

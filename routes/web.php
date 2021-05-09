@@ -22,14 +22,9 @@ use App\Http\Controllers\ViajeController;
 |
 */
 
-Route::get('/', HomeController::class);
-
 Route::get('combi19/registro', [PasajeroController::class, 'registro'])->name('combi19.registro');
 
 Route::post('combi19/store', [PasajeroController::class, 'store'])->name('combi19.store');
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('combi19/iniciarSesion', [iniciarSesionController::class, 'iniciarSesion'])->name('combi19.iniciarSesion');
 
@@ -74,3 +69,9 @@ Route::post('combi19/storeViaje', [ViajeController::class, 'storeViaje'])->name(
 Route::get('combi19/listarViajes', [ViajeController::class, 'listarViajes'])->name('combi19.listarViajes');
 Route::get('combi19/modificarViaje{viaje}', [ViajeController::class, 'modificarViaje'])->name('combi19.modificarViaje');
 Route::put('combi19/updateViaje{viaje}', [ViajeController::class, 'updateViaje'])->name('combi19.updateViaje');
+
+Auth::routes();
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/pasajero', [HomeController::class, 'pasajero'])->name('pasajero');
+Route::get('/chofer', [HomeController::class, 'chofer'])->name('chofer');
