@@ -1,4 +1,4 @@
-@extends('layouts.vistaAdministrador')
+@extends('layouts.app')
 
 @section('title', 'Lista de choferes')
 
@@ -34,6 +34,17 @@
 												@method('delete')
 												<button class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></button>
 											</form>
+
+											<!-- <a class="delete" title="Delete" data-toggle="tooltip" href="#" onclick="event.preventDefault(); document.getElementById('delete-form').submit();">
+		                                        <i class="material-icons">&#xE872;</i> 
+		                                    </a>
+
+		                                    <form id="delete-form" action="{{route('combi19.eliminarChofer', $chofer)}}" method="POST">
+		                                        @csrf
+		                                        @method('delete')
+		                                        {{$chofer->id}}
+		                                    </form> -->
+
 										</td>
 								@endforeach
 									</tr>

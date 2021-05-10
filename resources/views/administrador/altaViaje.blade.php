@@ -1,4 +1,4 @@
-@extends('layouts.vistaAdministrador')
+@extends('layouts.app')
 <?php
 	use App\Models\Lugar
 ?>

@@ -1,4 +1,4 @@
-@extends('layouts.vistaAdministrador')
+@extends('layouts.app')
 
 @section('title', 'Registro chofer')
 
