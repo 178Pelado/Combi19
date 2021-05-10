@@ -10,6 +10,10 @@ use App\Http\Controllers\InsumoController;
 use App\Http\Controllers\LugarController;
 use App\Http\Controllers\RutaController;
 use App\Http\Controllers\ViajeController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Chofer1Controller;
+use App\Http\Controllers\Pasajero1Controller;
+use App\Http\Controllers\VisitanteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,5 +77,8 @@ Route::put('combi19/updateViaje{viaje}', [ViajeController::class, 'updateViaje']
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/pasajero', [HomeController::class, 'pasajero'])->name('pasajero');
-Route::get('/chofer', [HomeController::class, 'chofer'])->name('chofer');
+
+Route::get('/admin', AdminController::class);
+Route::get('/chofer', Chofer1Controller::class);
+Route::get('/pasajero', Pasajero1Controller::class);
+Route::get('/visitante', VisitanteController::class);
