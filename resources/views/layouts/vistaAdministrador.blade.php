@@ -144,22 +144,8 @@ table.table td .add {
 
         <!-- Right Side Of Navbar -->
         <ul class="navbar-nav ml-auto">
-          <div class="form-group row">
-            <div class="col-md-6" style="margin-top: 15px">
-              <form method="get" action="/iniciarSesion">
-                <a class="btn btn-primary" href="iniciarSesion">
-                  {{ __('algun boton') }}
-                </a>
-              </form>
-            </div>
-            <div class="col-md-6" style="margin-top: 15px">
-              <a class="btn btn-primary" href="registro">
-                {{ __('algun boton') }}
-              </a>
-            </div>
-          </div>
           <!-- Authentication Links -->
-          <!-- @guest
+          @guest
           @if (Route::has('login'))
           <li class="nav-item">
           <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -170,7 +156,7 @@ table.table td .add {
         <li class="nav-item">
         <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
       </li>
-      @endif -->
+      @endif
       @else
       <li class="nav-item dropdown">
         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

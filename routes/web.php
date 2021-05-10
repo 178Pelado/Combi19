@@ -25,7 +25,7 @@ use App\Http\Controllers\VisitanteController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['middleware' => 'admin'], function () {
+Route::group(['middleware' => 'admin', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {
 Route::get('combi19/registro', [PasajeroController::class, 'registro'])->name('combi19.registro');
 
 Route::post('combi19/store', [PasajeroController::class, 'store'])->name('combi19.store');
