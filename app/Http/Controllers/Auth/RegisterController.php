@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
+use App\Models\Pasajero;
 
 class RegisterController extends Controller
 {
@@ -29,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/admin';
 
     /**
      * Create a new controller instance.
@@ -49,12 +51,18 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+      $dt = new Carbon();
+      $before = $dt->subYears(18)->format("Y-m-d");
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'nombre' => 'required|alpha_spaces',
+            'apellido' => 'required|alpha_spaces',
+            'dni' => 'required|integer|gt:0',
+            'email' => 'required|unique:pasajeros|email',
+            'clave' => 'required|min:6',
+            'fecha_nacimiento' => 'required|before_or_equal:' . $before,
         ]);
     }
+
 
     /**
      * Create a new user instance after a valid registration.
@@ -64,11 +72,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        Pasajero::create([
+          'nombre' => $data['nombre'],
+          'apellido' => $data['apellido'],
+          'dni' => $data['dni'],
+          'email' => $data['email'],
+          'contraseña' => $data['clave'],
+          'fecha_de_nacimiento' => $data['fecha_nacimiento'],
+        ]);
         return User::create([
-            'name' => $data['name'],
+            'name' => $data['nombre'],
             'email' => $data['email'],
-            'tipo' => $data['tipo'],
-            'password' => Hash::make($data['password']),
+            'tipo' => '3',
+            'password' => Hash::make($data['clave']),
         ]);
     }
 }

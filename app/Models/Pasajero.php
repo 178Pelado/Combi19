@@ -8,6 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Pasajero extends Model
 {
     use HasFactory;
-
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'nombre',
+        'apellido',
+        'dni',
+        'email',
+        'contraseña',
+        'fecha_de_nacimiento',
+    ];
     protected $table = "pasajeros";
 }

@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreCombis;
 use App\Http\Requests\UpdateCombis;
 use DateTime;
+use Illuminate\Http\Middleware\Admin;
 
 class CombiController extends Controller
 {
-
   public function altaCombi(){
     $choferes = \App\Models\Chofer::all();
     return view('administrador.altaCombi')->with('choferes', $choferes);

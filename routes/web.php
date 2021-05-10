@@ -25,7 +25,7 @@ use App\Http\Controllers\VisitanteController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::group(['middleware' => 'admin'], function () {
 Route::get('combi19/registro', [PasajeroController::class, 'registro'])->name('combi19.registro');
 
 Route::post('combi19/store', [PasajeroController::class, 'store'])->name('combi19.store');
@@ -73,12 +73,12 @@ Route::post('combi19/storeViaje', [ViajeController::class, 'storeViaje'])->name(
 Route::get('combi19/listarViajes', [ViajeController::class, 'listarViajes'])->name('combi19.listarViajes');
 Route::get('combi19/modificarViaje{viaje}', [ViajeController::class, 'modificarViaje'])->name('combi19.modificarViaje');
 Route::put('combi19/updateViaje{viaje}', [ViajeController::class, 'updateViaje'])->name('combi19.updateViaje');
+});
+Route::resource('/admin', AdminController::class);
+Route::resource('/chofer', Chofer1Controller::class);
+Route::resource('/pasajero', Pasajero1Controller::class);
+Route::resource('/visitante', VisitanteController::class);
 
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-Route::get('/admin', AdminController::class);
-Route::get('/chofer', Chofer1Controller::class);
-Route::get('/pasajero', Pasajero1Controller::class);
-Route::get('/visitante', VisitanteController::class);
