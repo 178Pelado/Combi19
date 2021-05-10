@@ -56,7 +56,7 @@ class AppServiceProvider extends ServiceProvider
     });
 
     Validator::extend('nombre_descripcion2', function ($attribute, $value, $parameters) {
-      $insumo = Insumo::where('nombre', '=', $value)->where('descripcion', '=', $parameters[0])->get()->first();
+      $insumo = Insumo::where('nombre', '=', $value)->where('descripcion', '=', $parameters[0])->where('id', '<>', $parameters[1])->get()->first();
       if(empty($insumo)){
         return true;
       }
@@ -65,16 +65,17 @@ class AppServiceProvider extends ServiceProvider
       }
     });
 
-    Validator::extend('nombre_descripcion_upd', function ($attribute, $value, $parameters) {  
-      $aux = Insumo::where('id', '=', $parameters[0])->get()->first();
-      $insumo = Insumo::where('id', '<>', $parameters[0])->where('nombre', '=', $parameters[1])->where('descripcion', '=', $value)->get()->first();
-      if(empty($insumo)){
-        return true;
-      }
-      else{
-        return false;
-      }
-    });
+    // Está al pedo
+    // Validator::extend('nombre_descripcion_upd', function ($attribute, $value, $parameters) {  
+    //   $aux = Insumo::where('id', '=', $parameters[0])->get()->first();
+    //   $insumo = Insumo::where('id', '<>', $parameters[0])->where('nombre', '=', $parameters[1])->where('descripcion', '=', $value)->get()->first();
+    //   if(empty($insumo)){
+    //     return true;
+    //   }
+    //   else{
+    //     return false;
+    //   }
+    // });
 
     Validator::extend('viaje_distinto_fecha', function ($attribute, $value, $parameters) {
       $fecha = Carbon::parse($value);

@@ -24,8 +24,8 @@ class UpdateInsumos extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => 'required|nombre_descripcion2:' . $this->descripcion,
-            'descripcion' => 'required|nombre_descripcion_upd:' . $this->id . ',' . $this->nombre,
+            'nombre' => 'required|nombre_descripcion2:' . $this->descripcion . ',' . $this->id,
+            'descripcion' => 'required',
             'cantidad' => 'required|integer|gt:0',
             'precio' => 'required|numeric|gt:0',
         ];
