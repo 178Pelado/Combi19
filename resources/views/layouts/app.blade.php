@@ -23,8 +23,11 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    combi19
+                <a class="navbar-brand" href="{{ url('admin') }}">
+                    <img src="../logo_combi19.png" alt="logo_combi19" style="height: 50px; padding-right: 10px">
+                </a>
+                <a class="navbar-brand" href="{{ url('admin') }}">
+                    <h1 style="margin-bottom: 0px">Combi19</h1>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -33,7 +36,37 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @guest
+                        @else
+                            @if(Auth::user()->tipo == 1)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('combi19.listarCombis') }}">{{ __('Combis') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('combi19.listarChoferes') }}">{{ __('Choferes') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('combi19.listarViajes') }}">{{ __('Viajes') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('combi19.listarLugares') }}">{{ __('Lugares') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('combi19.listarRutas') }}">{{ __('Rutas') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('combi19.listarInsumosTotal') }}">{{ __('Insumos') }}</a>
+                                </li>
+                            @elseif(Auth::user()->tipo == 2)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">{{ __('Viajes') }}</a>
+                                </li>
+                            @elseif(Auth::user()->tipo == 3)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">{{ __('Buscar Viajes') }}</a>
+                                </li>
+                            @endif
+                        @endguest
                     </ul>
 
                     <!-- Right Side Of Navbar -->

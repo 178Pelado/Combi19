@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Http\Request;
 
 
-class Chofer
+class Visitante
 {
     /**
      * Handle an incoming request.
