@@ -41,4 +41,42 @@
         </button>
     </div>
 </div>
+
+<br>
+
+<!-- Intento de sistema de comentarios -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-20">
+            <div class="card">
+                <div class="card-header">{{ __('Comentarios') }}</div>
+                <div class="card-body">
+                    <div class="form-floating">
+                      <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                      <label for="floatingTextarea">Escribe tu comentario aquí</label>
+                    </div> <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="well">
+                                <p>
+                                    Comentario 1 - Dominic "Dom" Toretto - Hace 5 minutos
+                                </p>
+                                <p>
+                                    Comentario 2 - Luke Hobbs - Hace 10 minutos
+                                </p>
+                                <p>
+                                    Comentario 3 - Roman "Rome" Pearce - Hace 15 minutos
+                                </p>
+                                <p>
+                                    Comentario 4 - Tej Parker - Hace 20 minutos
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection

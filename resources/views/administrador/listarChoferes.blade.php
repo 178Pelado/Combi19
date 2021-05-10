@@ -61,7 +61,6 @@
 					@endif
 					<a href="{{route('combi19.registroChofer')}}">Registro chofer</a>
 					{{$choferes->links()}}
-
 				</div>
 			</div>
 		</div>
