@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Combi;
+use App\Models\Chofer;
 use App\Models\Viaje;
 use Session;
 use Illuminate\Http\Request;
@@ -10,11 +11,12 @@ use App\Http\Requests\StoreCombis;
 use App\Http\Requests\UpdateCombis;
 use DateTime;
 use Illuminate\Http\Middleware\Admin;
+use Illuminate\Support\Facades\DB;
 
 class CombiController extends Controller
 {
   public function altaCombi(){
-    $choferes = \App\Models\Chofer::all();
+    $choferes = Chofer::whereNotIn('id', Combi::select('chofer_id'))->get();
     return view('administrador.altaCombi')->with('choferes', $choferes);
   }
 
@@ -52,7 +54,7 @@ class CombiController extends Controller
   }
 
   public function modificarCombi(Combi $combi){
-    $choferes = \App\Models\Chofer::all();
+    $choferes = Chofer::whereNotIn('id', Combi::select('chofer_id'))->get();
     return view('administrador.modificarCombi', compact('combi'))->with('choferes', $choferes);
   }
 

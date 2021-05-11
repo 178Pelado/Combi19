@@ -57,14 +57,21 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Chofer:</label>
                             <div class="col-md-6">
-                                <select class="form-control" name="chofer_id">
-                                    @foreach($choferes as $chofer)
-                                        <option value={{$chofer->id}}>
-                                            {{$chofer->apellido}}
-                                            {{$chofer->nombre}}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                @if (count($choferes) !== 0)
+                                    <select class="form-control" name="chofer_id">
+                                        @foreach($choferes as $chofer)
+                                            <option value={{$chofer->id}}>
+                                                {{$chofer->apellido}}
+                                                {{$chofer->nombre}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                @else
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <a href="{{route('combi19.registroChofer')}}" class="alert-link">No hay choferes disponibles. Seleccione aquí para registrar uno nuevo</a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="form-group row mb-0">

@@ -37,10 +37,13 @@ class ChoferController extends Controller
     public function eliminarChofer(Chofer $chofer){
         $combi = Combi::where('chofer_id', '=', $chofer->id)->get()->first();
         if (!empty($combi)){
-          Session::flash('message','El chofer se encuentra asignado a una combi');
-          return redirect()->route('combi19.listarChoferes');
+            Session::flash('messageNO','El chofer se encuentra asignado a una combi. Seleccione aquí para asignar un nuevo chofer.');
+            return redirect()->route('combi19.listarChoferes')->with('combi', $combi);
         }
-        $chofer->delete();
+        else {
+            Session::flash('messageSI','El chofer se eliminó correctamente');
+            $chofer->delete();
+        }       
         return redirect()->route('combi19.listarChoferes');
     }
 
