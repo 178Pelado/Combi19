@@ -49,9 +49,9 @@ class ViajeController extends Controller
 
   public function modificarViaje(Viaje $viaje){
     if ($viaje->combi->tipo == 'Cómoda') {
-      $combis = \App\Models\Combi::where('cantidad_asientos', '>=', $viaje->combi->cantidad_asientos)->get();
+      $combis = \App\Models\Combi::where('cantidad_asientos', '>=', $viaje->combi->cantidad_asientos)->where('id', '<>', $viaje->combi->id)->get();
     }else {
-      $combis = \App\Models\Combi::where('cantidad_asientos', '>=', $viaje->combi->cantidad_asientos)->where('tipo', '=', 'Super Cómoda')->get();
+      $combis = \App\Models\Combi::where('cantidad_asientos', '>=', $viaje->combi->cantidad_asientos)->where('tipo', '=', 'Super Cómoda')->where('id', '<>', $viaje->combi->id)->get();
     }
     $rutas = \App\Models\Ruta::all();
     $insumos_viaje = \App\Models\Insumos_viaje::where('viaje_id', '=', $viaje->id)->get();

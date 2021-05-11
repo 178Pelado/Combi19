@@ -45,10 +45,11 @@ class CombiController extends Controller
       $dt = new \DateTime();
       $dt= $dt->format('Y-m-d H:i:s');
       if ($viaje[$i]->fecha > $dt) {
-        Session::flash('message','La combi está asignada a un futuro viaje');
-        return redirect()->route('combi19.listarCombis');
+        Session::flash('messageNO', 'La combi está asignada a un futuro viaje. Seleccione aquí para asignar una nueva combi.');
+        return redirect()->route('combi19.listarCombis')->with('viaje', $viaje[$i]);
       }
     }
+    Session::flash('messageSI','La combi se eliminó correctamente');
     $combi->delete();
     return redirect()->route('combi19.listarCombis');
   }

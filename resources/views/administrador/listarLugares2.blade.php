@@ -5,10 +5,21 @@
 @section('content')
 <div class="container">
 	<div class="row justify-content-center">
-		<div class="col-md-20">
+		<div class="col-md-8">
 			<div class="card">
 				<div class="card-header">{{ __('Lista de Lugares 2') }}</div>
 				<div class="card-body">
+					@if(Session::has('messageNO'))
+						<div class="alert alert-danger alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<a href="{{route('combi19.modificarRuta', session('ruta'))}}" class="alert-link">{{Session::get('messageNO')}}</a>
+						</div>
+					@elseif(Session::has('messageSI'))
+						<div class="alert alert-success alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							{{Session::get('messageSI')}}
+						</div>
+					@endif
 					<table class="table table-bordered">
 <<<<<<< HEAD
 						@if($lugares[0] !== null)
@@ -24,7 +35,7 @@
 									<td>{{$lugar->nombre}}</td>
 									<td>
 										<button type="button" data-toggle="modal" data-target="#exampleModal{{$lugar->id}}"><i class="material-icons">&#xE254;</i></button>
-										<form action="{{route('combi19.eliminarLugar', $lugar)}}" method="POST">
+										<form action="{{route('combi19.eliminarLugar', $lugar)}}" class="formulario-eliminar" method="POST">
 											@csrf
 											@method('delete')
 											<button class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></button>

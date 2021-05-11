@@ -44,7 +44,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('admin') }}">
-                    <img src="https://raw.githubusercontent.com/178Pelado/Combi19/master/img/logo_combi19.png?token=AT3UNMKQX2KYPMIHGY5B7YLATLPDE" alt="logo_combi19" style="height: 50px; padding-right: 10px">
+                    <img src="https://i.imgur.com/MluPAaD.png" alt="logo_combi19" style="height: 50px; padding-right: 10px">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -137,7 +137,51 @@
         </main>
     </div>
 
-    @yield('js')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script>
+
+        $('.formulario-eliminar').submit(function(event){
+            event.preventDefault();
+
+        const swalWithBootstrapButtons = Swal.mixin({
+              customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+              },
+              buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+              title: '¿Estás seguro?',
+              text: "¡Este elemento se eliminará definitivamente!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: '¡Si, eliminar!',
+              cancelButtonText: '¡No, cancelar!',
+              reverseButtons: true
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // swalWithBootstrapButtons.fire(
+                //   '¡Eliminado!',
+                //   '',
+                //   'success'
+                // )
+                this.submit();
+              } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+              ) {
+                swalWithBootstrapButtons.fire(
+                  'Cancelado',
+                  '',
+                  'error'
+                )
+              }
+            })
+
+            });
+    </script>
 
 </body>
 </html>

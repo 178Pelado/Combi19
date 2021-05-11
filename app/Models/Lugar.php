@@ -14,7 +14,6 @@ class Lugar extends Model
     use SoftCascadeTrait;
     protected $dates = ['deleted_at'];
     protected $table = "lugares";
-    protected $softCascade = ['rutas', 'rutas2'];
 
     protected $fillable = [
         'nombre'

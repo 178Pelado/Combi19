@@ -66,6 +66,7 @@ Route::post('combi19/storeRuta', [RutaController::class, 'storeRuta'])->name('co
 Route::get('combi19/listarRutas', [RutaController::class, 'listarRutas'])->name('combi19.listarRutas');
 Route::delete('combi19/eliminarRuta{ruta}', [RutaController::class, 'eliminarRuta'])->name('combi19.eliminarRuta');
 Route::get('combi19/modificarRuta{ruta}', [RutaController::class, 'modificarRuta'])->name('combi19.modificarRuta');
+Route::get('combi19/modificarRutaConLugar/{ruta}/{lugar?}', [RutaController::class, 'modificarRutaConLugar'])->name('combi19.modificarRutaConLugar');
 Route::put('combi19/updateRuta{ruta}', [RutaController::class, 'updateRuta'])->name('combi19.updateRuta');
 
 Route::get('combi19/altaViaje', [ViajeController::class, 'altaViaje'])->name('combi19.altaViaje');
