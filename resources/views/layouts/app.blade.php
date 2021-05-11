@@ -44,10 +44,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('admin') }}">
-                    <img src="../logo_combi19.png" alt="logo_combi19" style="height: 50px; padding-right: 10px">
-                </a>
-                <a class="navbar-brand" href="{{ url('admin') }}">
-                    <h1 style="margin-bottom: 0px">Combi19</h1>
+                    <img src="https://raw.githubusercontent.com/178Pelado/Combi19/master/img/logo_combi19.png?token=AT3UNMKQX2KYPMIHGY5B7YLATLPDE" alt="logo_combi19" style="height: 50px; padding-right: 10px">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
