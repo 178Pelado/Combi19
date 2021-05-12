@@ -58,8 +58,8 @@ use App\Models\Lugar
 
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Precio:</label>
-							<div class="col-md-6">
-								<input type="number" step="any" class="form-control" name="precio" value="{{old('precio')}}">
+							<div class="col-md-6">	
+								<input type="number" step="any" class="form-control" name="precio" value="{{old('precio')}}">		
 								@error('precio')
 								<small>{{$message}}</small>
 								@enderror

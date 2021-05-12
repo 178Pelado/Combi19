@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Chofer;
+use App\Models\Combi;
 
-class ChoferSeeder extends Seeder
+class CombisSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,12 +14,12 @@ class ChoferSeeder extends Seeder
      */
     public function run()
     {
-        Chofer::create([
+        Combi::create([
         	'patente' => 'AAA 222',
         	'modelo' => 'Mercedes',
-        	'telefono' => '123456',
-        	'email' => 'fm@gmail.com',
-        	'contraseña' => '123456',
+        	'cantidad_asientos' => '11',
+        	'tipo' => 'Super Cómoda',
+        	'chofer_id' => '1',
         ]);
     }
 }

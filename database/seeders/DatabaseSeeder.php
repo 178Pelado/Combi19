@@ -14,7 +14,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(ChoferSeeder::class);
+        $this->call(CombisSeeder::class);
         $this->call(PasajeroSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(LugarSeeder::class);
+        $this->call(RutaSeeder::class);
+        $this->call(InsumoSeeder::class);
+        $this->call(ViajeSeeder::class);
     }
 }
