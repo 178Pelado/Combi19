@@ -25,7 +25,7 @@ class UpdateLugares extends FormRequest
   public function rules()
   {
     return [
-      'nombre' => 'required|unique:lugares',
+      'nombre' => 'required|unique:lugares,nombre,'.$this->id,
     ];
   }
 }

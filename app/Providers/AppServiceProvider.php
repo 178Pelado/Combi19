@@ -81,7 +81,7 @@ class AppServiceProvider extends ServiceProvider
       $fecha = Carbon::parse($value);
       $antes = $fecha->subHours(6)->format('Y-m-d H:i:s');
       $despues = $fecha->addHours(12)->format('Y-m-d H:i:s');
-      $viaje = Viaje::where('combi_id', '=', $parameters[0])->whereBetween('fecha', [$antes, $despues])->get();
+      $viaje = Viaje::where('combi_id', '=', $parameters[0])->whereBetween('fecha', [$antes, $despues])->where('id', '<>', $parameters[1])->get();
       if(count($viaje) == 0){
         return true;
       }

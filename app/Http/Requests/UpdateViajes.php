@@ -25,7 +25,7 @@ class UpdateViajes extends FormRequest
   public function rules()
   {
     return [
-      'fecha' => 'viaje_distinto_fecha:' . $this->combi_id,
+      'fecha' => 'viaje_distinto_fecha:' . $this->combi_id . ',' . $this->id,
     ];
   }
 

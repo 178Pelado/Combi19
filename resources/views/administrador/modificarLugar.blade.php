@@ -11,6 +11,7 @@
 				<div class="card-body">
 					<form action="{{route('combi19.updateLugar', $lugar)}}" method="POST">
 						@csrf @method('PUT')
+						<input type="hidden" name="id" value="{{$lugar->id}}">
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Nombre:</label>
 							<div class="col-md-6">

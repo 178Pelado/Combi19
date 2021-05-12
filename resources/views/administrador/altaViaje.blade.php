@@ -36,8 +36,7 @@ use App\Models\Lugar
 									{{$lugarO = Lugar::where('id', '=', $ruta->origen_id)->get()->first()}}
 									{{$lugarD = Lugar::where('id', '=', $ruta->destino_id)->get()->first()}}
 									<option value={{$ruta->id}}>
-										{{$lugarO->nombre}} -
-										{{$lugarD->nombre}}
+										{{$lugarO->nombre . ' - ' . $lugarD->nombre . ' (' . $ruta->descripcion .')'}}
 									</option>
 									@endforeach
 								</select>
@@ -49,7 +48,7 @@ use App\Models\Lugar
 								<select class="form-control" id="e1" multiple="multiple" name="insumo_id[]">
 									@foreach($insumos as $insumo)
 									<option value={{$insumo->id}}>
-										{{$insumo->nombre}}
+										{{$insumo->nombre . ' - ' . $insumo->descripcion}}
 									</option>
 									@endforeach
 								</select>

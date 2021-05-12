@@ -29,7 +29,7 @@ class StoreViajes extends FormRequest
       'ruta_id' => 'required',
       // 'insumo_id[]' => 'required',
       'precio' => 'required|numeric|gt:0',
-      'fecha' => 'required|viaje_distinto_fecha:' . $this->combi_id,
+      'fecha' => 'required|viaje_distinto_fecha:' . $this->combi_id . ',' . $this->id,
     ];
   }
 

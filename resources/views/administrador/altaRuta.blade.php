@@ -68,6 +68,7 @@
 							</div>
 						</div>
 					</form>
+					<a href="{{route('combi19.altaLugar')}}">Alta lugar</a>
 				</div>
 			</div>
 		</div>

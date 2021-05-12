@@ -8,11 +8,6 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreLugares extends FormRequest
 {
-  protected function failedValidation(Validator $validator)
-  {
-    throw new HttpResponseException(response()->json($validator->errors(), 422));
-  }
-
   /**
   * Determine if the user is authorized to make this request.
   *
