@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Insumo;
+use App\Models\Insumos_viaje;
+use Session;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreInsumos;
 use App\Http\Requests\UpdateInsumos;
@@ -32,6 +34,16 @@ class InsumoController extends Controller
     }
 
     public function eliminarInsumo(Insumo $insumo){
+      $viaje = Insumos_viaje::where('insumo_id', '=', $insumo->id)->get();
+      for ($i=0;$i<sizeOf($viaje);$i++){
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
+        $dt = new \DateTime();
+        $dt= $dt->format('Y-m-d H:i:s');
+        if ($viaje[$i]->viaje->fecha > $dt) {
+          Session::flash('messageNO', 'El insumo está asignado a un futuro viaje. Vuelva a intentarlo al finalizar el viaje.');
+          return redirect()->route('combi19.listarInsumosTotal');
+        }
+      }
       $insumo->delete();
       return redirect()->route('combi19.listarInsumosTotal');
     }

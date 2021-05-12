@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Viaje;
 use App\Models\Insumos_viaje;
+use Session;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreViajes;
 use App\Http\Requests\UpdateViajes;
@@ -43,8 +44,14 @@ class ViajeController extends Controller
   }
 
   public function listarViajes(){
-      $viajes = Viaje::paginate();
+    $viajes = Viaje::paginate();
     return view('administrador.listarViajes', compact('viajes'));
+  }
+
+  public function eliminarViaje(Viaje $viaje){
+    Session::flash('messageSI', 'El viaje se ha eliminado. En caso de haber pasajes vendidos, se deben realizar los reembolsos correspondientes.');
+    $viaje->delete();
+    return redirect()->route('combi19.listarViajes');
   }
 
   public function modificarViaje(Viaje $viaje){
@@ -57,7 +64,7 @@ class ViajeController extends Controller
     $insumos_viaje = \App\Models\Insumos_viaje::where('viaje_id', '=', $viaje->id)->get();
     return view('administrador.modificarViaje', compact('viaje'))->with('combis', $combis)->with('rutas', $rutas)->with('insumos_viaje', $insumos_viaje);
   }
-  
+
   public function updateViaje(UpdateViajes $request, Viaje $viaje){
     $viaje->update($request->all());
     return redirect()->route('combi19.listarViajes');

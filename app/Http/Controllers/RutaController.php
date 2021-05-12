@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Ruta;
 use App\Models\Lugar;
+use App\Models\Viaje;
+use Session;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreRutas;
 use App\Http\Requests\UpdateRutas;
@@ -34,6 +36,16 @@ class RutaController extends Controller
   }
 
   public function eliminarRuta(Ruta $ruta){
+    $viaje = Viaje::where('ruta_id', '=', $ruta->id)->get();
+    for ($i=0;$i<sizeOf($viaje);$i++){
+      date_default_timezone_set('America/Argentina/Buenos_Aires');
+      $dt = new \DateTime();
+      $dt= $dt->format('Y-m-d H:i:s');
+      if ($viaje[$i]->fecha > $dt) {
+        Session::flash('messageNO', 'La ruta está asignada a un futuro viaje. Vuelva a intentarlo al finalizar el viaje.');
+        return redirect()->route('combi19.listarRutas');
+      }
+    }
     $ruta->delete();
     return redirect()->route('combi19.listarRutas');
   }

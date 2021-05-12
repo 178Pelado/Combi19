@@ -12,21 +12,27 @@
 					<form action="{{route('combi19.updateRuta', $ruta)}}" method="POST">
 						@csrf @method('PUT')
 						<div class="form-group row">
+							@if (count($lugares) == 1)
+								<div class="alert alert-danger alert-dismissible" role="alert">
+										<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<a href="{{route('combi19.altaLugar')}}" class="alert-link">No hay suficientes lugares disponibles. Seleccione aquí para registrar uno nuevo</a>
+								</div>
+						 @endif
 							<label class="col-md-4 col-form-label text-md-right">Ciudad origen:</label>
 							<div class="col-md-6">
-								<select class="form-control" name="origen_id">
-									@foreach($lugares as $origen)
-										@if ($origen->id == $ruta->origen_id)
-											<option value={{$origen->id}} selected>
-												{{$origen->nombre}}
-											</option>
-										@else
-											<option value={{$origen->id}}>
-												{{$origen->nombre}}
-											</option>
-										@endif
-									@endforeach
-								</select>
+									<select class="form-control" name="origen_id">
+										@foreach($lugares as $origen)
+											@if ($origen->id == $ruta->origen_id)
+												<option value={{$origen->id}} selected>
+													{{$origen->nombre}}
+												</option>
+											@else
+												<option value={{$origen->id}}>
+													{{$origen->nombre}}
+												</option>
+											@endif
+										@endforeach
+									</select>
 							</div>
 						</div>
 						<div class="form-group row">

@@ -29,7 +29,7 @@ class LugarController extends Controller
     }
 
     public function eliminarLugar(Lugar $lugar){
-      $ruta = Ruta::where('origen_id', '=', $lugar->id, 'or', 'destino_id', '=', $lugar->id)->get()->first();
+      $ruta = Ruta::where('origen_id', '=', $lugar->id)->orWhere('destino_id', '=', $lugar->id)->get()->first();
       if (!empty($ruta)){
         Session::flash('messageNO','El lugar se encuentra asignado a una ruta. Seleccione aquí para asignar un nuevo lugar.');
         return redirect()->route('combi19.listarLugares')->with('ruta', $ruta)->with('lugar', $lugar);
@@ -37,7 +37,7 @@ class LugarController extends Controller
       else {
         Session::flash('messageSI','El lugar se eliminó correctamente');
         $lugar->delete();
-      }       
+      }
       return redirect()->route('combi19.listarLugares');
     }
 

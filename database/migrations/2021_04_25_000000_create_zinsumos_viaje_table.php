@@ -14,6 +14,7 @@ class CreateZinsumosViajeTable extends Migration
     public function up()
     {
         Schema::create('insumos_viaje', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('viaje_id')->constrained('viajes');
             $table->foreignId('insumo_id')->constrained('insumos');
             $table->softDeletes();

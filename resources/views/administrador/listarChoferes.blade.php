@@ -47,7 +47,7 @@
 											</form>
 
 											<!-- <a class="delete" title="Delete" data-toggle="tooltip" href="#" onclick="event.preventDefault(); document.getElementById('delete-form').submit();">
-		                                        <i class="material-icons">&#xE872;</i> 
+		                                        <i class="material-icons">&#xE872;</i>
 		                                    </a>
 
 		                                    <form id="delete-form" action="{{route('combi19.eliminarChofer', $chofer)}}" method="POST">
