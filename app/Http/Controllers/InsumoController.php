@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Insumo;
+use App\Models\Viaje;
 use App\Models\Insumos_viaje;
 use Session;
 use Illuminate\Http\Request;
@@ -39,7 +40,8 @@ class InsumoController extends Controller
         date_default_timezone_set('America/Argentina/Buenos_Aires');
         $dt = new \DateTime();
         $dt= $dt->format('Y-m-d H:i:s');
-        if ($viaje[$i]->viaje->fecha > $dt) {
+        $elviaje = Viaje::where('id', '=', $viaje[$i]->viaje_id)->get()->first();
+        if ($elviaje->fecha > $dt) {
           Session::flash('messageNO', 'El insumo está asignado a un futuro viaje. Vuelva a intentarlo al finalizar el viaje.');
           return redirect()->route('combi19.listarInsumosTotal');
         }

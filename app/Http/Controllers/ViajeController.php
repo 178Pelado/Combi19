@@ -49,8 +49,14 @@ class ViajeController extends Controller
   }
 
   public function eliminarViaje(Viaje $viaje){
-    Session::flash('messageSI', 'El viaje se ha eliminado. En caso de haber pasajes vendidos, se deben realizar los reembolsos correspondientes.');
-    $viaje->delete();
+    if ($viaje->en_curso == 1){
+      Session::flash('messageNO','El viaje se encuentra en curso.');
+      return redirect()->route('combi19.listarViajes');
+    }
+    else{
+      Session::flash('messageSI', 'El viaje se ha eliminado. En caso de haber pasajes vendidos, se deben realizar los reembolsos correspondientes.');
+      $viaje->delete();
+    }
     return redirect()->route('combi19.listarViajes');
   }
 

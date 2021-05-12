@@ -57,8 +57,8 @@ use App\Models\Lugar
 
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Precio:</label>
-							<div class="col-md-6">	
-								<input type="number" step="any" class="form-control" name="precio" value="{{old('precio')}}">		
+							<div class="col-md-6">
+								<input type="number" step="any" class="form-control" name="precio" value="{{old('precio')}}">
 								@error('precio')
 								<small>{{$message}}</small>
 								@enderror
@@ -75,7 +75,7 @@ use App\Models\Lugar
 								$dt = new DateTime(); // Date object using current date and time
 								$dt= $dt->format('Y-m-d\TH:i');
 								?>
-								<input type="datetime-local" min="<?php echo $dt_min; ?>" class="form-control" value="<?php echo $dt;?>" name="fecha">
+								<input type="datetime-local" name="fecha" min="<?php echo $dt_min; ?>" class="form-control" value="{{old('fecha')}}" name="fecha">
 								@error('fecha')
 								<small>{{$message}}</small>
 								@enderror

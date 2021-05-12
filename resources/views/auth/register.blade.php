@@ -50,7 +50,7 @@
             						<div class="form-group row">
             							<label class="col-md-4 col-form-label text-md-right">Clave:</label>
             							<div class="col-md-6">
-            								<input type="password" class="form-control" name="clave">
+            								<input type="password" class="form-control" name="clave" value="{{old('clave')}}">
             								@error('clave')
             								<small>{{$message}}</small>
             								@enderror

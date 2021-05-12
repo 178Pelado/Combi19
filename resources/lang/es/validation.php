@@ -24,7 +24,7 @@ return [
     'alpha_spaces'         => 'El campo :attribute solo puede contener letras',
     'array'                => 'El campo :attribute debe ser un array.',
     'before'               => 'El campo :attribute debe ser una fecha anterior a :date.',
-    'before_or_equal'      => 'El campo :attribute debe ser una fecha anterior o igual a :date.',
+    'before_or_equal'      => 'El usuario debe ser mayor a 18 años.',
     'between'              => [
         'numeric' => 'El campo :attribute debe ser un valor entre :min y :max.',
         'file'    => 'El archivo :attribute debe pesar entre :min y :max kilobytes.',
@@ -122,7 +122,7 @@ return [
     'uploaded'             => 'El campo :attribute no se pudo subir.',
     'url'                  => 'El formato del campo :attribute es inválido.',
     'uuid'                 => 'El campo :attribute debe ser un UUID válido.',
-    'viaje_distinto_fecha' => 'La combi :attribute ya está asignada a un viaje en esa fecha.',
+    'viaje_distinto_fecha' => 'La combi :attribute no se encuentra disponible en ese horario.',
 
     /*
     |--------------------------------------------------------------------------

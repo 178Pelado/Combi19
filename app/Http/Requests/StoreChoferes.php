@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\User;
 
 class StoreChoferes extends FormRequest
 {
@@ -27,7 +28,7 @@ class StoreChoferes extends FormRequest
       'nombre' => 'required|alpha_spaces',
       'apellido' => 'required|alpha_spaces',
       'telefono' => 'required|integer|gt:0',
-      'email' => 'required|unique:choferes|email',
+      'email' => 'required|unique:users|email',
       'clave' => 'required|min:6',
     ];
   }

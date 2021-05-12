@@ -57,7 +57,7 @@ class RegisterController extends Controller
             'nombre' => 'required|alpha_spaces',
             'apellido' => 'required|alpha_spaces',
             'dni' => 'required|integer|gt:0',
-            'email' => 'required|unique:pasajeros|email',
+            'email' => 'required|unique:users|email',
             'clave' => 'required|min:6',
             'fecha_nacimiento' => 'required|before_or_equal:' . $before,
         ]);

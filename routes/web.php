@@ -14,6 +14,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Chofer1Controller;
 use App\Http\Controllers\Pasajero1Controller;
 use App\Http\Controllers\VisitanteController;
+use App\Http\Controllers\HomeVisitanteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,7 @@ Route::delete('combi19/eliminarViaje{viaje}', [ViajeController::class, 'eliminar
 Route::get('combi19/modificarViaje{viaje}', [ViajeController::class, 'modificarViaje'])->name('combi19.modificarViaje');
 Route::put('combi19/updateViaje{viaje}', [ViajeController::class, 'updateViaje'])->name('combi19.updateViaje');
 });
+Route::get('homeGeneral', [HomeVisitanteController::class, 'homeGeneral'])->name('homeGeneral');
 Route::resource('/admin', AdminController::class);
 Route::resource('/chofer', Chofer1Controller::class);
 Route::resource('/pasajero', Pasajero1Controller::class);
@@ -83,4 +85,4 @@ Route::resource('/visitante', VisitanteController::class);
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('combi19/home', [HomeController::class, 'index'])->name('home');

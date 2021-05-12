@@ -52,6 +52,8 @@ class ChoferController extends Controller
         else {
             Session::flash('messageSI','El chofer se eliminó correctamente');
             $chofer->delete();
+            $user = User::where('email', '=', $chofer->email);
+            $user->delete();
         }
         return redirect()->route('combi19.listarChoferes');
     }
