@@ -47,6 +47,7 @@ class RutaController extends Controller
       }
     }
     $ruta->delete();
+    Session::flash('messageSI', 'La ruta se eliminó correctamente');
     return redirect()->route('combi19.listarRutas');
   }
 
