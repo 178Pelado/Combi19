@@ -55,7 +55,7 @@ class CombiController extends Controller
   }
 
   public function modificarCombi(Combi $combi){
-    $choferes = Chofer::get();
+    $choferes = Chofer::whereNotIn('id', Combi::select('chofer_id'))->orWhere('id', '=', $combi->chofer_id)->get();
     return view('administrador.modificarCombi', compact('combi'))->with('choferes', $choferes);
   }
 

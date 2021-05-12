@@ -39,7 +39,7 @@
 									<td>{{$combi->modelo}}</td>
 									<td>{{$combi->cantidad_asientos}}</td>
 									<td>{{$combi->tipo}}</td>
-									<td>{{$combi->chofer->nombre}}</td>
+									<td>{{$combi->chofer->nombre . ' ' . $combi->chofer->apellido}}</td>
 									<td>
 										<a href="{{route('combi19.modificarCombi', $combi)}}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
 										<form action="{{route('combi19.eliminarCombi', $combi)}}" class="formulario-eliminar" method="POST">
