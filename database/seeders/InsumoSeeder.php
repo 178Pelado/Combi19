@@ -22,22 +22,8 @@ class InsumoSeeder extends Seeder
         ]);
 
         Insumo::create([
-            'nombre' => 'Coca Cola',
-            'descripcion' => '2l',
-            'cantidad' => '100',
-            'precio' => '100',
-        ]);
-
-        Insumo::create([
             'nombre' => 'Papas Lays',
             'descripcion' => '150gr',
-            'cantidad' => '100',
-            'precio' => '100',
-        ]);
-
-        Insumo::create([
-            'nombre' => 'Papas Lays',
-            'descripcion' => '125gr',
             'cantidad' => '100',
             'precio' => '100',
         ]);

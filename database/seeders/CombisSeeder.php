@@ -21,5 +21,12 @@ class CombisSeeder extends Seeder
         	'tipo' => 'Super Cómoda',
         	'chofer_id' => '1',
         ]);
+        Combi::create([
+            'patente' => 'AAA 111',
+            'modelo' => 'Mercedes',
+            'cantidad_asientos' => '11',
+            'tipo' => 'Super Cómoda',
+            'chofer_id' => '2',
+        ]);
     }
 }

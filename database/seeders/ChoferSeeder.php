@@ -15,11 +15,32 @@ class ChoferSeeder extends Seeder
     public function run()
     {
         Chofer::create([
-        	'nombre' => 'Felipe',
-        	'apellido' => 'Mosqueira Jurado',
+        	'nombre' => 'Michael',
+        	'apellido' => 'Schumacher',
         	'telefono' => '123456',
-        	'email' => 'fm@gmail.com',
+        	'email' => 'miky@gmail.com',
         	'contraseña' => '123456',
+        ]);
+        Chofer::create([
+            'nombre' => 'Dominic',
+            'apellido' => 'Toretto',
+            'telefono' => '123456',
+            'email' => 'chofer@gmail.com',
+            'contraseña' => '123456',
+        ]);
+        Chofer::create([
+            'nombre' => 'Oscar',
+            'apellido' => 'Suarez',
+            'telefono' => '123456',
+            'email' => 'oscar@gmail.com',   
+            'contraseña' => '12345678',
+        ]);
+        Chofer::create([
+            'nombre' => 'Pepe',
+            'apellido' => 'Sancho',
+            'telefono' => '123456',
+            'email' => 'pepeS@gmail.com',   
+            'contraseña' => '12345678',
         ]);
     }
 }

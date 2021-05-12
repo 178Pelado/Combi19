@@ -30,6 +30,20 @@ class UserSeeder extends Seeder
           'codigo' => 'adm2',
         ]);
         User::create([
+          'name' => 'Oscar Suarez',
+          'email' => 'oscar@gmail.com',
+          'password' => Hash::make('12345678'),
+          'tipo' => '2',
+          'codigo' => 'adm4',
+        ]);
+        User::create([
+          'name' => 'Pepe Sancho',
+          'email' => 'pepeS@gmail.com',
+          'password' => Hash::make('12345678'),
+          'tipo' => '2',
+          'codigo' => 'adm5',
+        ]);
+        User::create([
         	'name' => 'pasajero',
         	'email' => 'pasajero@gmail.com',
           'password' => Hash::make('12345678'),
