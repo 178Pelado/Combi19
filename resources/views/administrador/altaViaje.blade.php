@@ -1,6 +1,6 @@
 @extends('layouts.app')
 <?php
-	use App\Models\Lugar
+use App\Models\Lugar
 ?>
 @section('title', 'Alta de viaje')
 
@@ -17,15 +17,15 @@
 							<label class="col-md-4 col-form-label text-md-right">Combi:</label>
 							<div class="col-md-6">
 								<select name="combi_id" class="form-control">
-                                    @foreach($combis as $combi)
-                                    <option value={{$combi->id}}>
-                                        {{$combi->patente . ' - ' . $combi->modelo . ' - ' . $combi->tipo}}
-                                    </option>
-                                    @endforeach
-                                </select>
-                                @error('combi_id')
-                                    <small>{{$message}}</small>
-                                @enderror
+									@foreach($combis as $combi)
+									<option value={{$combi->id}}>
+										{{$combi->patente . ' - ' . $combi->modelo . ' - ' . $combi->tipo}}
+									</option>
+									@endforeach
+								</select>
+								@error('combi_id')
+								<small>{{$message}}</small>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row">
@@ -61,7 +61,7 @@
 							<div class="col-md-6">
 								<input type="number" step="any" class="form-control" name="precio" value="{{old('precio')}}">
 								@error('precio')
-									<small>{{$message}}</small>
+								<small>{{$message}}</small>
 								@enderror
 							</div>
 						</div>
@@ -78,7 +78,7 @@
 								?>
 								<input type="datetime-local" min="<?php echo $dt_min; ?>" class="form-control" value="<?php echo $dt;?>" name="fecha">
 								@error('fecha')
-									<small>{{$message}}</small>
+								<small>{{$message}}</small>
 								@enderror
 							</div>
 						</div>
@@ -87,17 +87,19 @@
 								<button type="submit"class="btn btn-primary">
 									{{ __('Cargar') }}
 								</button>
-								</button>
-								<a type="button" href="{{route('combi19.listarViajes')}}" class="btn btn-secondary">
-									{{ __('Cancelar') }}
-								</a>
-							</div>
+							<a type="button" href="javascript:history.back(-1);" class="btn btn-secondary">
+								{{ __('Cancelar') }}
+							</a>
 						</div>
-					</form>
-				</div>
+					</div>
+				</form>
+				<a href="{{route('combi19.altaCombi')}}">Alta combi</a><br>
+				<a href="{{route('combi19.altaRuta')}}">Alta ruta</a><br>
+				<a href="{{route('combi19.altaInsumo')}}">Alta insumo</a>
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 
 @endsection

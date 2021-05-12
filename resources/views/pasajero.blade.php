@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Menu')
 @section('content')
 <div class="container-fluid">
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">

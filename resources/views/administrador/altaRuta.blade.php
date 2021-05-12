@@ -62,7 +62,7 @@
 									{{ __('Cargar') }}
 								</button>
 								</button>
-								<a type="button" href="{{route('combi19.listarRutas')}}" class="btn btn-secondary">
+								<a type="button" href="javascript:history.back(-1);" class="btn btn-secondary">
 									{{ __('Cancelar') }}
 								</a>
 							</div>

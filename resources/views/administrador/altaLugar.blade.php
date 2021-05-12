@@ -14,7 +14,7 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Nombre:</label>
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="nombre" value="{{old('nombre')}}">
+								<input type="text" class="form-control" name="nombre" value="{{old('nombre')}}" autofocus>
 								@error('nombre')
 									<small>{{$message}}</small>
 								@enderror
@@ -26,7 +26,7 @@
 									{{ __('Cargar') }}
 								</button>
 							</button>
-							<a type="button" href="{{route('combi19.listarLugares')}}" class="btn btn-secondary">
+							<a type="button" href="javascript:history.back(-1);" class="btn btn-secondary">
 								{{ __('Cancelar') }}
 							</a>
 							</div>

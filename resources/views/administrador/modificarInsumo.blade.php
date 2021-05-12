@@ -17,7 +17,7 @@
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="nombre" value="{{old('nombre', $insumo->nombre)}}">
 								@error('nombre')
-									<small>{{$message}}</small>
+								<small>{{$message}}</small>
 								@enderror
 							</div>
 						</div>
@@ -26,7 +26,7 @@
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="descripcion" value="{{old('descripcion', $insumo->descripcion)}}">
 								@error('descripcion')
-									<small>{{$message}}</small>
+								<small>{{$message}}</small>
 								@enderror
 							</div>
 						</div>
@@ -35,7 +35,7 @@
 							<div class="col-md-6">
 								<input type="number" class="form-control" name="cantidad" value="{{old('cantidad', $insumo->cantidad)}}">
 								@error('cantidad')
-									<small>{{$message}}</small>
+								<small>{{$message}}</small>
 								@enderror
 							</div>
 						</div>
@@ -44,7 +44,7 @@
 							<div class="col-md-6">
 								<input type="number" step="any" class="form-control" name="precio" value="{{old('precio', $insumo->precio)}}">
 								@error('precio')
-									<small>{{$message}}</small>
+								<small>{{$message}}</small>
 								@enderror
 							</div>
 						</div>
@@ -53,16 +53,16 @@
 								<button type="submit"class="btn btn-primary">
 									{{ __('Actualizar') }}
 								</button>
-                                </button>
-                                <a type="button" href="{{route('combi19.listarInsumosTotal')}}" class="btn btn-secondary">
-                                    {{ __('Cancelar') }}
-                                </a>
-							</div>
+							</button>
+							<a type="button" href="javascript:history.back(-1);" class="btn btn-secondary">
+								{{ __('Cancelar') }}
+							</a>
 						</div>
-					</form>
-				</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 @endsection

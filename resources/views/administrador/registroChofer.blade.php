@@ -16,8 +16,8 @@
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="nombre" autofocus value="{{old('nombre')}}">
 								@error('nombre')
-                                  <small>{{$message}}</small>
-                                @enderror
+								<small>{{$message}}</small>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row">
@@ -25,8 +25,8 @@
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="apellido" value="{{old('apellido')}}">
 								@error('apellido')
-                                  <small>{{$message}}</small>
-                                @enderror
+								<small>{{$message}}</small>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row">
@@ -34,8 +34,8 @@
 							<div class="col-md-6">
 								<input type="text" class="form-control" name="telefono" value="{{old('telefono')}}">
 								@error('telefono')
-                                  <small>{{$message}}</small>
-                                @enderror
+								<small>{{$message}}</small>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row">
@@ -43,8 +43,8 @@
 							<div class="col-md-6">
 								<input type="email" class="form-control" name="email" value="{{old('email')}}">
 								@error('email')
-                                  <small>{{$message}}</small>
-                                @enderror
+								<small>{{$message}}</small>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row">
@@ -52,8 +52,8 @@
 							<div class="col-md-6">
 								<input type="password" class="form-control" name="clave">
 								@error('clave')
-                                  <small>{{$message}}</small>
-                                @enderror
+								<small>{{$message}}</small>
+								@enderror
 							</div>
 						</div>
 						<div class="form-group row mb-0">
@@ -61,6 +61,9 @@
 								<button type="submit"class="btn btn-primary">
 									{{ __('Registrar') }}
 								</button>
+								<a type="button" href="javascript:history.back(-1);" class="btn btn-secondary">
+									{{ __('Cancelar') }}
+								</a>
 							</div>
 						</div>
 					</form>

@@ -25,7 +25,7 @@
 								<button type="submit"class="btn btn-primary">
 									{{ __('Actualizar') }}
 								</button>
-								<a type="button" href="{{route('combi19.listarLugares')}}" class="btn btn-secondary">
+								<a type="button" href="javascript:history.back(-1);" class="btn btn-secondary">
 									{{ __('Cancelar') }}
 								</a>
 							</div>

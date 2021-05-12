@@ -14,7 +14,7 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right">Patente:</label>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" name="patente" value="{{old('patente')}}">
+                                <input type="text" class="form-control" name="patente" value="{{old('patente')}}" autofocus>
                                 @error('patente')
                 					<small>{{$message}}</small>
                 				@enderror
@@ -80,12 +80,13 @@
                                     {{ __('Cargar') }}
                                 </button>
                                 </button>
-                                <a type="button" href="{{route('combi19.listarCombis')}}" class="btn btn-secondary">
+                                <a type="button" href="javascript:history.back(-1);" class="btn btn-secondary">
                                     {{ __('Cancelar') }}
                                 </a>
                             </div>
                         </div>
                     </form>
+                    <a href="{{route('combi19.registroChofer')}}">Alta chofer</a>
                 </div>
             </div>
         </div>

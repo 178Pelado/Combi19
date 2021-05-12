@@ -70,7 +70,7 @@
                             <label class="col-md-4 col-form-label text-md-right">Chofer:</label>
                             <div class="col-md-6">
                                 @if (count($choferes) !== 0)
-                                    <select class="form-control" name="chofer_id">                                    
+                                    <select class="form-control" name="chofer_id">
                                             @foreach($choferes as $chofer)
                                                 @if ($chofer->id == $combi->chofer_id)
                                                     <option value={{$chofer->id}} selected>
@@ -98,13 +98,13 @@
                                 <button type="submit"class="btn btn-primary">
                                     {{ __('Actualizar') }}
                                 </button>
-                                </button>
-                                <a type="button" href="{{route('combi19.listarCombis')}}" class="btn btn-secondary">
+                                <a type="button" href="javascript:history.back(-1);" class="btn btn-secondary">
                                     {{ __('Cancelar') }}
                                 </a>
                             </div>
                         </div>
                     </form>
+                    <a href="{{route('combi19.registroChofer')}}">Alta chofer</a>
                 </div>
             </div>
         </div>

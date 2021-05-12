@@ -86,12 +86,13 @@ use App\Models\Lugar
 								<button type="submit"class="btn btn-primary">
 									{{ __('Actualizar') }}
 								</button>
-								<a type="button" href="{{route('combi19.listarViajes')}}" class="btn btn-secondary">
+								<a type="button" href="javascript:history.back(-1);" class="btn btn-secondary">
 									{{ __('Cancelar') }}
 								</a>
 							</div>
 						</div>
 					</form>
+					<a href="{{route('combi19.altaCombi')}}">Alta combi</a>
 				</div>
 			</div>
 		</div>

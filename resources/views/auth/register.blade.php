@@ -1,11 +1,11 @@
 @extends('layouts.app')
-
+@section('title', 'Registro')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">{{ __('Registro') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -14,7 +14,7 @@
                         <div class="form-group row">
             							<label class="col-md-4 col-form-label text-md-right">Nombre:</label>
             							<div class="col-md-6">
-            								<input type="text" class="form-control" name="nombre" value="{{old('nombre')}}">
+            								<input type="text" class="form-control" name="nombre" value="{{old('nombre')}}" autofocus>
             								@error('nombre')
             								<small>{{$message}}</small>
             								@enderror

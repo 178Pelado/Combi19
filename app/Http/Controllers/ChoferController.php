@@ -8,6 +8,8 @@ use Session;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreChoferes;
 use App\Http\Requests\UpdateChoferes;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class ChoferController extends Controller
 {
@@ -24,8 +26,15 @@ class ChoferController extends Controller
     	$chofer->telefono = $request->telefono;
     	$chofer->email = $request->email;
     	$chofer->contraseña = $request->clave;
-
     	$chofer->save();
+
+      $user = new User();
+
+      $user->name = $request->nombre;
+      $user->email = $request->email;
+      $user->tipo = '2';
+      $user->password = Hash::make($request->clave);
+      $user->save();
         return redirect()->route('combi19.listarChoferes'); //vuelve a listado de choferes
     }
 
@@ -43,7 +52,7 @@ class ChoferController extends Controller
         else {
             Session::flash('messageSI','El chofer se eliminó correctamente');
             $chofer->delete();
-        }       
+        }
         return redirect()->route('combi19.listarChoferes');
     }
 

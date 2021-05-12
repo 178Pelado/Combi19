@@ -37,7 +37,7 @@
 										<form action="{{route('combi19.eliminarLugar', $lugar)}}" class="formulario-eliminar" method="POST">
 											@csrf
 											@method('delete')
-											<button class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></button>
+											<button class="delete" title="Delete" data-toggle="tooltip" style="border:none;background-color: Transparent;"><i class="material-icons">&#xE872;</i></button>
 										</form>
 									</td>
 								</tr>
