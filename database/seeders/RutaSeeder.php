@@ -20,5 +20,11 @@ class RutaSeeder extends Seeder
             'descripcion' => 'Por RP6 y RN205',
             'distancia_km' => '205.6',
         ]);
+        Ruta::create([
+            'origen_id' => '3',
+            'destino_id' => '1',
+            'descripcion' => 'Por RN205',
+            'distancia_km' => '158.5',
+        ]);
     }
 }

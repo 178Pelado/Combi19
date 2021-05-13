@@ -21,5 +21,8 @@ class LugarSeeder extends Seeder
         Lugar::create([
             'nombre' => 'Saladillo',
         ]);
+        Lugar::create([
+            'nombre' => 'Roque Pérez',
+        ]);
     }
 }
