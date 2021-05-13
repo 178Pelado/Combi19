@@ -24,7 +24,7 @@ class CombisSeeder extends Seeder
         Combi::create([
             'patente' => 'AAA 111',
             'modelo' => 'Mercedes',
-            'cantidad_asientos' => '11',
+            'cantidad_asientos' => '25',
             'tipo' => 'Super Cómoda',
             'chofer_id' => '2',
         ]);
