@@ -50,8 +50,8 @@
             						<div class="form-group row">
             							<label class="col-md-4 col-form-label text-md-right">Clave:</label>
             							<div class="col-md-6">
-            								<input type="password" class="form-control" name="clave" value="{{old('clave', $pasajero->contraseña)}}">
-            								@error('clave')
+            								<input type="password" class="form-control" name="contraseña" value="{{old('contraseña', $pasajero->contraseña)}}">
+            								@error('contraseña')
             								<small>{{$message}}</small>
             								@enderror
             							</div>
@@ -59,8 +59,8 @@
             						<div class="form-group row">
             							<label class="col-md-4 col-form-label text-md-right">Fecha de nacimiento:</label>
             							<div class="col-md-6">
-            								<input type="date" class="form-control" name="fecha_nacimiento" value="{{old('fecha_nacimiento', $pasajero->fecha_de_nacimiento)}}">
-            								@error('fecha_nacimiento')
+            								<input type="date" class="form-control" name="fecha_de_nacimiento" value="{{old('fecha_de_nacimiento', $pasajero->fecha_de_nacimiento)}}">
+            								@error('fecha_de_nacimiento')
             								<small>{{$message}}</small>
             								@enderror
             							</div>

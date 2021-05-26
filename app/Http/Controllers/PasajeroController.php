@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePasajeros;
 use App\Http\Requests\UpdatePasajeros;
+use Illuminate\Support\Facades\Hash;
 
 class PasajeroController extends Controller
 {
@@ -35,8 +36,12 @@ class PasajeroController extends Controller
   }
 
   public function updatePasajero(UpdatePasajeros $request, Pasajero $pasajero){
+    $user = User::where('email', '=', $pasajero->email)->get()->first();
     $pasajero->update($request->all());
-    $user = User::
+    $user->name = $request->nombre;
+    $user->email = $request->email;
+    $user->password = Hash::make($request['contraseña']);
+    $user->save();
     return redirect()->route('homeGeneral');
   }
 }

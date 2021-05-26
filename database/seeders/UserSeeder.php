@@ -50,5 +50,12 @@ class UserSeeder extends Seeder
           'tipo' => '3',
           'codigo' => 'adm3',
         ]);
+        User::create([
+        	'name' => 'Felipe',
+        	'email' => 'fm@gmail.com',
+          'password' => Hash::make('123456'),
+          'tipo' => '3',
+          'codigo' => 'adm6',
+        ]);
     }
 }
