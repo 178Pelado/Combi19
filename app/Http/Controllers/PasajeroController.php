@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pasajero;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePasajeros;
+use App\Http\Requests\UpdatePasajeros;
 
 class PasajeroController extends Controller
 {
@@ -25,5 +27,16 @@ class PasajeroController extends Controller
     $pasajero->fecha_de_nacimiento = $request->fecha_nacimiento;
 
     $pasajero->save();
+  }
+
+  public function modificarDatosDeCuentaPasajero($emailPasajero){
+    $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
+    return view('pasajero.modificarDatosDeCuentaPasajero', compact('pasajero'));
+  }
+
+  public function updatePasajero(UpdatePasajeros $request, Pasajero $pasajero){
+    $pasajero->update($request->all());
+    $user = User::
+    return redirect()->route('homeGeneral');
   }
 }

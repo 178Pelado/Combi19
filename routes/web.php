@@ -77,6 +77,10 @@ Route::delete('combi19/eliminarViaje{viaje}', [ViajeController::class, 'eliminar
 Route::get('combi19/modificarViaje{viaje}', [ViajeController::class, 'modificarViaje'])->name('combi19.modificarViaje');
 Route::put('combi19/updateViaje{viaje}', [ViajeController::class, 'updateViaje'])->name('combi19.updateViaje');
 });
+Route::group(['middleware' => 'pasajero', 'prefix' => 'pasajero', 'namespace' => 'Pasajero'], function () {
+Route::get('combi19/modificarDatosDeCuentaPasajero{pasajero}', [PasajeroController::class, 'modificarDatosDeCuentaPasajero'])->name('combi19.modificarDatosDeCuentaPasajero');
+Route::put('combi19/updatePasajero{pasajero}', [PasajeroController::class, 'updatePasajero'])->name('combi19.updatePasajero');
+});
 Route::get('homeGeneral', [HomeVisitanteController::class, 'homeGeneral'])->name('homeGeneral');
 Route::resource('/admin', AdminController::class);
 Route::resource('/chofer', Chofer1Controller::class);
