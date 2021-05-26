@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Combi;
 
-class CombisSeeder extends Seeder
+class CombiSeeder extends Seeder
 {
     /**
      * Run the database seeds.
