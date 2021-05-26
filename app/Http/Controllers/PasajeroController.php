@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePasajeros;
 use App\Http\Requests\UpdatePasajeros;
+use App\Models\Suscripcion;
+use App\Models\Tarjeta;
 
 class PasajeroController extends Controller
 {
@@ -38,5 +40,42 @@ class PasajeroController extends Controller
     $pasajero->update($request->all());
     $user = User::
     return redirect()->route('homeGeneral');
+  }
+
+  public function suscripcion($emailPasajero){
+    $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
+    $suscripciones = Suscripcion::where('pasajero_id', '=', $pasajero->id)->get();
+    if (isEmpty($suscripciones)){
+      return redirect()->route('combi19.suscribirPasajero')->with('pasajero', $pasajero);
+    } else {
+      return redirect()->route('combi19.verSuscripcion')->with('pasajero', $pasajero);
+    }
+    
+  }
+
+  public function suscribirPasajero($pasajero){
+    return view('pasajero.suscribirPasajero')->with('pasajero', $pasajero);
+  }
+
+  public function verSuscripcion($pasajero){
+    return view('pasajero.verSuscripcion')->with('pasajero', $pasajero);
+  }
+
+  public function storeSuscripcion(StoreSuscripcion $request, $emailPasajero){
+    $tarjeta = Tarjeta::where('numero', '=', $request->numero)->get()->first();
+    if (isEmpty($tarjeta)){
+      $tarjeta = new Tarjeta();
+      $tarjeta->numero = $request->numero;
+      $tarjeta->codigo = $request->codigo;
+      $tarjeta->fecha_de_vencimiento = $request->fecha_vencimiento;
+      $tarjeta->save();
+    }
+    $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
+    $suscripcion = new Suscripcion();
+    $suscripcion->pasajero_id = $pasajero->id;
+    $suscripcion->tarjeta_id = $tarjeta->id;
+    $suscripcion->save();
+
+    return redirect()->route('homeGeneral'); //vuelve al home
   }
 }

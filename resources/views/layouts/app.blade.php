@@ -84,6 +84,12 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">{{ __('Buscar Viajes') }}</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">{{ __('Mis Viajes') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('combi19.suscripcion', Auth::user()->email) }}">{{ __('Suscripción') }}</a>
+                                </li>
                             @endif
                         @endguest
                     </ul>
