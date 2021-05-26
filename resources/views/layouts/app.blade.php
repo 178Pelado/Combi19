@@ -122,7 +122,7 @@
                                     </form>
 
                                     @if(Auth::user()->tipo != 1)
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" href="{{ route('combi19.modificarDatosDeCuentaPasajero', Auth::user()->email) }}">
                                             {{ __('Editar Datos Personales') }}
                                         </a>
                                     @endif
