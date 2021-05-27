@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pasajero;
 use App\Models\User;
+use App\Models\Viaje;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePasajeros;
 use App\Http\Requests\UpdatePasajeros;
@@ -43,5 +44,10 @@ class PasajeroController extends Controller
     $user->password = Hash::make($request['contraseña']);
     $user->save();
     return redirect()->route('homeGeneral');
+  }
+
+  public function buscarViaje(){
+    $viajes = Viaje::where('estado', '=', 1)->get();
+    return view('buscarViaje', compact('viajes'));
   }
 }
