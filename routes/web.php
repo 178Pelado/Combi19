@@ -80,6 +80,7 @@ Route::put('combi19/updateViaje{viaje}', [ViajeController::class, 'updateViaje']
 Route::group(['middleware' => 'pasajero', 'prefix' => 'pasajero', 'namespace' => 'Pasajero'], function () {
 Route::get('combi19/modificarDatosDeCuentaPasajero{pasajero}', [PasajeroController::class, 'modificarDatosDeCuentaPasajero'])->name('combi19.modificarDatosDeCuentaPasajero');
 Route::put('combi19/updatePasajero{pasajero}', [PasajeroController::class, 'updatePasajero'])->name('combi19.updatePasajero');
+Route::get('combi19/perfilDePasajero{pasajero}', [PasajeroController::class, 'perfilDePasajero'])->name('combi19.perfilDePasajero');
 });
 Route::get('homeGeneral', [HomeVisitanteController::class, 'homeGeneral'])->name('homeGeneral');
 Route::resource('/admin', AdminController::class);

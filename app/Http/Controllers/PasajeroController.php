@@ -42,6 +42,11 @@ class PasajeroController extends Controller
     $user->email = $request->email;
     $user->password = Hash::make($request['contraseña']);
     $user->save();
-    return redirect()->route('homeGeneral');
+    return view('pasajero.perfilDePasajero', compact('pasajero'));
+  }
+
+  public function perfilDePasajero($emailPasajero){
+    $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
+    return view('pasajero.perfilDePasajero', compact('pasajero'));
   }
 }

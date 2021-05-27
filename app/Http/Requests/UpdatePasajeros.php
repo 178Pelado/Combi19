@@ -31,8 +31,9 @@ class UpdatePasajeros extends FormRequest
       'apellido' => 'required|alpha_spaces',
       'dni' => 'required|integer|gt:0',
       'email' => 'required|email|unique:pasajeros,email,'.$this->id,
-      'contraseña' => 'required|min:6',
-      'fecha_de_nacimiento' => 'required|before_or_equal:' . $before,
+      'contraseñaActual' => 'nullable|min:6|es_contraseña_actual:' . $this->contraseñaActual . ',' . $this->id,
+      'contraseñaNueva' => 'required_if:contraseñaActual,==,$this->contraseñaActual',
+      'contraseñaNuevaConfirmacion' => 'min:6|confirmed',
     ];
   }
 }

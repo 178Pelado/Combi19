@@ -125,6 +125,9 @@
                                         <a class="dropdown-item" href="{{ route('combi19.modificarDatosDeCuentaPasajero', Auth::user()->email) }}">
                                             {{ __('Editar Datos Personales') }}
                                         </a>
+                                        <a class="dropdown-item" href="{{ route('combi19.perfilDePasajero', Auth::user()->email) }}">
+                                            {{ __('Mi perfil') }}
+                                        </a>
                                     @endif
                                 </div>
                             </li>
