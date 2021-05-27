@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pasajero;
 use App\Models\User;
+use App\Models\Viaje;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePasajeros;
 use App\Http\Requests\UpdatePasajeros;
@@ -48,5 +49,10 @@ class PasajeroController extends Controller
   public function perfilDePasajero($emailPasajero){
     $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
     return view('pasajero.perfilDePasajero', compact('pasajero'));
+  }
+
+  public function buscarViaje(){
+    $viajes = Viaje::where('estado', '=', 1)->get();
+    return view('buscarViaje', compact('viajes'));
   }
 }

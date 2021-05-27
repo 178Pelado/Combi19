@@ -82,7 +82,7 @@
                                 </li>
                             @elseif(Auth::user()->tipo == 3)
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">{{ __('Buscar Viajes') }}</a>
+                                    <a class="nav-link" href="{{ route('buscarViaje') }}">{{ __('Buscar Viajes') }}</a>
                                 </li>
                             @endif
                         @endguest
