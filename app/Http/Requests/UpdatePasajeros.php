@@ -30,9 +30,9 @@ class UpdatePasajeros extends FormRequest
       'nombre' => 'required|alpha_spaces',
       'apellido' => 'required|alpha_spaces',
       'dni' => 'required|integer|gt:0',
-      'email' => 'required|email|unique:users,email,'.$this->id,
-      'clave' => 'required|min:6',
-      'fecha_nacimiento' => 'required|before_or_equal:' . $before,
+      'email' => 'required|email|unique:pasajeros,email,'.$this->id,
+      'contraseña' => 'required|min:6',
+      'fecha_de_nacimiento' => 'required|before_or_equal:' . $before,
     ];
   }
 }

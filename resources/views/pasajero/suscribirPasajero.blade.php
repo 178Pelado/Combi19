@@ -24,7 +24,7 @@
                             <label class="col-md-4 col-form-label text-md-right">Código de seguridad:</label>
                             <div class="col-md-6">
                                 <input type="number" class="form-control" name="codigo" value="{{old('codigo')}}">
-                                @error('modelo')
+                                @error('codigo')
                 				    <small>{{$message}}</small>
                 				@enderror
                             </div>
@@ -33,7 +33,7 @@
 							<label class="col-md-4 col-form-label text-md-right">Fecha de vencimiento:</label>
 							<div class="col-md-6">
 								<input type="date" class="form-control" name="fecha_vencimiento" value="{{old('fecha_vencimiento')}}">
-								@error('fecha_nacimiento')
+								@error('fecha_vencimiento')
 								<small>{{$message}}</small>
 								@enderror
 							</div>
