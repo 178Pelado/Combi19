@@ -82,7 +82,7 @@
                                 </li>
                             @elseif(Auth::user()->tipo == 3)
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">{{ __('Buscar Viajes') }}</a>
+                                    <a class="nav-link" href="{{ route('buscarViaje') }}">{{ __('Buscar Viajes') }}</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">{{ __('Mis Viajes') }}</a>
@@ -130,6 +130,9 @@
                                     @if(Auth::user()->tipo != 1)
                                         <a class="dropdown-item" href="{{ route('combi19.modificarDatosDeCuentaPasajero', Auth::user()->email) }}">
                                             {{ __('Editar Datos Personales') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('combi19.perfilDePasajero', Auth::user()->email) }}">
+                                            {{ __('Mi perfil') }}
                                         </a>
                                     @endif
                                 </div>

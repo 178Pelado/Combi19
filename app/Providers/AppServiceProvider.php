@@ -7,6 +7,7 @@ use Validator;
 use App\Models\Insumo;
 use App\Models\Viaje;
 use App\Models\Combi;
+use App\Models\Pasajero;
 use Carbon\Carbon;
 
 class AppServiceProvider extends ServiceProvider
@@ -66,7 +67,7 @@ class AppServiceProvider extends ServiceProvider
     });
 
     // Está al pedo
-    // Validator::extend('nombre_descripcion_upd', function ($attribute, $value, $parameters) {  
+    // Validator::extend('nombre_descripcion_upd', function ($attribute, $value, $parameters) {
     //   $aux = Insumo::where('id', '=', $parameters[0])->get()->first();
     //   $insumo = Insumo::where('id', '<>', $parameters[0])->where('nombre', '=', $parameters[1])->where('descripcion', '=', $value)->get()->first();
     //   if(empty($insumo)){
@@ -89,6 +90,16 @@ class AppServiceProvider extends ServiceProvider
         return false;
       }
     });
-    
+
+    Validator::extend('es_contraseña_actual', function ($attribute, $value, $parameters) {
+      $pasajero = Pasajero::where('id', '=', $parameters[1])->where('contraseña', '=', $parameters[0])->get();
+      if(count($pasajero) == 0){
+        return false;
+      }
+      else{
+        return true;
+      }
+    });
+
   }
 }

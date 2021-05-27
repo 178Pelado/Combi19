@@ -43,6 +43,7 @@ return [
     'distinct'             => 'El campo :attribute tiene un valor duplicado.',
     'email'                => 'El campo :attribute debe ser una dirección de correo válida.',
     'ends_with'            => 'El campo :attribute debe finalizar con alguno de los siguientes valores: :values',
+
     'exists'               => 'El campo :attribute seleccionado no existe.',
     'file'                 => 'El campo :attribute debe ser un archivo.',
     'filled'               => 'El campo :attribute debe tener un valor.',
@@ -123,6 +124,7 @@ return [
     'url'                  => 'El formato del campo :attribute es inválido.',
     'uuid'                 => 'El campo :attribute debe ser un UUID válido.',
     'viaje_distinto_fecha' => 'La combi :attribute no se encuentra disponible en ese horario.',
+    'es_contraseña_actual'   => 'La contraseña ingresada no coincide',
 
     /*
     |--------------------------------------------------------------------------

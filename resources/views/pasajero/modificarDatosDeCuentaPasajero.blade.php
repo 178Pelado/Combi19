@@ -48,24 +48,32 @@
             							</div>
             						</div>
             						<div class="form-group row">
-            							<label class="col-md-4 col-form-label text-md-right">Clave:</label>
+            							<label class="col-md-4 col-form-label text-md-right">Contraseña actual:</label>
             							<div class="col-md-6">
-            								<input type="password" class="form-control" name="clave" value="{{old('clave', $pasajero->contraseña)}}">
-            								@error('clave')
+            								<input type="password" class="form-control" name="contraseñaActual">
+            								@error('contraseñaActual')
             								<small>{{$message}}</small>
             								@enderror
             							</div>
             						</div>
-            						<div class="form-group row">
-            							<label class="col-md-4 col-form-label text-md-right">Fecha de nacimiento:</label>
+                        <div class="form-group row">
+            							<label class="col-md-4 col-form-label text-md-right">Contraseña nueva:</label>
             							<div class="col-md-6">
-            								<input type="date" class="form-control" name="fecha_nacimiento" value="{{old('fecha_nacimiento', $pasajero->fecha_de_nacimiento)}}">
-            								@error('fecha_nacimiento')
+            								<input type="password" class="form-control" name="contraseñaNueva">
+            								@error('contraseñaNueva')
             								<small>{{$message}}</small>
             								@enderror
             							</div>
             						</div>
-
+                        <div class="form-group row">
+            							<label class="col-md-4 col-form-label text-md-right">Confimación de contraseña:</label>
+            							<div class="col-md-6">
+            								<input type="password" class="form-control" name="contraseñaNuevaConfirmacion">
+            								@error('contraseñaNuevaConfirmacion')
+            								<small>{{$message}}</small>
+            								@enderror
+            							</div>
+            						</div>
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
