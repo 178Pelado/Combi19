@@ -73,7 +73,10 @@ class PasajeroController extends Controller
     if (empty($suscripcion)){
       return view('pasajero.suscribirPasajero')->with('pasajero', $pasajero);
     } else {
-      return view('pasajero.verSuscripcion')->with('pasajero', $pasajero);
+      $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->where('estado','=',3)->paginate(); 
+      // viajes finalizados realizados por el usuario
+      $tarjeta = Tarjeta::where('id', '=', $suscripcion->tarjeta_id)->get()->first();
+      return view('pasajero.verSuscripcion', compact('pasajero', 'misViajes', 'tarjeta'));
     }
 
   }
@@ -110,9 +113,9 @@ class PasajeroController extends Controller
 
   public function misViajes($emailPasajero){
     $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
-    // $misPasajes = Pasaje::where('pasajero_id','=',$pasajero->id)->get();
-    $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->where('estado','=',3)->paginate(); 
-    // viajes finalizados realizados por el usuario
-    return view('pasajero.misViajes', compact('pasajero', 'misViajes'));
+    $misPasajes = Pasaje::where('pasajero_id','=',$pasajero->id)->get();
+    $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->paginate(); 
+    // viajes realizados por el usuario
+    return view('pasajero.misViajes', compact('pasajero', 'misPasajes', 'misViajes'));
   }
 }
