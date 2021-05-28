@@ -43,10 +43,12 @@ class PasajeroController extends Controller
 
   public function updatePasajero(UpdatePasajeros $request, Pasajero $pasajero){
     $user = User::where('email', '=', $pasajero->email)->get()->first();
-    // $pasajero->update($request->all());
+    $pasajero->update($request->all());
+    $pasajero->contraseña = $request->contraseñaNueva;
+    $pasajero->save();
     $user->name = $request->nombre;
     $user->email = $request->email;
-    $user->password = Hash::make($request['contraseña']);
+    $user->password = Hash::make($request['contraseñaNueva']);
     $user->save();
     return view('pasajero.perfilDePasajero', compact('pasajero'));
   }

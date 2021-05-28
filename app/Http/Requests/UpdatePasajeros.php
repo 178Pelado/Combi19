@@ -31,9 +31,16 @@ class UpdatePasajeros extends FormRequest
       'apellido' => 'required|alpha_spaces',
       'dni' => 'required|integer|gt:0',
       'email' => 'required|email|unique:pasajeros,email,'.$this->id,
-      'contraseñaActual' => 'required|min:6|es_contraseña_actual:' . $this->contraseñaActual . ',' . $this->id,
-      'contraseña' => 'required|min:6',
-      'contraseñaNuevaConfirmacion' => 'required|min:6|same:contraseña',
+      'contraseña' => 'required|min:6|es_contraseña_actual:' . $this->contraseña . ',' . $this->id,
+      'contraseñaNueva' => 'required|min:6|same:contraseñaNuevaConfirmacion',
+      'contraseñaNuevaConfirmacion' => 'required|min:6',
+    ];
+  }
+
+  public function attributes()
+  {
+    return [
+      'contraseñaNuevaConfirmacion' => 'confirmación de contraseña',
     ];
   }
 }

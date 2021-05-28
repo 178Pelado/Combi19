@@ -50,8 +50,8 @@
             						<div class="form-group row">
             							<label class="col-md-4 col-form-label text-md-right">Contraseña actual:</label>
             							<div class="col-md-6">
-            								<input type="password" class="form-control" name="contraseñaActual">
-            								@error('contraseñaActual')
+            								<input type="password" class="form-control" name="contraseña">
+            								@error('contraseña')
             								<small>{{$message}}</small>
             								@enderror
             							</div>
