@@ -148,10 +148,9 @@ class PasajeroController extends Controller
 
   public function misViajes($emailPasajero){
     $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
-    $misPasajes = Pasaje::where('pasajero_id','=',$pasajero->id)->get();
     $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->paginate();
     // viajes realizados por el usuario
-    return view('pasajero.misViajes', compact('pasajero', 'misPasajes', 'misViajes'));
+    return view('pasajero.misViajes', compact('pasajero', 'misViajes'));
   }
 
   public function realizarComentario(){
