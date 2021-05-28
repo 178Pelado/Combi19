@@ -18,6 +18,7 @@ class CreateZinsumosPasajeTable extends Migration
             $table->foreignId('pasaje_id')->constrained('pasajes');
             $table->foreignId('insumo_id')->constrained('insumos');
             $table->integer('cantidad');
+            $table->double('precio_al_reservar');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -17,6 +17,15 @@ class PasajeSeeder extends Seeder
         Pasaje::create([
         	'viaje_id' => '1',
         	'pasajero_id' => '1',
+            'precio_viaje' => '100.0',
+            'precio' => '990.0',
+        	'estado' => '3',
+        ]);
+        Pasaje::create([
+        	'viaje_id' => '2',
+        	'pasajero_id' => '1',
+            'precio_viaje' => '250.0',
+            'precio' => '2025.0',
         	'estado' => '1',
         ]);
     }

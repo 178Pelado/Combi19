@@ -17,6 +17,8 @@ class Pasaje extends Model
         'viaje_id',
         'pasajero_id',
         'estado',
+        'precio_viaje',
+        'precio'
     ];
     protected $table = "pasajes";
 

@@ -13,8 +13,13 @@ class Estado extends Model
      *
      * @var array
      */
+
     protected $fillable = [
         'nombre',
     ];
     protected $table = "estados";
+
+    // public function nombre(){
+    //     return $this->nombre;
+    // }
 }

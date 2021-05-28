@@ -7,7 +7,7 @@
 	<div class="row justify-content-center">
 		<div class="col-md-20">
 			<div class="card">
-				<div class="card-header">{{ __('Mi Suscripción') }}</div>
+				<div class="card-header">{{ __('¿Cuánto ahorré?') }}</div>
 				<div class="card-body">
 					{{-- @if(Session::has('messageNO'))
 					<div class="alert alert-danger alert-dismissible" role="alert">
@@ -21,39 +21,49 @@
 					</div>
 					@endif --}}
 					<table class="table table-bordered">
+						El precio gold está hardcodeado
 						@if($misViajes[0] !== null)
-						<thead>
-							<tr>
-								<th>Ruta</th>
-								<th>Combi</th>
-								<th>Insumos</th>
-								<th>Fecha</th>
-                                <th>Precio</th>
-                                <th>Precio Gold</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach ($misViajes as $viaje)
-							<tr>
-								<td>{{$viaje->ruta->origen->nombre}} - {{$viaje->ruta->destino->nombre}}</td>
-								<td>{{$viaje->combi->patente}}</td>
-								<td>
-									<dl class="dl-horizontal">
-										<?php
-										$insumos = (App\Models\Insumos_viaje::withTrashed()->where('viaje_id', '=', $viaje->id)->get());
-										?>
-										@foreach ($insumos as $insumo)
-										<dt>{{$insumo->insumo->nombre}}</dt>
-										<dd>{{$insumo->insumo->descripcion}}</dd>
-										@endforeach
-									</dl>
-								</td>
-								<td>{{$viaje->fecha}}</td>
-                                <td>{{$viaje->precio}}</td>
-                                <td>un precio</td>
+							<thead>
+								<tr>
+									<th>Ruta</th>
+									<th>Combi</th>
+									<th>Insumos</th> {{-- del pasaje --}}
+									<th>Fecha</th>
+									<th>Precio</th> {{-- del pasaje con los costos de aquel entonces--}}
+									<th>Precio Gold</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach ($misViajes as $viaje)
+
+								<?php
+									$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get()); 	
+									$insumos = (App\Models\Insumos_pasaje::withTrashed()->where('pasaje_id', '=', $pasaje[0]->id)->get());
+
+									$costo_insumos = 0;
+									foreach ($insumos as $insumo) { 
+										$costo_insumos = $costo_insumos + ($insumo->precio_al_reservar * $insumo->cantidad); //sumo lo que costaron los insumos en aquel entonces
+									}
+									$total = $pasaje[0]->precio_viaje + $costo_insumos; //sumo el precio del viaje en aquel entonces + $costo_insumos
+								?>
+
+								<tr>
+									<td>{{$viaje->ruta->origen->nombre}} - {{$viaje->ruta->destino->nombre}}</td>
+									<td>{{$viaje->combi->patente}}</td>
+									<td>
+										<dl class="dl-horizontal">
+											@foreach ($insumos as $insumo)
+												<dt>{{$insumo->insumo->nombre}} <small>(x{{$insumo->cantidad}})</small></dt>
+												<dd>{{$insumo->insumo->descripcion}}</dd>
+											@endforeach
+										</dl>
+									</td>
+									<td>{{$viaje->fecha}}</td>
+									<td>{{$total}}</td>
+									<td>{{$pasaje[0]->precio}}</td>
 								@endforeach
-							</tr>
-						</tbody>
+								</tr>
+							</tbody>
                         @else
 						    <h1>No has realizado ningún viaje</h1>
 						@endif 

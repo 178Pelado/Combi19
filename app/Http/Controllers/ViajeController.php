@@ -26,6 +26,7 @@ class ViajeController extends Controller
     $viaje->ruta_id = $request->ruta_id;
     $viaje->precio = $request->precio;
     $viaje->fecha = $request->fecha;
+    $viaje->estado = 1;
 
     $viaje->save();
 

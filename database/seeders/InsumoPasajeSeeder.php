@@ -18,11 +18,13 @@ class InsumoPasajeSeeder extends Seeder
         	'pasaje_id' => '1',
         	'insumo_id' => '1',
         	'cantidad' => '10',
+            'precio_al_reservar' => '100.0'
         ]);
         Insumos_pasaje::create([
-            'pasaje_id' => '1',
+            'pasaje_id' => '2',
             'insumo_id' => '2',
             'cantidad' => '20',
+            'precio_al_reservar' => '100.0'
         ]);
     }
 }
