@@ -79,6 +79,9 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Guardar cambios') }}
                                 </button>
+                                <a type="button" href="javascript:history.back(-1);" class="btn btn-secondary">
+                                    {{ __('Cancelar') }}
+                                </a>
                             </div>
                         </div>
                     </form>

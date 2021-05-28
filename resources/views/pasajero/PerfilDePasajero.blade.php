@@ -83,20 +83,29 @@
                     <div class="col-sm-3">
                       <h6 class="mb-0">Membresía gold</h6>
                     </div>
+                    @if ($suscripcion != null)
+                      <div class="col-sm-9 text-secondary">
+                        Activa
+                        <a class="btn btn-info " target="" href="{{ route('combi19.suscripcion', Auth::user()->email) }}">Ver</a>
+                      </div>
+                    @else
                     <div class="col-sm-9 text-secondary">
-                      No activa
+                      No activa  
                     </div>
+                    @endif
                   </div>
                   <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Tarjeta de crédito</h6>
+                  @if ($suscripcion != null)
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <h6 class="mb-0">Tarjeta de crédito</h6>
+                      </div>
+                      <div class="col-sm-9 text-secondary">
+                        ************{{substr($tarjeta->numero,12,15)}}
+                      </div>
                     </div>
-                    <div class="col-sm-9 text-secondary">
-                      12323232
-                    </div>
-                  </div>
-                  <hr>
+                    <hr>
+                  @endif
                   <div class="row">
                     <div class="col-sm-12">
                       <a class="btn btn-info " href="{{ route('combi19.modificarDatosDeCuentaPasajero', Auth::user()->email) }}">Editar datos</a>
