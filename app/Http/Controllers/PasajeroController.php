@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Pasajero;
 use App\Models\User;
+use App\Models\Combi;
+use App\Models\Ruta;
+use App\Models\Lugar;
 use App\Models\Viaje;
 use App\Models\Pasaje;
+use App\Models\Suscripcion;
+use App\Models\Tarjeta;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePasajeros;
 use App\Http\Requests\UpdatePasajeros;
 use App\Http\Requests\StoreSuscripcion;
 use App\Http\Requests\StoreTarjeta;
-use App\Models\Suscripcion;
-use App\Models\Tarjeta;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
@@ -66,7 +70,35 @@ class PasajeroController extends Controller
 
   public function buscarViaje(){
     $viajes = Viaje::where('estado', '=', 1)->get();
-    return view('buscarViaje', compact('viajes'));
+    $ciudadO = null;
+    $ciudadD = null;
+    $precio = null;
+    $tipo_de_combi = null;
+    $fecha = null;
+    $viajes = Viaje::where('estado', '=', 1)->get();
+    return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha'));
+  }
+
+  public function buscarViajeConDatos(request $request){
+    $ciudadO = $request->ciudadO;
+    $ciudadD = $request->ciudadD;
+    $tipo_de_combi = $request->tipo_de_combi;
+    $fecha = $request->fecha;
+    $precio = $request->precio;
+    $viajes = Viaje::where('estado', '=', 1)     
+              ->whereIn('combi_id', Combi::select('id')->where('tipo', '=', $tipo_de_combi))
+              ->whereIn('ruta_id', Ruta::select('id')->whereIn('origen_id', Lugar::select('id')->where('nombre', 'like', '%' . $ciudadO . '%')))
+              ->whereIn('ruta_id', Ruta::select('id')->whereIn('destino_id', Lugar::select('id')->where('nombre', 'like', '%' . $ciudadD . '%')))
+              ->get();
+    if($precio != null){
+      $viajes = $viajes->where('precio', '<=', $precio);
+    }
+    if($fecha != null){
+      $viajes = $viajes->where(Viaje::selectRaw('DATE(fecha) as date')->get()->where('date', '=', $fecha));
+      dd(Viaje::selectRaw('DATE(fecha) as date', '=', $fecha));
+    }
+
+    return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha'));
   }
 
   public function suscripcion($emailPasajero){

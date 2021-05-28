@@ -87,6 +87,9 @@ Route::get('combi19/misViajes{pasajero}', [PasajeroController::class, 'misViajes
 
 });
 Route::get('/buscarViaje', [PasajeroController::class, 'buscarViaje'])->name('buscarViaje');
+Route::post('/buscarViajeConDatos', [PasajeroController::class, 'buscarViajeConDatos'])->name('buscarViajeConDatos');
+
+
 Route::get('homeGeneral', [HomeVisitanteController::class, 'homeGeneral'])->name('homeGeneral');
 Route::resource('/admin', AdminController::class);
 Route::resource('/chofer', Chofer1Controller::class);
