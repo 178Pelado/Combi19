@@ -24,49 +24,56 @@
 						@if($misViajes[0] !== null)
 						<thead>
 							<tr>
-                                <th>Estado</th>
+                                <th>Estado</th> {{--del pasaje--}}
 								<th>Ruta</th>
 								<th>Combi</th>
-								<th>Insumos</th>
+								<th>Insumos</th> {{--del pasaje--}}
 								<th>Fecha</th>
-                                <th>Precio</th>
+                                <th>Precio</th> {{--del pasaje--}}
                                 <th>Acciones</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($misPasajes as $pasaje)
-                            <tr>{{$pasaje->estado}}</tr>
-							<tr>
-								<td>{{$pasaje->viaje()->ruta->origen->nombre}} - {{$pasaje->viaje()->ruta->destino->nombre}}</td>
-								<td>{{$pasaje->viaje()->combi->patente}}</td>
-								<td>
-									<dl class="dl-horizontal">
-										<?php
-										$insumos = (App\Models\Insumos_viaje::withTrashed()->where('viaje_id', '=', $pasaje->viaje_id)->get());
-										?>
-										@foreach ($insumos as $insumo)
-										<dt>{{$insumo->insumo->nombre}}</dt>
-										<dd>{{$insumo->insumo->descripcion}}</dd>
-										@endforeach
-									</dl>
-								</td>
-								<td>{{$pasaje->viaje()->fecha}}</td>
-                                <td>{{$pasaje->precio}}</td>
-                                <td>
-									<a href="{{route('#', $pasaje->viaje())}}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-									<form action="{{route('#', $pasaje->viaje())}}" class="formulario-eliminar" method="POST">
-										@csrf
-										@method('delete')
-										<button class="delete" title="Delete" data-toggle="tooltip" style="border:none;background-color: Transparent;"><i class="material-icons">&#xE872;</i></button>
-									</form>
-								</td>
-								@endforeach
-							</tr>
+							@foreach ($misViajes as $viaje)
+								<?php
+									$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get()); 
+								?>
+								<tr>
+									<?php
+										$estado = (App\Models\Estado::where('id','=', $pasaje[0]->estado)->get()); 	
+									?>
+									<td>{{$estado[0]->nombre}}</td>
+									<td>{{$viaje->ruta->origen->nombre}} - {{$viaje->ruta->destino->nombre}}</td>
+									<td>{{$viaje->combi->patente}}</td>
+									<td>
+										<dl class="dl-horizontal">
+											<?php
+												$insumos = (App\Models\Insumos_pasaje::withTrashed()->where('pasaje_id', '=', $pasaje[0]->id)->get());
+											?>
+											@foreach ($insumos as $insumo)
+												<dt>{{$insumo->insumo->nombre}} <small>(x{{$insumo->cantidad}})</small></dt>
+												<dd>{{$insumo->insumo->descripcion}}</dd>
+											@endforeach
+										</dl>
+									</td>
+									<td>{{$viaje->fecha}}</td>
+									<td>{{$pasaje[0]->precio}}</td>
+									<td>
+										<a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+										<form action="#" class="formulario-eliminar" method="POST">
+											@csrf
+											@method('delete')
+											<button class="delete" title="Delete" data-toggle="tooltip" style="border:none;background-color: Transparent;"><i class="material-icons">&#xE872;</i></button>
+										</form>
+									</td>
+								</tr>
+							@endforeach
 						</tbody>
                         @else
 						    <h1>No has realizado ningún viaje</h1>
 						@endif 
                     </table>
+					Las acciones serían comentar si finalizó y cancelar si está pendiente
 					@if(Session::has('message'))
 					<div class="alert alert-danger alert-dismissible" role="alert">
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

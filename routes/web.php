@@ -84,7 +84,8 @@ Route::get('combi19/suscripcion{pasajero}', [PasajeroController::class, 'suscrip
 Route::post('combi19/storeSuscripcion{pasajero}', [PasajeroController::class, 'storeSuscripcion'])->name('combi19.storeSuscripcion');
 Route::get('combi19/perfilDePasajero{pasajero}', [PasajeroController::class, 'perfilDePasajero'])->name('combi19.perfilDePasajero');
 Route::get('combi19/misViajes{pasajero}', [PasajeroController::class, 'misViajes'])->name('combi19.misViajes');
-
+Route::get('combi19/realizarComentario', [PasajeroController::class, 'realizarComentario'])->name('combi19.realizarComentario');
+Route::post('combi19/storeComentario', [PasajeroController::class, 'storeComentario'])->name('combi19.storeComentario');
 });
 Route::get('/buscarViaje', [PasajeroController::class, 'buscarViaje'])->name('buscarViaje');
 Route::post('/buscarViajeConDatos', [PasajeroController::class, 'buscarViajeConDatos'])->name('buscarViajeConDatos');

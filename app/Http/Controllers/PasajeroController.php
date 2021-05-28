@@ -9,6 +9,7 @@ use App\Models\Ruta;
 use App\Models\Lugar;
 use App\Models\Viaje;
 use App\Models\Pasaje;
+use App\Models\Comentario;
 use App\Models\Suscripcion;
 use App\Models\Tarjeta;
 use Illuminate\Support\Facades\DB;
@@ -113,7 +114,7 @@ class PasajeroController extends Controller
     if (empty($suscripcion)){
       return view('pasajero.suscribirPasajero')->with('pasajero', $pasajero);
     } else {
-      $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->where('estado','=',3)->paginate(); 
+      $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->where('estado','=',3)->paginate();
       // viajes finalizados realizados por el usuario
       $tarjeta = Tarjeta::where('id', '=', $suscripcion->tarjeta_id)->get()->first();
       return view('pasajero.verSuscripcion', compact('pasajero', 'misViajes', 'tarjeta'));
@@ -153,9 +154,23 @@ class PasajeroController extends Controller
 
   public function misViajes($emailPasajero){
     $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
-    $misPasajes = Pasaje::where('pasajero_id','=',$pasajero->id)->get();
-    $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->paginate(); 
+    $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->paginate();
     // viajes realizados por el usuario
-    return view('pasajero.misViajes', compact('pasajero', 'misPasajes', 'misViajes'));
+    return view('pasajero.misViajes', compact('pasajero', 'misViajes'));
+  }
+
+  public function realizarComentario(){
+    return view('pasajero.realizarComentario');
+  }
+
+  public function storeComentario(Request $request){
+      $comentario = new Comentario();
+      $comentario->viaje_id = '1';
+      // $comentario->viaje_id = $viaje->id;
+    	$comentario->pasajero_id = '1';
+      // $comentario->pasajero_id = $pasajero->id;
+    	$comentario->texto = $request->texto;
+      $comentario->save();
+      return view('pasajero.realizarComentario');
   }
 }

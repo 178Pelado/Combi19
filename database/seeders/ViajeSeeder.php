@@ -17,8 +17,15 @@ class ViajeSeeder extends Seeder
         Viaje::create([
         	'combi_id' => '2',
         	'ruta_id' => '1',
-        	'precio' => '10.000',
+        	'precio' => '100.000',
             'fecha' => '2021-05-14 18:00:00',
+            'estado' => '3',
+        ]);
+        Viaje::create([
+        	'combi_id' => '2',
+        	'ruta_id' => '2',
+        	'precio' => '250.000',
+            'fecha' => '2021-05-31 15:20:00',
             'estado' => '1',
         ]);
     }
