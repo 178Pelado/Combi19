@@ -10,39 +10,71 @@
                 <div class="card-header">{{ __('Buscar Viaje') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{route('buscarViajeConDatos')}}">
                         @csrf
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label class="col-form-label text-md-right">Ciudad Origen:</label>
                                 <div>
-                                    <input type="text" class="form-control" name="nombre" value="{{old('nombre')}}" autofocus>
+                                    @if($ciudadO !== null)
+                                        <input type="text" class="form-control" name="ciudadO"  value="{{$ciudadO}}">
+                                    @else
+                                        <input type="text" class="form-control" name="ciudadO"  value="">
+                                    @endif
                                 </div>
                             </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="col-form-label text-md-right">Ciudad Destino:</label>
-                                        <div>
-                                            <input type="text" class="form-control" name="apellido" value="{{old('apellido')}}">
-                                        </div>
+                            <div class="form-group col-md-4">
+                                <label class="col-form-label text-md-right">Ciudad Destino:</label>
+                                <div>
+                                    @if($ciudadD !== null)
+                                        <input type="text" class="form-control" name="ciudadD"  value="{{$ciudadD}}">
+                                    @else
+                                        <input type="text" class="form-control" name="ciudadD"  value="">
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="col-form-label text-md-right">Precio:</label>
+                                <div>
+                                    @if($precio !== null)
+                                        <input type="number" class="form-control" name="precio"  value="{{$precio}}">
+                                    @else
+                                        <input type="number" class="form-control" name="precio"  value="">
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="col-form-label text-md-right">Tipo de Combi:</label>
+                                <div>
+                                    <select class="form-control" name="tipo_de_combi">            
+                                        @if($tipo_de_combi == 'Cómoda')
+                                            <option value='Super Cómoda'>
+                                                Super Cómoda
+                                            </option>
+                                            <option value='Cómoda' selected="">
+                                                Cómoda
+                                            </option>
+                                        @else
+                                            <option value='Super Cómoda'>
+                                                Super Cómoda
+                                            </option>
+                                            <option value='Cómoda'>
+                                                Cómoda
+                                            </option>
+                                        @endif                                                                            
+                                    </select>
+                                </div>
+                            </div>
+                                <div class="form-group col-md-4">
+                                    <label class="col-form-label text-md-right">Fecha:</label>
+                                    <div>
+                                        @if($fecha !== null)
+                                            <input type="date" class="form-control" name="fecha"  value="{{$fecha}}">
+                                        @else
+                                            <input type="date" class="form-control" name="fecha"  value="">
+                                        @endif
                                     </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="col-form-label text-md-right">Precio:</label>
-                                        <div>
-                                            <input type="text" class="form-control" name="dni" value="{{old('dni')}}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="col-form-label text-md-right">Tipo de Combi:</label>
-                                        <div>
-                                            <input type="email" class="form-control" name="email" value="{{old('email')}}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="col-form-label text-md-right">Fecha:</label>
-                                        <div>
-                                            <input type="date" class="form-control" name="fecha_nacimiento" value="{{old('fecha_nacimiento')}}">
-                                        </div>
-                                    </div>
+                                </div>
                         
                             <div class="form-group col-md-4">
                                 <label class="col-form-label text-md-right"></label>
@@ -58,7 +90,7 @@
                     <!-- Listado -->
                     <div class="listado">
                         <table class="table table-bordered">
-                            @if($viajes[0] !== null)
+                            @if(count($viajes) !== 0)
                             <thead>
                                 <tr>
                                     <th>Ciudad Origen</th>

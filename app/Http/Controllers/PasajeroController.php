@@ -4,15 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Pasajero;
 use App\Models\User;
+use App\Models\Combi;
+use App\Models\Ruta;
+use App\Models\Lugar;
 use App\Models\Viaje;
 use App\Models\Pasaje;
+use App\Models\Comentario;
+use App\Models\Suscripcion;
+use App\Models\Tarjeta;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePasajeros;
 use App\Http\Requests\UpdatePasajeros;
 use App\Http\Requests\StoreSuscripcion;
 use App\Http\Requests\StoreTarjeta;
-use App\Models\Suscripcion;
-use App\Models\Tarjeta;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
@@ -44,10 +49,12 @@ class PasajeroController extends Controller
 
   public function updatePasajero(UpdatePasajeros $request, Pasajero $pasajero){
     $user = User::where('email', '=', $pasajero->email)->get()->first();
-    // $pasajero->update($request->all());
+    $pasajero->update($request->all());
+    $pasajero->contraseña = $request->contraseñaNueva;
+    $pasajero->save();
     $user->name = $request->nombre;
     $user->email = $request->email;
-    $user->password = Hash::make($request['contraseña']);
+    $user->password = Hash::make($request['contraseñaNueva']);
     $user->save();
     return view('pasajero.perfilDePasajero', compact('pasajero'));
   }
@@ -64,7 +71,35 @@ class PasajeroController extends Controller
 
   public function buscarViaje(){
     $viajes = Viaje::where('estado', '=', 1)->get();
-    return view('buscarViaje', compact('viajes'));
+    $ciudadO = null;
+    $ciudadD = null;
+    $precio = null;
+    $tipo_de_combi = null;
+    $fecha = null;
+    $viajes = Viaje::where('estado', '=', 1)->get();
+    return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha'));
+  }
+
+  public function buscarViajeConDatos(request $request){
+    $ciudadO = $request->ciudadO;
+    $ciudadD = $request->ciudadD;
+    $tipo_de_combi = $request->tipo_de_combi;
+    $fecha = $request->fecha;
+    $precio = $request->precio;
+    $viajes = Viaje::where('estado', '=', 1)
+              ->whereIn('combi_id', Combi::select('id')->where('tipo', '=', $tipo_de_combi))
+              ->whereIn('ruta_id', Ruta::select('id')->whereIn('origen_id', Lugar::select('id')->where('nombre', 'like', '%' . $ciudadO . '%')))
+              ->whereIn('ruta_id', Ruta::select('id')->whereIn('destino_id', Lugar::select('id')->where('nombre', 'like', '%' . $ciudadD . '%')))
+              ->get();
+    if($precio != null){
+      $viajes = $viajes->where('precio', '<=', $precio);
+    }
+    if($fecha != null){
+      $viajes = $viajes->where(Viaje::selectRaw('DATE(fecha) as date')->get()->where('date', '=', $fecha));
+      dd(Viaje::selectRaw('DATE(fecha) as date', '=', $fecha));
+    }
+
+    return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha'));
   }
 
   public function suscripcion($emailPasajero){
@@ -73,7 +108,7 @@ class PasajeroController extends Controller
     if (empty($suscripcion)){
       return view('pasajero.suscribirPasajero')->with('pasajero', $pasajero);
     } else {
-      $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->where('estado','=',3)->paginate(); 
+      $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->where('estado','=',3)->paginate();
       // viajes finalizados realizados por el usuario
       $tarjeta = Tarjeta::where('id', '=', $suscripcion->tarjeta_id)->get()->first();
       return view('pasajero.verSuscripcion', compact('pasajero', 'misViajes', 'tarjeta'));
@@ -114,8 +149,23 @@ class PasajeroController extends Controller
   public function misViajes($emailPasajero){
     $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
     $misPasajes = Pasaje::where('pasajero_id','=',$pasajero->id)->get();
-    $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->paginate(); 
+    $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->paginate();
     // viajes realizados por el usuario
     return view('pasajero.misViajes', compact('pasajero', 'misPasajes', 'misViajes'));
+  }
+
+  public function realizarComentario(){
+    return view('pasajero.realizarComentario');
+  }
+
+  public function storeComentario(Request $request){
+      $comentario = new Comentario();
+      $comentario->viaje_id = '1';
+      // $comentario->viaje_id = $viaje->id;
+    	$comentario->pasajero_id = '1';
+      // $comentario->pasajero_id = $pasajero->id;
+    	$comentario->texto = $request->texto;
+      $comentario->save();
+      return view('pasajero.realizarComentario');
   }
 }
