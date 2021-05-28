@@ -99,7 +99,7 @@
                   <hr>
                   <div class="row">
                     <div class="col-sm-12">
-                      <a class="btn btn-info " target="__blank" href="{{ route('combi19.modificarDatosDeCuentaPasajero', Auth::user()->email) }}">Editar datos</a>
+                      <a class="btn btn-info " href="{{ route('combi19.modificarDatosDeCuentaPasajero', Auth::user()->email) }}">Editar datos</a>
                     </div>
                   </div>
                 </div>
