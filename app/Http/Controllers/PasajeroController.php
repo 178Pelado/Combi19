@@ -19,6 +19,7 @@ use App\Http\Requests\StoreSuscripcion;
 use App\Http\Requests\StoreTarjeta;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class PasajeroController extends Controller
 {
@@ -85,19 +86,24 @@ class PasajeroController extends Controller
     $tipo_de_combi = $request->tipo_de_combi;
     $fecha = $request->fecha;
     $precio = $request->precio;
-    $viajes = Viaje::where('estado', '=', 1)     
+    $viajes1 = Viaje::where('estado', '=', 1)     
               ->whereIn('combi_id', Combi::select('id')->where('tipo', '=', $tipo_de_combi))
               ->whereIn('ruta_id', Ruta::select('id')->whereIn('origen_id', Lugar::select('id')->where('nombre', 'like', '%' . $ciudadO . '%')))
               ->whereIn('ruta_id', Ruta::select('id')->whereIn('destino_id', Lugar::select('id')->where('nombre', 'like', '%' . $ciudadD . '%')))
               ->get();
     if($precio != null){
-      $viajes = $viajes->where('precio', '<=', $precio);
+      $viajes1 = $viajes1->where('precio', '<=', $precio);
     }
     if($fecha != null){
-      $viajes = $viajes->where(Viaje::selectRaw('DATE(fecha) as date')->get()->where('date', '=', $fecha));
-      dd(Viaje::selectRaw('DATE(fecha) as date', '=', $fecha));
+      $viajes = array();
+      for($i = 0; $i < count($viajes1); $i++){
+        $soloFecha = $viajes1[$i]->fecha;
+        $soloFecha = Str::limit($soloFecha, 10, '');
+        if($soloFecha == $fecha){
+          array_push($viajes, $viajes1[$i]);
+        }
+      }
     }
-
     return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha'));
   }
 
