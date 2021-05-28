@@ -88,6 +88,9 @@ Route::get('combi19/realizarComentario', [PasajeroController::class, 'realizarCo
 Route::post('combi19/storeComentario', [PasajeroController::class, 'storeComentario'])->name('combi19.storeComentario');
 });
 Route::get('/buscarViaje', [PasajeroController::class, 'buscarViaje'])->name('buscarViaje');
+Route::post('/buscarViajeConDatos', [PasajeroController::class, 'buscarViajeConDatos'])->name('buscarViajeConDatos');
+
+
 Route::get('homeGeneral', [HomeVisitanteController::class, 'homeGeneral'])->name('homeGeneral');
 Route::resource('/admin', AdminController::class);
 Route::resource('/chofer', Chofer1Controller::class);
