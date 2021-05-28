@@ -44,7 +44,7 @@ class PasajeroController extends Controller
 
   public function updatePasajero(UpdatePasajeros $request, Pasajero $pasajero){
     $user = User::where('email', '=', $pasajero->email)->get()->first();
-    $pasajero->update($request->all());
+    // $pasajero->update($request->all());
     $user->name = $request->nombre;
     $user->email = $request->email;
     $user->password = Hash::make($request['contraseña']);
@@ -71,14 +71,14 @@ class PasajeroController extends Controller
     $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
     $suscripcion = Suscripcion::where('pasajero_id', '=', $pasajero->id)->get()->first();
     if (empty($suscripcion)){
-      return view('pasajero.suscribirPasajero')->with('pasajero', $pasajero);    
+      return view('pasajero.suscribirPasajero')->with('pasajero', $pasajero);
     } else {
       return view('pasajero.verSuscripcion')->with('pasajero', $pasajero);
     }
-    
+
   }
 
-  public function storeSuscripcion(Request $data, $pasajero){ 
+  public function storeSuscripcion(Request $data, $pasajero){
     //no entiendo por qué pero en $pasajero entra su id
     $dt = new Carbon();
     $after = $dt->format("Y-m-d");
