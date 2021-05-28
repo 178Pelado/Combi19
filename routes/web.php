@@ -83,6 +83,8 @@ Route::put('combi19/updatePasajero{pasajero}', [PasajeroController::class, 'upda
 Route::get('combi19/suscripcion{pasajero}', [PasajeroController::class, 'suscripcion'])->name('combi19.suscripcion');
 Route::post('combi19/storeSuscripcion{pasajero}', [PasajeroController::class, 'storeSuscripcion'])->name('combi19.storeSuscripcion');
 Route::get('combi19/perfilDePasajero{pasajero}', [PasajeroController::class, 'perfilDePasajero'])->name('combi19.perfilDePasajero');
+Route::get('combi19/misViajes{pasajero}', [PasajeroController::class, 'misViajes'])->name('combi19.misViajes');
+
 });
 Route::get('/buscarViaje', [PasajeroController::class, 'buscarViaje'])->name('buscarViaje');
 Route::get('homeGeneral', [HomeVisitanteController::class, 'homeGeneral'])->name('homeGeneral');

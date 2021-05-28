@@ -19,4 +19,8 @@ class Pasaje extends Model
         'estado',
     ];
     protected $table = "pasajes";
+
+    function viaje(){
+        return Viaje::where('id','=',$this->id_viaje)->get()->first();  
+    }
 }

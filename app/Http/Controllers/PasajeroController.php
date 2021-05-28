@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pasajero;
 use App\Models\User;
 use App\Models\Viaje;
+use App\Models\Pasaje;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePasajeros;
 use App\Http\Requests\UpdatePasajeros;
@@ -55,7 +56,12 @@ class PasajeroController extends Controller
 
   public function perfilDePasajero($emailPasajero){
     $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
-    return view('pasajero.perfilDePasajero', compact('pasajero'));
+    $suscripcion = Suscripcion::where('pasajero_id', '=', $pasajero->id)->get()->first();
+    if($suscripcion == null){
+      return view('pasajero.perfilDePasajero', compact('pasajero', 'suscripcion'));
+    }
+    $tarjeta = Tarjeta::where('id','=',$suscripcion->tarjeta_id)->get()->first();
+    return view('pasajero.perfilDePasajero', compact('pasajero', 'suscripcion', 'tarjeta'));
   }
 
   public function buscarViaje(){
@@ -69,7 +75,10 @@ class PasajeroController extends Controller
     if (empty($suscripcion)){
       return view('pasajero.suscribirPasajero')->with('pasajero', $pasajero);
     } else {
-      return view('pasajero.verSuscripcion')->with('pasajero', $pasajero);
+      $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->where('estado','=',3)->paginate(); 
+      // viajes finalizados realizados por el usuario
+      $tarjeta = Tarjeta::where('id', '=', $suscripcion->tarjeta_id)->get()->first();
+      return view('pasajero.verSuscripcion', compact('pasajero', 'misViajes', 'tarjeta'));
     }
 
   }
@@ -102,5 +111,13 @@ class PasajeroController extends Controller
     $suscripcion->save();
 
     return redirect()->route('homeGeneral'); //vuelve al home
+  }
+
+  public function misViajes($emailPasajero){
+    $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
+    $misPasajes = Pasaje::where('pasajero_id','=',$pasajero->id)->get();
+    $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->paginate(); 
+    // viajes realizados por el usuario
+    return view('pasajero.misViajes', compact('pasajero', 'misPasajes', 'misViajes'));
   }
 }
