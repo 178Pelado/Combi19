@@ -87,23 +87,26 @@ class PasajeroController extends Controller
     $tipo_de_combi = $request->tipo_de_combi;
     $fecha = $request->fecha;
     $precio = $request->precio;
+    $viajes2 = array();
     $viajes1 = Viaje::where('estado', '=', 1)     
               ->whereIn('combi_id', Combi::select('id')->where('tipo', '=', $tipo_de_combi))
               ->whereIn('ruta_id', Ruta::select('id')->whereIn('origen_id', Lugar::select('id')->where('nombre', 'like', '%' . $ciudadO . '%')))
               ->whereIn('ruta_id', Ruta::select('id')->whereIn('destino_id', Lugar::select('id')->where('nombre', 'like', '%' . $ciudadD . '%')))
               ->get();
+    $viajes = $viajes1;
     if($precio != null){
       $viajes1 = $viajes1->where('precio', '<=', $precio);
+      $viajes = $viajes1;
     }
     if($fecha != null){
-      $viajes = array();
       for($i = 0; $i < count($viajes1); $i++){
         $soloFecha = $viajes1[$i]->fecha;
         $soloFecha = Str::limit($soloFecha, 10, '');
         if($soloFecha == $fecha){
-          array_push($viajes, $viajes1[$i]);
+          array_push($viajes2, $viajes1[$i]);
         }
       }
+      $viajes = $viajes2;
     }
     return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha'));
   }
