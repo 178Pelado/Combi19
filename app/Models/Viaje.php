@@ -32,4 +32,8 @@ class Viaje extends Model
     public function ruta(){
       return $this->belongsTo('App\Models\Ruta', 'ruta_id')->withTrashed();
     }
+
+    public function asientos_ocupados(){
+      return $this->hasMany('App\Models\Pasaje', 'id');
+    }
 }

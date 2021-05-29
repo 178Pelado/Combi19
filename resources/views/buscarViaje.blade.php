@@ -110,9 +110,81 @@
                                     <td>{{$viaje->combi->tipo}}</td>
                                     <td>{{$viaje->fecha}}</td>
                                     <td>
-                                        agregar al carrito
+                                        <button type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}"><i class="material-icons">&#xE417;</i></button>
                                     </td>
-                                    @endforeach
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal{{$viaje->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Información del viaje</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="col-form-label text-md-right">
+                                                        Ruta: {{$viaje->ruta->origen->nombre}} - {{$viaje->ruta->destino->nombre}}
+                                                    </label>  
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label class="col-form-label text-md-right">
+                                                        Descripción: {{$viaje->ruta->descripcion}}
+                                                    </label>  
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label class="col-form-label text-md-right">
+                                                        Tipo de combi: {{$viaje->combi->tipo}}
+                                                    </label>  
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label class="col-form-label text-md-right">
+                                                        Fecha: {{$viaje->fecha}}
+                                                    </label>  
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label class="col-form-label text-md-right">
+                                                        Precio: {{$viaje->precio}}
+                                                    </label>  
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label class="col-form-label text-md-right">
+                                                        <?php
+                                                            $asientos_disponibles = $viaje->combi->cantidad_asientos - count($viaje->asientos_ocupados);
+                                                        ?>
+                                                        Asientos disponibles: {{$asientos_disponibles}}
+                                                    </label> 
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer btn-group" role="group">
+                                                @if($asientos_disponibles > 0)
+                                                    <a href="#" class="btn btn-primary">
+                                                        {{ __('Comprar pasaje para mi') }}
+                                                    </a>
+                                                    <a href="#" class="btn btn-primary">
+                                                        {{ __('Comprar pasaje para otro') }}
+                                                    </a>
+                                                @else
+                                                    <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">
+                                                        {{ __('Comprar pasaje para mi') }}
+                                                    </a>
+                                                    <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">
+                                                        {{ __('Comprar pasaje para otro') }}
+                                                    </a>
+                                                @endif
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    {{ __('Cancelar') }}
+                                                </button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                @endforeach
                                 </tr>
                             </tbody>
                             @else
@@ -120,7 +192,6 @@
                             @endif
                         </table>
                     </div>
-
                 </div>
             </div>
         </div>
