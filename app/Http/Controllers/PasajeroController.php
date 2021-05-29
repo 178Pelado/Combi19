@@ -97,6 +97,8 @@ class PasajeroController extends Controller
     $viajes = $viajes1;
     if($precio != null){
       $viajes1 = $viajes1->where('precio', '<=', $precio);
+      $viajes1 = collect([$viajes1], []);
+      $viajes1 = $viajes1->collapse();
       $viajes = $viajes1;
     }
     if($fecha != null){
