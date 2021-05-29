@@ -20,7 +20,7 @@ class Viaje extends Model
     protected $fillable = [
       'combi_id',
     ];
-    
+
     public function combi(){
       return $this->belongsTo('App\Models\Combi', 'combi_id')->withTrashed();
     }
@@ -35,5 +35,9 @@ class Viaje extends Model
 
     public function asientos_ocupados(){
       return $this->hasMany('App\Models\Pasaje', 'id');
+    }
+
+    public function comentarios(){
+      return $this->hasMany('App\Models\Comentario', 'viaje_id');
     }
 }

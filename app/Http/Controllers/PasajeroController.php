@@ -18,6 +18,7 @@ use App\Http\Requests\StorePasajeros;
 use App\Http\Requests\UpdatePasajeros;
 use App\Http\Requests\StoreSuscripcion;
 use App\Http\Requests\StoreTarjeta;
+use App\Http\Requests\StoreComentario;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -88,7 +89,7 @@ class PasajeroController extends Controller
     $fecha = $request->fecha;
     $precio = $request->precio;
     $viajes2 = array();
-    $viajes1 = Viaje::where('estado', '=', 1)     
+    $viajes1 = Viaje::where('estado', '=', 1)
               ->whereIn('combi_id', Combi::select('id')->where('tipo', '=', $tipo_de_combi))
               ->whereIn('ruta_id', Ruta::select('id')->whereIn('origen_id', Lugar::select('id')->where('nombre', 'like', '%' . $ciudadO . '%')))
               ->whereIn('ruta_id', Ruta::select('id')->whereIn('destino_id', Lugar::select('id')->where('nombre', 'like', '%' . $ciudadD . '%')))
@@ -166,14 +167,13 @@ class PasajeroController extends Controller
     return view('pasajero.realizarComentario');
   }
 
-  public function storeComentario(Request $request){
+  public function storeComentario(StoreComentario $request, Viaje $viaje, $emailPasajero){
+      $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
       $comentario = new Comentario();
-      $comentario->viaje_id = '1';
-      // $comentario->viaje_id = $viaje->id;
-    	$comentario->pasajero_id = '1';
-      // $comentario->pasajero_id = $pasajero->id;
-    	$comentario->texto = $request->texto;
+      $comentario->viaje_id = $viaje->id;
+      $comentario->pasajero_id = $pasajero->id;
+    	$comentario->texto = $request->comentario;
       $comentario->save();
-      return view('pasajero.realizarComentario');
+      return redirect()->route('combi19.misViajes', [$emailPasajero]);
   }
 }
