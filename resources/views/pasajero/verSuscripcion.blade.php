@@ -94,25 +94,6 @@
 						    <h1>No has realizado ningún viaje</h1>
 						@endif 
                     </table>
-                    
-                    {{-- @if($misViajes[0] !== null)
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Total</th>
-                                    <th>Total Gold</th>
-                                    <th>Ahorraste</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>total</td>
-                                    <td>total gold</td>
-                                    <td>total - total gold</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    @endif  --}}
 					@if(Session::has('message'))
 					<div class="alert alert-danger alert-dismissible" role="alert">
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -126,13 +107,17 @@
             <div class="card">
                 <div class="card-body">
                     <h6>Estado: <small>?</small></h6>
+					<form action="{{route('combi19.eliminarSuscripcion', Auth::user()->email)}}" class="formulario-eliminar" method="POST">
+						@csrf
+						@method('delete')
+						<button class="btn btn-info " data-toggle="tooltip">Cancelar Suscripcion</button>
+					</form>
                 </div>
             </div>
             <div class="card">
                 <div class="card-body">
                     <h6>Tarjeta: <small>************{{substr($tarjeta->numero,12,15)}}</small>
-                        <a class="btn btn-info " href="#">Modificar</a>
-                        <a class="btn btn-info " href="#">Cancelar Suscripcion</a>
+                        <a class="btn btn-info " href="{{ route('combi19.modificarTarjeta', Auth::user()->email) }}">Modificar</a>
                     </h6>
                 </div>
             </div>

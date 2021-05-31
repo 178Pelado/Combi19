@@ -12,6 +12,7 @@ use App\Models\Pasaje;
 use App\Models\Comentario;
 use App\Models\Suscripcion;
 use App\Models\Tarjeta;
+use Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePasajeros;
@@ -155,6 +156,49 @@ class PasajeroController extends Controller
     $suscripcion->tarjeta_id = $tarjeta->id;
     $suscripcion->save();
 
+    return redirect()->route('homeGeneral'); //vuelve al home
+  }
+
+  public function modificarTarjeta($emailPasajero){
+    $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
+    return view('pasajero.modificarTarjeta', compact('pasajero'));
+  }
+
+  public function updateTarjeta(Request $data, Pasajero $pasajero){
+    $dt = new Carbon();
+    $after = $dt->format("Y-m-d");
+    $data-> validate([
+      'numero' => 'required|numeric|digits: 16', //no es necesario verificar que sea unique xq en el if de abajo hago esa validación
+      'codigo' => 'required|numeric|digits: 3',
+      'fecha_vencimiento' => 'required|after:' . $after,
+    ]);
+
+    $tarjeta = Tarjeta::where('numero', '=', $data->numero)->get()->first();
+    if ($tarjeta == null){
+      $tarjeta = new Tarjeta();
+      $tarjeta->numero = $data->numero;
+      $tarjeta->codigo = $data->codigo;
+      $tarjeta->fecha_de_vencimiento = $data->fecha_vencimiento;
+      $tarjeta->save();
+    }
+
+    //la suscripcion no se valida y al parecer no es necesario, pero de ser necesario habria que hacerlo en una funcion auxiliar
+    //no es necesario xq un usuario suscripto nunca va a entrar a la página de suscribirse asi que el pasajero_id siempre va a ser nuevo
+    //pero si de alguna forma se puede "hackear" y mandar el formulario con un id ya suscripto ahi habría que hacer la validación para evitar que se suscriba dos veces
+    $suscripcion = Suscripcion::where('pasajero_id', '=', $pasajero->id)->get()->first();
+    $suscripcion->tarjeta_id = $tarjeta->id;
+    $suscripcion->save();
+
+    $pasajero = $pasajero->email; //la ruta suscripcion recibe el mail
+
+    return redirect()->route('combi19.suscripcion', compact('pasajero')); //vuelve a la suscripcion del pasajero
+  }
+
+  public function eliminarSuscripcion($emailPasajero){
+    $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
+    $suscripcion = Suscripcion::where('pasajero_id', '=', $pasajero->id)->get()->first();
+    $suscripcion->delete();
+    Session::flash('messageSI', 'Has cancelado tu suscripción Gold satisfactoriamente');
     return redirect()->route('homeGeneral'); //vuelve al home
   }
 
