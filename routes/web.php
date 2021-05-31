@@ -84,6 +84,7 @@ Route::get('combi19/suscripcion{pasajero}', [PasajeroController::class, 'suscrip
 Route::post('combi19/storeSuscripcion{pasajero}', [PasajeroController::class, 'storeSuscripcion'])->name('combi19.storeSuscripcion');
 Route::get('combi19/modificarTarjeta{pasajero}', [PasajeroController::class, 'modificarTarjeta'])->name('combi19.modificarTarjeta');
 Route::put('combi19/updateTarjeta{pasajero}', [PasajeroController::class, 'updateTarjeta'])->name('combi19.updateTarjeta');
+Route::get('combi19/prepararCancelacion{pasajero}', [PasajeroController::class, 'prepararCancelacion'])->name('combi19.prepararCancelacion');
 Route::delete('combi19/eliminarSuscripcion{pasajero}', [PasajeroController::class, 'eliminarSuscripcion'])->name('combi19.eliminarSuscripcion');
 Route::get('combi19/perfilDePasajero{pasajero}', [PasajeroController::class, 'perfilDePasajero'])->name('combi19.perfilDePasajero');
 Route::get('combi19/misViajes{pasajero}', [PasajeroController::class, 'misViajes'])->name('combi19.misViajes');

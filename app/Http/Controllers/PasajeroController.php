@@ -124,7 +124,21 @@ class PasajeroController extends Controller
       $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->where('estado','=',3)->paginate();
       // viajes finalizados realizados por el usuario
       $tarjeta = Tarjeta::where('id', '=', $suscripcion->tarjeta_id)->get()->first();
-      return view('pasajero.verSuscripcion', compact('pasajero', 'misViajes', 'tarjeta'));
+
+      $dt = new Carbon();
+      $fechaActual = $dt->format("Y-m-d");
+      $fechaActual = date($fechaActual); //paso la fecha de string a Date
+      $fechaBD = date($suscripcion->fecha_baja);
+      // si no hay una fecha de baja programada entra sin problemas
+      if ($suscripcion->fecha_baja == null) {
+        return view('pasajero.verSuscripcion', compact('pasajero', 'misViajes', 'tarjeta', 'suscripcion'));
+      } elseif ($fechaBD>=$fechaActual) {
+        // sino, si la fecha programada aún no llegó
+        return view('pasajero.verSuscripcion', compact('pasajero', 'misViajes', 'tarjeta', 'suscripcion'));
+      } else {
+        // por ultimo, si la fecha si llegó
+        return redirect()->route('combi19.eliminarSuscripcion', $pasajero->email); //elimino la suscripción
+      }
     }
 
   }
@@ -192,6 +206,19 @@ class PasajeroController extends Controller
     $pasajero = $pasajero->email; //la ruta suscripcion recibe el mail
 
     return redirect()->route('combi19.suscripcion', compact('pasajero')); //vuelve a la suscripcion del pasajero
+  }
+
+  public function prepararCancelacion($emailPasajero){
+    $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
+    $suscripcion = Suscripcion::where('pasajero_id', '=', $pasajero->id)->get()->first();
+    $dt = new Carbon();
+    $fechaActual = $dt->format("Y-m-d");
+    $fecha = date("Y-m-t", strtotime($fechaActual)); //ultimo dia del mes actual
+    $suscripcion->fecha_baja = $fecha;
+    $suscripcion->save();
+    
+    Session::flash('messageSI', 'Has cancelado tu suscripción Gold satisfactoriamente, estará activa hasta que finalice el mes');
+    return redirect()->route('combi19.suscripcion', $emailPasajero); //recarga la pagina de suscripcion
   }
 
   public function eliminarSuscripcion($emailPasajero){

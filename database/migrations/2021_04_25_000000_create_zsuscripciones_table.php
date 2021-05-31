@@ -17,6 +17,7 @@ class CreateZsuscripcionesTable extends Migration
             $table->id();
             $table->foreignId('pasajero_id')->constrained('pasajeros');
             $table->foreignId('tarjeta_id')->constrained('tarjetas');
+            $table->date('fecha_baja')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
