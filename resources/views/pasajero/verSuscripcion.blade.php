@@ -31,20 +31,33 @@
 									<th>Fecha</th>
 									<th>Precio</th> {{-- del pasaje con los costos de aquel entonces--}}
 									<th>Precio Gold</th>
+									<th>Ahorraste</th>
 								</tr>
 							</thead>
 							<tbody>
+								<?php
+									$totalViajes = 0;
+									$totalViajesGold = 0;
+									$ahorroTotal = 0;
+								?>
 								@foreach ($misViajes as $viaje)
 
 								<?php
 									$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get()); 	
 									$insumos = (App\Models\Insumos_pasaje::withTrashed()->where('pasaje_id', '=', $pasaje[0]->id)->get());
 
+									// calculando el precio para un viaje
 									$costo_insumos = 0;
 									foreach ($insumos as $insumo) { 
-										$costo_insumos = $costo_insumos + ($insumo->precio_al_reservar * $insumo->cantidad); //sumo lo que costaron los insumos en aquel entonces
+										$costo_insumos += ($insumo->precio_al_reservar * $insumo->cantidad); //sumo lo que costaron los insumos en aquel entonces
 									}
 									$total = $pasaje[0]->precio_viaje + $costo_insumos; //sumo el precio del viaje en aquel entonces + $costo_insumos
+									$totalGold = $pasaje[0]->precio; //precio Gold
+									$ahorro = $total - $totalGold; //cuánto ahorré
+
+									$totalViajes += $total; //sumo el precio del viaje al total de los viajes
+									$totalViajesGold += $totalGold; //sumo el precio gold del viaje al total gold de los viajes
+									$ahorroTotal += $ahorro; //sumo el ahorro del viaje al ahorro total de los viajes
 								?>
 
 								<tr>
@@ -60,16 +73,29 @@
 									</td>
 									<td>{{$viaje->fecha}}</td>
 									<td>{{$total}}</td>
-									<td>{{$pasaje[0]->precio}}</td>
+									<td>{{$totalGold}}</td>
+									<td>{{$ahorro}}</td>
 								@endforeach
 								</tr>
 							</tbody>
+							<tfoot>
+								<tr>
+									<th colspan="3"></th>
+									<th>Totales</th>
+									<th>{{$totalViajes}}</th>
+									<th>{{$totalViajesGold}}</th>
+									<th>{{$ahorroTotal}}</th>
+								</tr>
+							</tfoot>
+							<thead>
+
+							</thead>
                         @else
 						    <h1>No has realizado ningún viaje</h1>
 						@endif 
                     </table>
                     
-                    @if($misViajes[0] !== null)
+                    {{-- @if($misViajes[0] !== null)
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -86,7 +112,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                    @endif 
+                    @endif  --}}
 					@if(Session::has('message'))
 					<div class="alert alert-danger alert-dismissible" role="alert">
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

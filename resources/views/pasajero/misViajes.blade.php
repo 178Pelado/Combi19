@@ -29,14 +29,27 @@
 								<th>Combi</th>
 								<th>Insumos</th> {{--del pasaje--}}
 								<th>Fecha</th>
-								<th>Precio</th> {{--del pasaje--}}
+								<th>Precio Viaje</th>
+								<th>Precio Total</th>
+								<th>Descuento Gold</th>
+								<th>Precio Final</th> {{--del pasaje--}}
 								<th>Acciones</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($misViajes as $viaje)
 							<?php
-							$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get());
+								$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get());
+								$insumos = (App\Models\Insumos_pasaje::withTrashed()->where('pasaje_id', '=', $pasaje[0]->id)->get());
+								
+								// calculando el precio para un viaje
+								$costo_insumos = 0;
+								foreach ($insumos as $insumo) { 
+									$costo_insumos += ($insumo->precio_al_reservar * $insumo->cantidad); //sumo lo que costaron los insumos en aquel entonces
+								}
+								$total = $pasaje[0]->precio_viaje + $costo_insumos; //sumo el precio del viaje en aquel entonces + $costo_insumos
+								$totalGold = $pasaje[0]->precio; //precio Gold
+								$ahorro = $total - $totalGold; //cuánto ahorré
 							?>
 							<tr>
 								<?php
@@ -47,26 +60,22 @@
 								<td>{{$viaje->combi->patente}}</td>
 								<td>
 									<dl class="dl-horizontal">
-										<?php
-										$insumos = (App\Models\Insumos_pasaje::withTrashed()->where('pasaje_id', '=', $pasaje[0]->id)->get());
-										?>
 										@foreach ($insumos as $insumo)
-										<dt>{{$insumo->insumo->nombre}} <small>(x{{$insumo->cantidad}})</small></dt>
+										<dt>{{$insumo->insumo->nombre}} <small>${{$insumo->precio_al_reservar}} (x{{$insumo->cantidad}})</small></dt>
 										<dd>{{$insumo->insumo->descripcion}}</dd>
 										@endforeach
 									</dl>
 								</td>
 								<td>{{$viaje->fecha}}</td>
-								<td>{{$pasaje[0]->precio}}</td>
+								<td>{{$viaje->precio}}</td>
+								<td>{{$total}}</td>
+								<td>{{$ahorro}}</td> {{-- si no hubo descuento gold será 0 --}}
+								<td>{{$totalGold}}</td> {{-- si no hubo descuento gold será igual al total --}}
 								<td>
-									<a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-									<form action="#" class="formulario-eliminar" method="POST">
-										@csrf
-										@method('delete')
-										<button class="delete" title="Delete" data-toggle="tooltip" style="border:none;background-color: Transparent;"><i class="material-icons">&#xE872;</i></button>
-									</form>
 									@if($viaje->estado == 3 && count($viaje->comentarios) == 0)
 									<button class="btn btn-primary btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}">Comentar</button>
+									@else
+									<button class="btn btn-secondary btn-sm shadow-none" type="button" data-toggle="modal" disabled>Comentar</button>
 									@endif
 								</td>
 								<!-- Modal -->
