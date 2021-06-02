@@ -10,6 +10,12 @@
                 <div class="card-header">{{ __('Buscar Viaje') }}</div>
 
                 <div class="card-body">
+                    @if(Session::has('viajeCargado'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            {{Session::get('viajeCargado')}}
+                        </div>
+                    @endif
                     <form method="POST" action="{{route('buscarViajeConDatos')}}">
                         @csrf
                         <div class="row">
@@ -162,7 +168,7 @@
                                             </div>
                                             <div class="modal-footer btn-group" role="group">
                                                 @if($asientos_disponibles > 0)
-                                                    <a href="#" class="btn btn-primary">
+                                                    <a href="{{route('cart.addViaje', $viaje->id)}}" class="btn btn-primary">
                                                         {{ __('Comprar pasaje para mi') }}
                                                     </a>
                                                     <a href="#" class="btn btn-primary">

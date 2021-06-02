@@ -15,6 +15,7 @@ use App\Http\Controllers\Chofer1Controller;
 use App\Http\Controllers\Pasajero1Controller;
 use App\Http\Controllers\VisitanteController;
 use App\Http\Controllers\HomeVisitanteController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -104,3 +105,17 @@ Route::resource('/visitante', VisitanteController::class);
 Auth::routes();
 
 Route::get('combi19/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('combi19/listarInsumosViaje{viaje_id}', [InsumoController::class, 'listarInsumosViaje'])->name('combi19.listarInsumosViaje');
+
+//Carrito de compras
+
+Route::post('/cart-add', [CartController::class, 'add'])->name('cart.add');
+
+Route::get('/cart-addViaje{viaje_id}', [CartController::class, 'addViaje'])->name('cart.addViaje');
+
+Route::get('/cart-checkout', [CartController::class, 'cart'])->name('cart.checkout');
+
+Route::post('/cart-clear', [CartController::class, 'clear'])->name('cart.clear');
+
+Route::post('/cart-removeitem', [CartController::class, 'removeitem'])->name('cart.removeitem');

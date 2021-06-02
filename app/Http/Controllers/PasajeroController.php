@@ -73,7 +73,6 @@ class PasajeroController extends Controller
   }
 
   public function buscarViaje(){
-    $viajes = Viaje::where('estado', '=', 1)->get();
     $ciudadO = null;
     $ciudadD = null;
     $precio = null;
