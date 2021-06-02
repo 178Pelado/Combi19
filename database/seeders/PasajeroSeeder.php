@@ -22,5 +22,13 @@ class PasajeroSeeder extends Seeder
         	'contraseña' => '123456',
         	'fecha_de_nacimiento' => '2000-08-17'
         ]);
+        Pasajero::create([
+        	'nombre' => 'pasajero',
+        	'apellido' => 'Mosqueira Jurado',
+        	'dni' => '123456',
+        	'email' => 'pasajero@gmail.com',
+        	'contraseña' => '12345678',
+        	'fecha_de_nacimiento' => '2000-08-17'
+        ]);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 //Necesitamos agregar el middleware que creamos anteriormente.
 use Illuminate\Http\Middleware\Pasajero;
+use App\Models\Comentario;
 
 class Pasajero1Controller extends Controller
 {
@@ -20,8 +21,8 @@ class Pasajero1Controller extends Controller
      */
     public function index()
     {
-        //
-        return view('pasajero'); 
+        $comentarios = Comentario::get();
+        return view('homeGeneral', compact('comentarios'));
     }
 
     /**

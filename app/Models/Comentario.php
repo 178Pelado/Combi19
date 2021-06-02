@@ -19,4 +19,8 @@ class Comentario extends Model
         'texto',
     ];
     protected $table = "comentarios";
+
+    public function pasajero(){
+      return $this->belongsTo('App\Models\Pasajero', 'pasajero_id');
+    }
 }
