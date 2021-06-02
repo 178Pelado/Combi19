@@ -51,6 +51,7 @@
       <div class="card">
         <div class="card-header">{{ __('Comentarios') }}</div>
         <div class="card-body">
+          @if (count($comentarios) > 0)
           @foreach ($comentarios as $comentario)
           <div class="row">
             <div class="col-md-10">
@@ -63,6 +64,9 @@
           </div>
           <hr style="width:100%;">
           @endforeach
+          @else
+          <h1>No hay comentarios</h1>
+          @endif
         </div>
       </div>
     </div>

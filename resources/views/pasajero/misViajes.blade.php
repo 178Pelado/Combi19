@@ -39,17 +39,17 @@
 						<tbody>
 							@foreach ($misViajes as $viaje)
 							<?php
-								$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get());
-								$insumos = (App\Models\Insumos_pasaje::withTrashed()->where('pasaje_id', '=', $pasaje[0]->id)->get());
+							$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get());
+							$insumos = (App\Models\Insumos_pasaje::withTrashed()->where('pasaje_id', '=', $pasaje[0]->id)->get());
 
-								// calculando el precio para un viaje
-								$costo_insumos = 0;
-								foreach ($insumos as $insumo) {
-									$costo_insumos += ($insumo->precio_al_reservar * $insumo->cantidad); //sumo lo que costaron los insumos en aquel entonces
-								}
-								$total = $pasaje[0]->precio_viaje + $costo_insumos; //sumo el precio del viaje en aquel entonces + $costo_insumos
-								$totalGold = $pasaje[0]->precio; //precio Gold
-								$ahorro = $total - $totalGold; //cuánto ahorré
+							// calculando el precio para un viaje
+							$costo_insumos = 0;
+							foreach ($insumos as $insumo) {
+								$costo_insumos += ($insumo->precio_al_reservar * $insumo->cantidad); //sumo lo que costaron los insumos en aquel entonces
+							}
+							$total = $pasaje[0]->precio_viaje + $costo_insumos; //sumo el precio del viaje en aquel entonces + $costo_insumos
+							$totalGold = $pasaje[0]->precio; //precio Gold
+							$ahorro = $total - $totalGold; //cuánto ahorré
 							?>
 							<tr>
 								<?php
@@ -72,17 +72,17 @@
 								<td>{{$ahorro}}</td> {{-- si no hubo descuento gold será 0 --}}
 								<td>{{$totalGold}}</td> {{-- si no hubo descuento gold será igual al total --}}
 								<td>
-									@foreach ($pasajes as $pasaje)
-									@if ($pasaje->viaje_id == $viaje->id)
-										<?php
-										$pasajeActual = $pasaje
-										?>
-									@endif
-									@endforeach
+									<?php
+									$pasajeActual = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->get()->first());
+									?>
 									@if($viaje->estado == 3 && count($pasajeActual->comentarios) == 0)
 									<button class="btn btn-primary btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}">Comentar</button>
-									@else
-									<button class="btn btn-secondary btn-sm shadow-none" type="button" data-toggle="modal" disabled>Comentar</button>
+									@endif
+									@if (count($pasajeActual->comentarios) == 1)
+									<div class="btn-group-vertical">
+										<button class="btn btn-primary btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModalEdit{{$viaje->id}}">Editar comentario</button>
+										<a class="btn btn-danger btn-sm shadow-none" type="button">Eliminar comentario</a>
+									</div>
 									@endif
 								</td>
 								<!-- Modal -->
@@ -133,7 +133,7 @@
 																		@csrf
 																		<div class="bg-light p-2">
 																			<div class="d-flex flex-row align-items-start">
-																				<textarea class="form-control ml-1 shadow-none textarea" name='comentario'></textarea></div>
+																				<textarea class="form-control ml-1 shadow-none textarea" name='comentario' maxlength="140" required></textarea></div>
 																				@error('comentario')
 																				<small>{{$message}}</small>
 																				@enderror
@@ -151,6 +151,73 @@
 												</div>
 											</div>
 										</div>
+										<!-- Modal para editar -->
+										<div class="modal fade" id="exampleModalEdit{{$viaje->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="exampleModalLabel">Información del viaje</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">
+
+														<div class="row">
+															<div class="form-group col-md-12">
+																<label class="col-form-label text-md-right">
+																	Ruta: {{$viaje->ruta->origen->nombre}} - {{$viaje->ruta->destino->nombre}}
+																</label>
+															</div>
+															<div class="form-group col-md-12">
+																<label class="col-form-label text-md-right">
+																	Descripción: {{$viaje->ruta->descripcion}}
+																</label>
+															</div>
+															<div class="form-group col-md-12">
+																<label class="col-form-label text-md-right">
+																	Tipo de combi: {{$viaje->combi->tipo}}
+																</label>
+															</div>
+															<div class="form-group col-md-12">
+																<label class="col-form-label text-md-right">
+																	Fecha: {{$viaje->fecha}}
+																</label>
+															</div>
+															<div class="form-group col-md-12">
+																<label class="col-form-label text-md-right">
+																	Precio: {{$viaje->precio}}
+																</label>
+															</div>
+														</div>
+														<div class="modal-footer btn-group" role="group">
+															<div class="container mt-5">
+																<div class="d-flex justify-content-center row">
+																	<div class="col-md-12">
+																		<div class="d-flex flex-column comment-section">
+																			<form action="{{route('combi19.updateComentario', [$pasajeActual, Auth::user()->email])}}" method="POST">
+																				@csrf @method('PUT')
+																				<div class="bg-light p-2">
+																					<div class="d-flex flex-row align-items-start">
+
+																						<textarea class="form-control ml-1 shadow-none textarea" name='comentario' maxlength="140" required></textarea></div>
+																						@error('comentario')
+																						<small>{{$message}}</small>
+																						@enderror
+																						<div class="mt-2 text-right">
+																							<button class="btn btn-primary" type="submit">Comentar</button>
+																							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button></div>
+																						</div>
+																					</form>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
 									</tr>
 									@endforeach
 								</tbody>

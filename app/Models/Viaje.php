@@ -40,4 +40,8 @@ class Viaje extends Model
     public function comentarios(){
       return $this->hasMany('App\Models\Comentario', 'viaje_id');
     }
+
+    public function pasaje(){
+      return $this->hasMany('App\Models\Pasaje', 'viaje_id');
+    }
 }
