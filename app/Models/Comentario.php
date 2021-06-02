@@ -13,14 +13,22 @@ class Comentario extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'viaje_id',
-        'pasajero_id',
-        'texto',
-    ];
+
     protected $table = "comentarios";
 
+    protected $fillable = [
+        'texto',
+    ];
+    
     public function pasajero(){
       return $this->belongsTo('App\Models\Pasajero', 'pasajero_id');
+    }
+
+    public function viaje(){
+      return $this->belongsTo('App\Models\Viaje', 'viaje_id');
+    }
+
+    public function pasaje(){
+      return $this->belongsTo('App\Models\Pasaje', 'pasaje_id');
     }
 }

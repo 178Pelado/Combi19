@@ -73,7 +73,14 @@
 								<td>{{$totalGold}}</td> {{-- si no hubo descuento gold será igual al total --}}
 								<td>
 									<?php
-									$pasajeActual = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->get()->first());
+										$pasajeActual = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=', $pasajero->id)->get()->first());
+										$comentario = (App\Models\Comentario::where('viaje_id','=', $viaje->id)->where('pasajero_id','=', $pasajero->id)->first());
+										if($comentario !== null){
+											$texto = $comentario->texto;
+										}
+										else {
+											$texto = '';
+										}
 									?>
 									@if($viaje->estado == 3 && count($pasajeActual->comentarios) == 0)
 									<button class="btn btn-primary btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}">Comentar</button>
@@ -199,10 +206,10 @@
 																				@csrf @method('PUT')
 																				<div class="bg-light p-2">
 																					<div class="d-flex flex-row align-items-start">
-
-																						<textarea class="form-control ml-1 shadow-none textarea" name='comentario' maxlength="140" required></textarea></div>
+																						<textarea class="form-control ml-1 shadow-none textarea" name='comentario' maxlength="140" required>{{$texto}}</textarea>
+																					</div>
 																						@error('comentario')
-																						<small>{{$message}}</small>
+																							<small>{{$message}}</small>
 																						@enderror
 																						<div class="mt-2 text-right">
 																							<button class="btn btn-primary" type="submit">Comentar</button>
@@ -222,7 +229,7 @@
 									@endforeach
 								</tbody>
 								@else
-								<h1>No has realizado ningún viaje</h1>
+									<h1>No has realizado ningún viaje</h1>
 								@endif
 							</table>
 							Las acciones serían comentar si finalizó y cancelar si está pendiente

@@ -22,11 +22,11 @@ class Pasaje extends Model
     ];
     protected $table = "pasajes";
 
-    function viaje(){
+    public function viaje(){
         return Viaje::where('id','=',$this->id_viaje)->get()->first();
     }
 
     public function comentarios(){
-      return $this->hasMany('App\Models\Comentario', 'pasaje_id');
+        return $this->hasMany('App\Models\Comentario', 'pasaje_id');
     }
 }
