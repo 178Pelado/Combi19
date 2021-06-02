@@ -41,10 +41,10 @@
 							<?php
 								$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get());
 								$insumos = (App\Models\Insumos_pasaje::withTrashed()->where('pasaje_id', '=', $pasaje[0]->id)->get());
-								
+
 								// calculando el precio para un viaje
 								$costo_insumos = 0;
-								foreach ($insumos as $insumo) { 
+								foreach ($insumos as $insumo) {
 									$costo_insumos += ($insumo->precio_al_reservar * $insumo->cantidad); //sumo lo que costaron los insumos en aquel entonces
 								}
 								$total = $pasaje[0]->precio_viaje + $costo_insumos; //sumo el precio del viaje en aquel entonces + $costo_insumos
@@ -72,7 +72,14 @@
 								<td>{{$ahorro}}</td> {{-- si no hubo descuento gold será 0 --}}
 								<td>{{$totalGold}}</td> {{-- si no hubo descuento gold será igual al total --}}
 								<td>
-									@if($viaje->estado == 3 && count($viaje->comentarios) == 0)
+									@foreach ($pasajes as $pasaje)
+									@if ($pasaje->viaje_id == $viaje->id)
+										<?php
+										$pasajeActual = $pasaje
+										?>
+									@endif
+									@endforeach
+									@if($viaje->estado == 3 && count($pasajeActual->comentarios) == 0)
 									<button class="btn btn-primary btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}">Comentar</button>
 									@else
 									<button class="btn btn-secondary btn-sm shadow-none" type="button" data-toggle="modal" disabled>Comentar</button>
@@ -122,7 +129,7 @@
 														<div class="d-flex justify-content-center row">
 															<div class="col-md-12">
 																<div class="d-flex flex-column comment-section">
-																	<form action="{{route('combi19.storeComentario', [$viaje, Auth::user()->email])}}" method="POST">
+																	<form action="{{route('combi19.storeComentario', [$pasajeActual, Auth::user()->email])}}" method="POST">
 																		@csrf
 																		<div class="bg-light p-2">
 																			<div class="d-flex flex-row align-items-start">

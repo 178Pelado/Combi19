@@ -216,7 +216,7 @@ class PasajeroController extends Controller
     $fecha = date("Y-m-t", strtotime($fechaActual)); //ultimo dia del mes actual
     $suscripcion->fecha_baja = $fecha;
     $suscripcion->save();
-    
+
     Session::flash('messageSI', 'Has cancelado tu suscripción Gold satisfactoriamente, estará activa hasta que finalice el mes');
     return redirect()->route('combi19.suscripcion', $emailPasajero); //recarga la pagina de suscripcion
   }
@@ -233,18 +233,19 @@ class PasajeroController extends Controller
     $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
     $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->paginate();
     // viajes realizados por el usuario
-    return view('pasajero.misViajes', compact('pasajero', 'misViajes'));
+    $pasajes = Pasaje::where('estado', '=', 3)->where('pasajero_id', '=', $pasajero->id)->get();
+    return view('pasajero.misViajes', compact('pasajero', 'misViajes', 'pasajes'));
   }
 
   public function realizarComentario(){
     return view('pasajero.realizarComentario');
   }
 
-  public function storeComentario(StoreComentario $request, Viaje $viaje, $emailPasajero){
-      $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
+  public function storeComentario(StoreComentario $request, Pasaje $pasaje, $emailPasajero){
       $comentario = new Comentario();
-      $comentario->viaje_id = $viaje->id;
-      $comentario->pasajero_id = $pasajero->id;
+      $comentario->viaje_id = $pasaje->viaje_id;
+      $comentario->pasajero_id = $pasaje->pasajero_id;
+      $comentario->pasaje_id = $pasaje->id;
     	$comentario->texto = $request->comentario;
       $comentario->save();
       return redirect()->route('combi19.misViajes', [$emailPasajero]);

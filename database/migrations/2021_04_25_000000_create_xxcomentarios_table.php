@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateXcomentariosTable extends Migration
+class CreateXXcomentariosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,6 +17,7 @@ class CreateXcomentariosTable extends Migration
             $table->id();
             $table->foreignId('viaje_id')->constrained('viajes');
             $table->foreignId('pasajero_id')->constrained('pasajeros');
+            $table->foreignId('pasaje_id')->constrained('pasajes');
             $table->string('texto');
             $table->softDeletes();
             $table->timestamps();

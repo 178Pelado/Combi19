@@ -23,6 +23,10 @@ class Pasaje extends Model
     protected $table = "pasajes";
 
     function viaje(){
-        return Viaje::where('id','=',$this->id_viaje)->get()->first();  
+        return Viaje::where('id','=',$this->id_viaje)->get()->first();
+    }
+
+    public function comentarios(){
+      return $this->hasMany('App\Models\Comentario', 'pasaje_id');
     }
 }
