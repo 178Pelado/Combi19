@@ -250,4 +250,9 @@ class PasajeroController extends Controller
       $comentario->save();
       return redirect()->route('combi19.misViajes', [$emailPasajero]);
   }
+
+  public function updateComentario(UpdateComentario $request, $emailPasajero){
+    $pasajero->update($request->all());
+    return redirect()->route('combi19.misViajes', [$emailPasajero]);
+  }
 }

@@ -26,7 +26,7 @@ class StoreComentario extends FormRequest
   public function rules()
   {
     return [
-      'comentario' => 'required',
+      'comentario' => 'required|max:140',
     ];
   }
 }
