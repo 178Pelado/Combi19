@@ -92,6 +92,7 @@ Route::get('combi19/misViajes{pasajero}', [PasajeroController::class, 'misViajes
 Route::get('combi19/realizarComentario', [PasajeroController::class, 'realizarComentario'])->name('combi19.realizarComentario');
 Route::post('combi19/storeComentario/{pasaje}/{pasajero}', [PasajeroController::class, 'storeComentario'])->name('combi19.storeComentario');
 Route::put('combi19/updateComentario{comentario}/{pasajero}', [PasajeroController::class, 'updateComentario'])->name('combi19.updateComentario');
+Route::delete('combi19/eliminarComentario{comentario}/{pasajero}', [PasajeroController::class, 'eliminarComentario'])->name('combi19.eliminarComentario');
 });
 Route::get('/buscarViaje', [PasajeroController::class, 'buscarViaje'])->name('buscarViaje');
 Route::post('/buscarViajeConDatos', [PasajeroController::class, 'buscarViajeConDatos'])->name('buscarViajeConDatos');

@@ -247,11 +247,20 @@ class PasajeroController extends Controller
       $comentario->pasaje_id = $pasaje->id;
     	$comentario->texto = $request->comentario;
       $comentario->save();
+      Session::flash('messageSI', 'Comentario realizado con éxito');
       return redirect()->route('combi19.misViajes', [$emailPasajero]);
   }
 
-  public function updateComentario(UpdateComentario $request, $emailPasajero){
-    $pasajero->update($request->all());
+  public function updateComentario(Request $request, Comentario $comentario, $emailPasajero){
+    $comentario->texto = $request->comentario;
+    $comentario->save();
+    Session::flash('messageSI', 'Comentario actualizado con éxito');
+    return redirect()->route('combi19.misViajes', [$emailPasajero]);
+  }
+
+  public function eliminarComentario(Comentario $comentario, $emailPasajero){
+    $comentario->delete();
+    Session::flash('messageNO', 'Comentario eliminado con éxito');
     return redirect()->route('combi19.misViajes', [$emailPasajero]);
   }
 }

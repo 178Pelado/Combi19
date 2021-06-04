@@ -9,7 +9,7 @@
 			<div class="card">
 				<div class="card-header">{{ __('Mis viajes') }}</div>
 				<div class="card-body">
-					{{-- @if(Session::has('messageNO'))
+					@if(Session::has('messageNO'))
 					<div class="alert alert-danger alert-dismissible" role="alert">
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						{{Session::get('messageNO')}}
@@ -19,7 +19,7 @@
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						{{Session::get('messageSI')}}
 					</div>
-					@endif --}}
+					@endif
 					<table class="table table-bordered">
 						@if($misViajes[0] !== null)
 						<thead>
@@ -73,14 +73,14 @@
 								<td>{{$totalGold}}</td> {{-- si no hubo descuento gold será igual al total --}}
 								<td>
 									<?php
-										$pasajeActual = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=', $pasajero->id)->get()->first());
-										$comentario = (App\Models\Comentario::where('viaje_id','=', $viaje->id)->where('pasajero_id','=', $pasajero->id)->first());
-										if($comentario !== null){
-											$texto = $comentario->texto;
-										}
-										else {
-											$texto = '';
-										}
+									$pasajeActual = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=', $pasajero->id)->get()->first());
+									$comentario = (App\Models\Comentario::where('viaje_id','=', $viaje->id)->where('pasajero_id','=', $pasajero->id)->first());
+									if($comentario !== null){
+										$texto = $comentario->texto;
+									}
+									else {
+										$texto = '';
+									}
 									?>
 									@if($viaje->estado == 3 && count($pasajeActual->comentarios) == 0)
 									<button class="btn btn-primary btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}">Comentar</button>
@@ -88,7 +88,11 @@
 									@if (count($pasajeActual->comentarios) == 1)
 									<div class="btn-group-vertical">
 										<button class="btn btn-primary btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModalEdit{{$viaje->id}}">Editar comentario</button>
-										<a class="btn btn-danger btn-sm shadow-none" type="button">Eliminar comentario</a>
+										<form action="{{route('combi19.eliminarComentario', [$comentario, Auth::user()->email])}}" class="formulario-eliminar" method="POST">
+											@csrf
+											@method('delete')
+											<button class="btn btn-danger btn-sm shadow-none" data-toggle="tooltip">Eliminar comentario</button>
+										</form>
 									</div>
 									@endif
 								</td>
@@ -202,21 +206,22 @@
 																<div class="d-flex justify-content-center row">
 																	<div class="col-md-12">
 																		<div class="d-flex flex-column comment-section">
-																			<form action="{{route('combi19.updateComentario', [$pasajeActual, Auth::user()->email])}}" method="POST">
+																			@if ($comentario != null)
+																			<form action="{{route('combi19.updateComentario', [$comentario, Auth::user()->email])}}" method="POST">
 																				@csrf @method('PUT')
 																				<div class="bg-light p-2">
 																					<div class="d-flex flex-row align-items-start">
 																						<textarea class="form-control ml-1 shadow-none textarea" name='comentario' maxlength="140" required>{{$texto}}</textarea>
 																					</div>
-																						@error('comentario')
-																							<small>{{$message}}</small>
-																						@enderror
-																						<div class="mt-2 text-right">
-																							<button class="btn btn-primary" type="submit">Comentar</button>
-																							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button></div>
-																						</div>
-																					</form>
-																				</div>
+																					@error('comentario')
+																					<small>{{$message}}</small>
+																					@enderror
+																					<div class="mt-2 text-right">
+																						<button class="btn btn-primary" type="submit">Editar comentario</button>
+																						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button></div>
+																					</div>
+																				</form>
+																				@endif
 																			</div>
 																		</div>
 																	</div>
@@ -225,24 +230,25 @@
 														</div>
 													</div>
 												</div>
-									</tr>
-									@endforeach
-								</tbody>
-								@else
+											</div>
+										</tr>
+										@endforeach
+									</tbody>
+									@else
 									<h1>No has realizado ningún viaje</h1>
+									@endif
+								</table>
+								Las acciones serían comentar si finalizó y cancelar si está pendiente
+								@if(Session::has('message'))
+								<div class="alert alert-danger alert-dismissible" role="alert">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									{{Session::get('message')}}
+								</div>
 								@endif
-							</table>
-							Las acciones serían comentar si finalizó y cancelar si está pendiente
-							@if(Session::has('message'))
-							<div class="alert alert-danger alert-dismissible" role="alert">
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								{{Session::get('message')}}
+								{{$misViajes->links()}}
 							</div>
-							@endif
-							{{$misViajes->links()}}
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		@endsection
+			@endsection
