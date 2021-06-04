@@ -261,7 +261,7 @@ class PasajeroController extends Controller
 
   public function eliminarComentario(Comentario $comentario, $emailPasajero){
     $comentario->delete();
-    Session::flash('messageNO', 'Comentario eliminado con éxito');
+    Session::flash('messageSI', 'Comentario eliminado con éxito');
     return redirect()->route('combi19.misViajes', [$emailPasajero]);
   }
 }
