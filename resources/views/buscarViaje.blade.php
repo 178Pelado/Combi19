@@ -171,14 +171,14 @@
                                                         <a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $pasajero->id])}}" class="btn btn-primary">
                                                             {{ __('Agregar insumos') }}
                                                         </a>
-                                                        <a href="#" class="btn btn-primary">
+                                                        <a href="{{route('combi19.cargarDatosTercero', $viaje->id)}}" class="btn btn-primary">
                                                             {{ __('Comprar pasaje para otro') }}
                                                         </a>
                                                     @else
-                                                        <a href="{{route('cart.addViaje', $viaje->id)}}" class="btn btn-primary">
+                                                        <a href="{{route('cart.addViaje', $viaje->id, 1)}}" class="btn btn-primary">
                                                             {{ __('Comprar pasaje para mi') }}
                                                         </a>
-                                                        <a href="#" class="btn btn-primary">
+                                                        <a href="{{route('combi19.cargarDatosTercero', $viaje->id)}}" class="btn btn-primary">
                                                             {{ __('Comprar pasaje para otro') }}
                                                         </a>
                                                     @endif

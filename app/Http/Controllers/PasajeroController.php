@@ -21,6 +21,7 @@ use App\Http\Requests\UpdatePasajeros;
 use App\Http\Requests\StoreSuscripcion;
 use App\Http\Requests\StoreTarjeta;
 use App\Http\Requests\StoreComentario;
+use App\Http\Requests\StoreTercero;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -265,5 +266,21 @@ class PasajeroController extends Controller
     $comentario->delete();
     Session::flash('messageSI', 'Comentario eliminado con éxito');
     return redirect()->route('combi19.misViajes', [$emailPasajero]);
+  }
+
+  public function cargarDatosTercero($viaje_id){
+    return view('pasajero.reservarPasajeTercero', compact('viaje_id'));
+  }
+
+  public function reservarPasajeTercero(StoreTercero $request){
+    $tercero = new Pasajero();
+    $tercero->nombre = $request->nombre;
+    $tercero->apellido = $request->apellido;
+    $tercero->dni = $request->dni;
+    $tercero->email = '';
+    $tercero->contraseña = '';
+    $tercero->fecha_de_nacimiento = new Carbon();
+    $tercero->save();
+    return redirect()->route('cart.addViaje', [$request->viaje_id, $tercero]);
   }
 }

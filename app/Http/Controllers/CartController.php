@@ -43,8 +43,13 @@ class CartController extends Controller
         return back();
     }
 
-    public function addViaje($viaje_id){  
-        $pasajero = Pasajero::where('email', '=', Auth::user()->email)->first();
+    public function addViaje($viaje_id, $esUsuario){
+        if($esUsuario == 1){
+            $pasajero = Pasajero::where('email', '=', Auth::user()->email)->first();
+        }  
+        else{
+            $pasajero = Pasajero::find($esUsuario);
+        }
         $viaje = Viaje::find($viaje_id);
         $nombre = $viaje->ruta->origen->nombre . ' - ' . $viaje->ruta->destino->nombre;
         Cart::add(
@@ -59,7 +64,7 @@ class CartController extends Controller
         $tipo_de_combi = null;
         $fecha = null;
         $viajes = Viaje::where('estado', '=', 1)->get();
-        $pasaje = new Pasaje();
+        $pasaje = new Pasaje();        
         $pasaje->viaje_id = $viaje_id; 
         $pasaje->pasajero_id = $pasajero->id;
         $pasaje->precio_viaje = $viaje->precio;

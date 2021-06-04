@@ -9,8 +9,9 @@
 			<div class="card">
 				<div class="card-header">{{ __('Reservar pasaje para otro') }}</div>
 				<div class="card-body">
-					<form action="{{route('combi19.storePasajeTercero')}}" method="POST">
+					<form action="{{route('combi19.reservarPasajeTercero')}}" method="POST">
 						@csrf
+						<input type="hidden" name="viaje_id" value="{{$viaje_id}}">
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label text-md-right">Nombre:</label>
 							<div class="col-md-6">
