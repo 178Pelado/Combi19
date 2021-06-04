@@ -15,7 +15,7 @@
                 </div>
               </div>
               <div class="card mt-3" style="width:100%; height:50%;overflow: scroll;">
-                <div class="card-header">{{ __('Mis comentarios') }}</div>
+                <div class="card-header"><h4>Mis comentarios</h4></div>
                 <div class="card-body">
                   @if (count($comentarios) > 0)
                   @foreach ($comentarios as $comentario)
