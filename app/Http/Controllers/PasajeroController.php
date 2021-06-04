@@ -69,7 +69,8 @@ class PasajeroController extends Controller
       return view('pasajero.perfilDePasajero', compact('pasajero', 'suscripcion'));
     }
     $tarjeta = Tarjeta::where('id','=',$suscripcion->tarjeta_id)->get()->first();
-    return view('pasajero.perfilDePasajero', compact('pasajero', 'suscripcion', 'tarjeta'));
+    $comentarios = Comentario::where('pasajero_id', '=', $pasajero->id)->get();
+    return view('pasajero.perfilDePasajero', compact('pasajero', 'suscripcion', 'tarjeta', 'comentarios'));
   }
 
   public function buscarViaje(){
