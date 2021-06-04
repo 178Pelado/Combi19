@@ -108,7 +108,7 @@ Auth::routes();
 
 Route::get('combi19/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('combi19/listarInsumosViaje{viaje_id}', [InsumoController::class, 'listarInsumosViaje'])->name('combi19.listarInsumosViaje');
+Route::get('combi19/listarInsumosViaje{viaje_id}/{pasajero_id}', [InsumoController::class, 'listarInsumosViaje'])->name('combi19.listarInsumosViaje');
 
 //Carrito de compras
 

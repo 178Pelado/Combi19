@@ -34,6 +34,8 @@
                         @csrf
                         <div class="form-group row">
                             <input type="hidden" name="insumo_id" value="{{$insumo->insumo->id}}">
+                            <input type="hidden" name="viaje_id" value="{{$viaje_id}}">
+                            <input type="hidden" name="pasajero_id" value="{{$pasajero_id}}">
                             <input type="number" name="cantidad" class="form-control" value="1">
                             
                         </div>

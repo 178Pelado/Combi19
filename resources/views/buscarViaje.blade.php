@@ -13,7 +13,7 @@
                     @if(Session::has('viajeCargado'))
                         <div class="alert alert-success alert-dismissible" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            {{Session::get('viajeCargado')}}
+                            {{Session::get('viajeCargado')}}<a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $pasajero->id])}}">Agregar insumos al carrito</a>
                         </div>
                     @endif
                     <form method="POST" action="{{route('buscarViajeConDatos')}}">
@@ -118,7 +118,6 @@
                                     <td>
                                         <button type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}"><i class="material-icons">&#xE417;</i></button>
                                     </td>
-
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal{{$viaje->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                       <div class="modal-dialog">
@@ -168,12 +167,21 @@
                                             </div>
                                             <div class="modal-footer btn-group" role="group">
                                                 @if($asientos_disponibles > 0)
-                                                    <a href="{{route('cart.addViaje', $viaje->id)}}" class="btn btn-primary">
-                                                        {{ __('Comprar pasaje para mi') }}
-                                                    </a>
-                                                    <a href="#" class="btn btn-primary">
-                                                        {{ __('Comprar pasaje para otro') }}
-                                                    </a>
+                                                    @if($pasajero->tienePasaje($viaje->id, $pasajero->id))
+                                                        <a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $pasajero->id])}}" class="btn btn-primary">
+                                                            {{ __('Agregar insumos') }}
+                                                        </a>
+                                                        <a href="#" class="btn btn-primary">
+                                                            {{ __('Comprar pasaje para otro') }}
+                                                        </a>
+                                                    @else
+                                                        <a href="{{route('cart.addViaje', $viaje->id)}}" class="btn btn-primary">
+                                                            {{ __('Comprar pasaje para mi') }}
+                                                        </a>
+                                                        <a href="#" class="btn btn-primary">
+                                                            {{ __('Comprar pasaje para otro') }}
+                                                        </a>
+                                                    @endif
                                                 @else
                                                     <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">
                                                         {{ __('Comprar pasaje para mi') }}

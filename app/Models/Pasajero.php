@@ -22,4 +22,9 @@ class Pasajero extends Model
         'fecha_de_nacimiento',
     ];
     protected $table = "pasajeros";
+
+    public function tienePasaje($viaje_id, $pasajero_id){
+        $pasaje = Pasaje::where('viaje_id', '=', $viaje_id)->where('pasajero_id', '=', $pasajero_id)->first();
+        return ($pasaje != null);
+    }
 }

@@ -13,6 +13,7 @@ use App\Models\Comentario;
 use App\Models\Suscripcion;
 use App\Models\Tarjeta;
 use Session;
+use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePasajeros;
@@ -80,7 +81,8 @@ class PasajeroController extends Controller
     $tipo_de_combi = null;
     $fecha = null;
     $viajes = Viaje::where('estado', '=', 1)->get();
-    return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha'));
+    $pasajero = Pasajero::where('email', '=', Auth::user()->email)->first();
+    return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha', 'pasajero'));
   }
 
   public function buscarViajeConDatos(request $request){
