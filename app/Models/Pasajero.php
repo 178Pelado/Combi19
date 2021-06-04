@@ -19,7 +19,6 @@ class Pasajero extends Model
         'dni',
         'email',
         'contraseña',
-        'fecha_de_nacimiento',
     ];
     protected $table = "pasajeros";
 

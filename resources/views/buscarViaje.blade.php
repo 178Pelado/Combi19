@@ -52,7 +52,7 @@
                             <div class="form-group col-md-4">
                                 <label class="col-form-label text-md-right">Tipo de Combi:</label>
                                 <div>
-                                    <select class="form-control" name="tipo_de_combi">            
+                                    <select class="form-control" name="tipo_de_combi">
                                         @if($tipo_de_combi == 'Cómoda')
                                             <option value='Super Cómoda'>
                                                 Super Cómoda
@@ -67,7 +67,7 @@
                                             <option value='Cómoda'>
                                                 Cómoda
                                             </option>
-                                        @endif                                                                            
+                                        @endif
                                     </select>
                                 </div>
                             </div>
@@ -81,7 +81,7 @@
                                         @endif
                                     </div>
                                 </div>
-                        
+
                             <div class="form-group col-md-4">
                                 <label class="col-form-label text-md-right"></label>
                                 <div>
@@ -134,35 +134,35 @@
                                                 <div class="form-group col-md-12">
                                                     <label class="col-form-label text-md-right">
                                                         Ruta: {{$viaje->ruta->origen->nombre}} - {{$viaje->ruta->destino->nombre}}
-                                                    </label>  
+                                                    </label>
                                                 </div>
                                                 <div class="form-group col-md-12">
                                                     <label class="col-form-label text-md-right">
                                                         Descripción: {{$viaje->ruta->descripcion}}
-                                                    </label>  
+                                                    </label>
                                                 </div>
                                                 <div class="form-group col-md-12">
                                                     <label class="col-form-label text-md-right">
                                                         Tipo de combi: {{$viaje->combi->tipo}}
-                                                    </label>  
+                                                    </label>
                                                 </div>
                                                 <div class="form-group col-md-12">
                                                     <label class="col-form-label text-md-right">
                                                         Fecha: {{$viaje->fecha}}
-                                                    </label>  
+                                                    </label>
                                                 </div>
                                                 <div class="form-group col-md-12">
                                                     <label class="col-form-label text-md-right">
                                                         Precio: {{$viaje->precio}}
-                                                    </label>  
+                                                    </label>
                                                 </div>
                                                 <div class="form-group col-md-12">
                                                     <label class="col-form-label text-md-right">
                                                         <?php
-                                                            $asientos_disponibles = $viaje->combi->cantidad_asientos - count($viaje->asientos_ocupados);
+                                                            $asientos_disponibles = $viaje->combi->cantidad_asientos - count($viaje->asientos_ocupados());
                                                         ?>
                                                         Asientos disponibles: {{$asientos_disponibles}}
-                                                    </label> 
+                                                    </label>
                                                 </div>
                                             </div>
                                             <div class="modal-footer btn-group" role="group">
@@ -171,21 +171,24 @@
                                                         <a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $pasajero->id])}}" class="btn btn-primary">
                                                             {{ __('Agregar insumos') }}
                                                         </a>
-                                                        <a href="{{route('combi19.cargarDatosTercero', $viaje->id)}}" class="btn btn-primary">
-                                                            {{ __('Comprar pasaje para otro') }}
-                                                        </a>
                                                     @else
-                                                        <a href="{{route('cart.addViaje', $viaje->id, 1)}}" class="btn btn-primary">
+                                                        <a href="{{route('cart.addViaje', [$viaje->id, 1])}}" class="btn btn-primary">
                                                             {{ __('Comprar pasaje para mi') }}
                                                         </a>
-                                                        <a href="{{route('combi19.cargarDatosTercero', $viaje->id)}}" class="btn btn-primary">
-                                                            {{ __('Comprar pasaje para otro') }}
+                                                    @endif
+                                                    <a href="{{route('combi19.cargarDatosTercero', $viaje->id)}}" class="btn btn-primary">
+                                                        {{ __('Comprar pasaje para otro') }}
+                                                    </a>
+                                                @else
+                                                    @if($pasajero->tienePasaje($viaje->id, $pasajero->id))
+                                                        <a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $pasajero->id])}}" class="btn btn-primary">
+                                                            {{ __('Agregar insumos') }}
+                                                        </a>
+                                                    @else
+                                                        <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">
+                                                            {{ __('Comprar pasaje para mi') }}
                                                         </a>
                                                     @endif
-                                                @else
-                                                    <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">
-                                                        {{ __('Comprar pasaje para mi') }}
-                                                    </a>
                                                     <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">
                                                         {{ __('Comprar pasaje para otro') }}
                                                     </a>

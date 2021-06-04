@@ -42,7 +42,6 @@ class PasajeroController extends Controller
     $pasajero->dni = $request->dni;
     $pasajero->email = $request->email;
     $pasajero->contraseña = $request->clave;
-    $pasajero->fecha_de_nacimiento = $request->fecha_nacimiento;
 
     $pasajero->save();
   }
@@ -277,9 +276,8 @@ class PasajeroController extends Controller
     $tercero->nombre = $request->nombre;
     $tercero->apellido = $request->apellido;
     $tercero->dni = $request->dni;
-    $tercero->email = '';
-    $tercero->contraseña = '';
-    $tercero->fecha_de_nacimiento = new Carbon();
+    $tercero->email = null;
+    $tercero->contraseña = null;
     $tercero->save();
     return redirect()->route('cart.addViaje', [$request->viaje_id, $tercero]);
   }

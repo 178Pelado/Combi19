@@ -34,7 +34,8 @@ class Viaje extends Model
     }
 
     public function asientos_ocupados(){
-      return $this->hasMany('App\Models\Pasaje', 'id');
+      $pasajes = Pasaje::where('viaje_id', '=', $this->id)->get();
+      return ($pasajes);
     }
 
     public function comentarios(){

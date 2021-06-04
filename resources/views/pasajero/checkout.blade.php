@@ -31,6 +31,7 @@
                                 <form action="{{route('cart.removeitem')}}" method="POST">
                                     @csrf
                                     <input type="hidden" name="id" value="{{$item->id}}">
+                                    <input type="hidden" name='cantidad' value="{{$item->quantity}}">
                                     <button type="submit" class="btn btn-link btn-sm text-danger">x</button>
                                 </form>
                             </td>
@@ -51,7 +52,7 @@
            @endif
 
        </div>
-       
+
     </div>
 </div>
 @endsection
