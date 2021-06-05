@@ -29,4 +29,29 @@ class Pasaje extends Model
     public function comentarios(){
         return $this->hasMany('App\Models\Comentario', 'pasaje_id');
     }
+
+    public function insumos_asociados(){
+        $insumos_pasaje = Insumos_pasaje::where('pasaje_id', '=', $this->id)->get();
+        $insumos = collect();
+        foreach($insumos_pasaje as $insumo_pasaje){
+            $insumos->push(Insumo::find($insumo_pasaje->insumo_id));
+        }
+        return $insumos;
+    }
+
+    public function insumos_pasaje(){
+        $insumos_pasaje = Insumos_pasaje::where('pasaje_id', '=', $this->id)->get();
+        return $insumos_pasaje;
+    }
+
+    public function buscarPasaje($pasaje_id){
+        $pasaje = Pasaje::where('id', '=', $pasaje_id);
+        return $pasaje;
+    }
+
+    public function nombrePasajero(){
+        $pasajero = Pasajero::find($this->pasajero_id);
+        $nom_ape = $pasajero->nombre . ' ' . $pasajero->apellido;
+        return $nom_ape;
+    }
 }

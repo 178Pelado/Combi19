@@ -40,7 +40,7 @@
 							@foreach ($misViajes as $viaje)
 							<?php
 							$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get());
-							$insumos = (App\Models\Insumos_pasaje::withTrashed()->where('pasaje_id', '=', $pasaje[0]->id)->get());
+							$insumos = (App\Models\Insumos_pasaje::where('pasaje_id', '=', $pasaje[0]->id)->get());
 
 							// calculando el precio para un viaje
 							$costo_insumos = 0;

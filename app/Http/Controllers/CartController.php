@@ -10,6 +10,7 @@ use App\Models\Pasajero;
 use App\Models\Insumo;
 use App\Models\Viaje;
 use App\Models\Pasaje;
+use App\Models\Suscripcion;
 use App\Models\Insumos_pasaje;
 use App\Http\Requests\StoreInsumoPasaje;
 use Carbon\Carbon;
@@ -21,17 +22,16 @@ class CartController extends Controller
     public function add(StoreInsumoPasaje $request){
         $insumo = Insumo::find($request->insumo_id);
         $nom_desc = $insumo->nombre . ' ' . $insumo->descripcion;
-        Cart::add(
-            $insumo->id,
-            $nom_desc,
-            $insumo->precio,
-            $request->cantidad,
-        );
         $insumo->cantidad = $insumo->cantidad - $request->cantidad;
         $insumo->save();
 
         $pasaje = Pasaje::where('viaje_id', '=', $request->viaje_id)->where('pasajero_id', '=', $request->pasajero_id)->first();
+
         $insumo_pasaje = new Insumos_pasaje();
+
+        $pasaje->precio+= $request->cantidad * $insumo->precio;
+        $pasaje->save();
+
         $insumo_pasaje->pasaje_id = $pasaje->id;
         $insumo_pasaje->insumo_id = $insumo->id;
         $insumo_pasaje->cantidad = $request->cantidad;
@@ -44,8 +44,9 @@ class CartController extends Controller
     }
 
     public function addViaje($viaje_id, $esUsuario){
+        $usuarioAuth = Pasajero::where('email', '=', Auth::user()->email)->first();
         if($esUsuario == 1){
-            $pasajero = Pasajero::where('email', '=', Auth::user()->email)->first();
+            $pasajero = $usuarioAuth;
         }
         else{
             $pasajero = Pasajero::find($esUsuario);
@@ -53,15 +54,25 @@ class CartController extends Controller
         $viaje = Viaje::find($viaje_id);
         $nombre = $viaje->ruta->origen->nombre . ' - ' . $viaje->ruta->destino->nombre;
         $pasaje = new Pasaje();
+
+        $suscripcion = Suscripcion::where('pasajero_id', '=', $usuarioAuth->id)->first();
+        if($suscripcion != null){
+            if ($suscripcion->estoySuscripto()){
+                $pasaje->precio = $viaje->precio * 0.9;
+            }
+        }
+        else{
+            $pasaje->precio = $viaje->precio;
+        }
+
         $pasaje->viaje_id = $viaje_id;
         $pasaje->pasajero_id = $pasajero->id;
         $pasaje->precio_viaje = $viaje->precio;
-        $pasaje->precio = $viaje->precio;
         $pasaje->estado = $viaje->estado;
         $pasaje->deleted_at = new Carbon();
         $pasaje->save();
         Cart::add(
-            $pasaje->id + 100, //el 100 es para que no se choquen insumos con viajes
+            $pasaje->id,
             $nombre,
             $pasaje->precio,
             1,
@@ -85,30 +96,28 @@ class CartController extends Controller
         Cart::remove([
         'id' => $request->id,
         ]);
-        if ($request->id > 100){
-          $pasaje = Pasaje::where('id', '=', ($request->id-100))->first();
-          $insumos_pasaje = Insumos_pasaje::where('pasaje_id', '=', $pasaje->id)->get();
-          foreach ($insumos_pasaje as $insumo_pasaje) {
-            $insumo = Insumo::find($insumo_pasaje->insumo_id);
+        $pasaje = Pasaje::where('id', '=', ($request->id))->first();
+        $insumos_pasaje = Insumos_pasaje::where('pasaje_id', '=', $pasaje->id)->get();
+        foreach ($insumos_pasaje as $insumo_pasaje) {
+            $insumo = Insumo::find($insumo_pasaje->insumo_id);  
+            $insumo->cantidad+= $insumo_pasaje->cantidad;
+            $insumo->save();
             $insumo_pasaje->delete();
-            foreach (Cart::getContent() as $item) {
-              if ($item->id == $insumo->id) {
-                $insumo->cantidad = $insumo->cantidad + $item->quantity;
-                $insumo->save();
-                Cart::remove([
-                'id' => $insumo->id,
-                ]);
-              }
-            }
-          }
-          $pasaje->delete();
         }
-        else {
-          $insumo = Insumo::find($request->id);
-          $insumo->cantidad = $insumo->cantidad + $request->cantidad;
-          $insumo->save();
-        }
-        return back()->with('success',"Producto eliminado con éxito de su carrito.");
+        $pasaje->delete();
+        return back()->with('success',"Viaje eliminado con éxito de su carrito.");
+    }
+
+    public function eliminarReservaInsumo($insumo_pasaje_id){
+        $insumo_pasaje = Insumos_pasaje::find($insumo_pasaje_id);
+        $insumo = Insumo::find($insumo_pasaje->insumo_id);
+        $pasaje = Pasaje::find($insumo_pasaje->pasaje_id);
+        $pasaje->precio-= $insumo_pasaje->precio_al_reservar * $insumo_pasaje->cantidad;  
+        $insumo->cantidad+= $insumo_pasaje->cantidad;
+        $pasaje->save();
+        $insumo->save();
+        $insumo_pasaje->delete();
+        return back();
     }
 
     public function clear(){

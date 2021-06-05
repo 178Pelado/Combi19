@@ -18,7 +18,7 @@ class Insumos_pasaje extends Model
     }
 
     public function insumo(){
-        return $this->belongsTo('App\Models\Insumo', 'insumo_id')->withTrashed();
+        return $this->belongsTo('App\Models\Insumo', 'insumo_id');
     }
 
     protected $fillable = [

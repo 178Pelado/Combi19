@@ -113,6 +113,7 @@ Route::get('combi19/home', [HomeController::class, 'index'])->name('home');
 Route::get('combi19/listarInsumosViaje{viaje_id}/{pasajero_id}', [InsumoController::class, 'listarInsumosViaje'])->name('combi19.listarInsumosViaje');
 
 //Carrito de compras
+Route::get('combi19/eliminarReservaInsumo{insumo_pasaje_id}', [CartController::class, 'eliminarReservaInsumo'])->name('combi19.eliminarReservaInsumo');
 
 Route::post('/cart-add', [CartController::class, 'add'])->name('cart.add');
 

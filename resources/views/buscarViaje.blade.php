@@ -118,6 +118,7 @@
                                     <td>
                                         <button type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}"><i class="material-icons">&#xE417;</i></button>
                                     </td>
+                                    
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal{{$viaje->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                       <div class="modal-dialog">
