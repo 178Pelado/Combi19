@@ -26,4 +26,13 @@ class Pasajero extends Model
         $pasaje = Pasaje::where('viaje_id', '=', $viaje_id)->where('pasajero_id', '=', $pasajero_id)->first();
         return ($pasaje != null);
     }
+
+    public function buscarPasajeComprado($viaje_id){
+        $pasaje = Pasaje::where('viaje_id', '=', $viaje_id)->where('pasajero_id', '=', $this->id)->first();
+        if ($pasaje->deleted_at != null){
+          return false;
+        }else{
+          return true;
+        }
+      }
 }

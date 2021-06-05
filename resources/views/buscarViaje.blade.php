@@ -13,7 +13,7 @@
                     @if(Session::has('viajeCargado'))
                         <div class="alert alert-success alert-dismissible" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            {{Session::get('viajeCargado')}}<a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $pasajero->id])}}">Agregar insumos al carrito</a>
+                            {{Session::get('viajeCargado')}} <a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $pasajero->id])}}">Agregar insumos al carrito</a>
                         </div>
                     @endif
                     <form method="POST" action="{{route('buscarViajeConDatos')}}">
@@ -60,7 +60,17 @@
                                             <option value='Cómoda' selected="">
                                                 Cómoda
                                             </option>
+                                        @elseif($tipo_de_combi == 'Super Cómoda')
+                                            <option value='Super Cómoda' selected="">
+                                                Super Cómoda
+                                            </option>
+                                            <option value='Cómoda'>
+                                                Cómoda
+                                            </option>
                                         @else
+                                            <option value='' disabled selected="">
+                                                Seleccione el tipo
+                                            </option>
                                             <option value='Super Cómoda'>
                                                 Super Cómoda
                                             </option>
@@ -118,7 +128,7 @@
                                     <td>
                                         <button type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}"><i class="material-icons">&#xE417;</i></button>
                                     </td>
-                                    
+
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal{{$viaje->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                       <div class="modal-dialog">
@@ -169,9 +179,15 @@
                                             <div class="modal-footer btn-group" role="group">
                                                 @if($asientos_disponibles > 0)
                                                     @if($pasajero->tienePasaje($viaje->id, $pasajero->id))
-                                                        <a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $pasajero->id])}}" class="btn btn-primary">
-                                                            {{ __('Agregar insumos') }}
+                                                        @if($pasajero->buscarPasajeComprado($viaje->id))
+                                                        <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">
+                                                            {{ __('Pasaje comprado') }}
                                                         </a>
+                                                        @else
+                                                            <a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $pasajero->id])}}" class="btn btn-primary">
+                                                                {{ __('Agregar insumos') }}
+                                                            </a>
+                                                        @endif
                                                     @else
                                                         <a href="{{route('cart.addViaje', [$viaje->id, 1])}}" class="btn btn-primary">
                                                             {{ __('Comprar pasaje para mi') }}

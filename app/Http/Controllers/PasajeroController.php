@@ -22,6 +22,7 @@ use App\Http\Requests\StoreSuscripcion;
 use App\Http\Requests\StoreTarjeta;
 use App\Http\Requests\StoreComentario;
 use App\Http\Requests\StoreTercero;
+use App\Http\Requests\ValidateTarjeta;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -114,7 +115,8 @@ class PasajeroController extends Controller
       }
       $viajes = $viajes2;
     }
-    return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha'));
+    $pasajero = Pasajero::where('email', '=', Auth::user()->email)->first();
+    return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha', 'pasajero'));
   }
 
   public function suscripcion($emailPasajero){
@@ -197,6 +199,10 @@ class PasajeroController extends Controller
       $tarjeta->fecha_de_vencimiento = $data->fecha_vencimiento;
       $tarjeta->save();
     }
+    $tarjeta->numero = $data->numero;
+    $tarjeta->codigo = $data->codigo;
+    $tarjeta->fecha_de_vencimiento = $data->fecha_vencimiento;
+    $tarjeta->save();
 
     //la suscripcion no se valida y al parecer no es necesario, pero de ser necesario habria que hacerlo en una funcion auxiliar
     //no es necesario xq un usuario suscripto nunca va a entrar a la página de suscribirse asi que el pasajero_id siempre va a ser nuevo
@@ -206,7 +212,7 @@ class PasajeroController extends Controller
     $suscripcion->save();
 
     $pasajero = $pasajero->email; //la ruta suscripcion recibe el mail
-
+    Session::flash('messageSI', '¡Tarjeta modificada con éxito!');
     return redirect()->route('combi19.suscripcion', compact('pasajero')); //vuelve a la suscripcion del pasajero
   }
 
@@ -233,7 +239,7 @@ class PasajeroController extends Controller
 
   public function misViajes($emailPasajero){
     $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
-    $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->paginate();
+    $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id)->where('deleted_at', '=', null))->paginate();
     // viajes realizados por el usuario
     $pasajes = Pasaje::where('estado', '=', 3)->where('pasajero_id', '=', $pasajero->id)->get();
     return view('pasajero.misViajes', compact('pasajero', 'misViajes', 'pasajes'));
@@ -280,5 +286,13 @@ class PasajeroController extends Controller
     $tercero->contraseña = null;
     $tercero->save();
     return redirect()->route('cart.addViaje', [$request->viaje_id, $tercero]);
+  }
+
+  public function cargarTarjeta(){
+    return view('pasajero.cargarTarjeta');
+  }
+
+  public function validarTarjeta(ValidateTarjeta $request){
+      return redirect()->route('combi19.pagarPasajePobre');
   }
 }
