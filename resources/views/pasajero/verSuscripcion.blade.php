@@ -36,7 +36,6 @@
 					</div>
 					@endif --}}
 					<table class="table table-bordered">
-						El precio gold está puesto a mano en la BD
 						@if($misViajes[0] !== null)
 							<thead>
 								<tr>
