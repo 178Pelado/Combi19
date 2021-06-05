@@ -7,24 +7,29 @@
 	<div class="row justify-content-center">
 		<div class="col-md-20">
 			<div class="card">
-				@foreach ($misViajes as $viaje)
-					<?php
-						$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get()); 	
-						$insumos = (App\Models\Insumos_pasaje::withTrashed()->where('pasaje_id', '=', $pasaje[0]->id)->get());
+				@if($misViajes[0] !== null)
+						@foreach ($misViajes as $viaje)
+						{{dd($viaje)}}
+							<?php
+								$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get());
+								$insumos = (App\Models\Insumos_pasaje::where('pasaje_id', '=', $pasaje[0]->id)->get());
 
-						// calculando el precio para un viaje
-						$costo_insumos = 0;
-						foreach ($insumos as $insumo) { 
-							$costo_insumos += ($insumo->precio_al_reservar * $insumo->cantidad); //sumo lo que costaron los insumos en aquel entonces
-						}
-						$total = $pasaje[0]->precio_viaje + $costo_insumos; //sumo el precio del viaje en aquel entonces + $costo_insumos
-						$totalGold = $pasaje[0]->precio; //precio Gold
-						$ahorro = $total - $totalGold; //cuánto ahorré
-					?>
-				@endforeach
+								// calculando el precio para un viaje
+								$costo_insumos = 0;
+								foreach ($insumos as $insumo) {
+									$costo_insumos += ($insumo->precio_al_reservar * $insumo->cantidad); //sumo lo que costaron los insumos en aquel entonces
+								}
+								$total = $pasaje[0]->precio_viaje + $costo_insumos; //sumo el precio del viaje en aquel entonces + $costo_insumos
+								$totalGold = $pasaje[0]->precio; //precio Gold
+								$ahorro = $total - $totalGold; //cuánto ahorré
+							?>
+						@endforeach
+				@else
+						<?php $ahorro = 0; ?>
+				@endif
 				<div class="card-header">{{ __('¿Cuánto ahorré? → ')}}<strong style="color: green; font-size: 18px"> ${{$ahorro}}</strong></div>
 				<div class="card-body">
-					{{-- @if(Session::has('messageNO'))
+					@if(Session::has('messageNO'))
 					<div class="alert alert-danger alert-dismissible" role="alert">
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						{{Session::get('messageNO')}}
@@ -34,7 +39,7 @@
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						{{Session::get('messageSI')}}
 					</div>
-					@endif --}}
+					@endif
 					<table class="table table-bordered">
 						@if($misViajes[0] !== null)
 							<thead>
@@ -56,17 +61,18 @@
 								?>
 								@foreach ($misViajes as $viaje)
 									<?php
-										$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get()); 	
+										$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get());
 										$insumos = (App\Models\Insumos_pasaje::where('pasaje_id', '=', $pasaje[0]->id)->get());
 
 										// calculando el precio para un viaje
 										$costo_insumos = 0;
-										foreach ($insumos as $insumo) { 
+										foreach ($insumos as $insumo) {
 											$costo_insumos += ($insumo->precio_al_reservar * $insumo->cantidad); //sumo lo que costaron los insumos en aquel entonces
 										}
 										$total = $pasaje[0]->precio_viaje + $costo_insumos; //sumo el precio del viaje en aquel entonces + $costo_insumos
 										$totalGold = $pasaje[0]->precio; //precio Gold
 										$ahorro = $total - $totalGold; //cuánto ahorré
+
 									?>
 									@if ($ahorro > 0 && $pasaje[0]->estado == 3)
 										<?php
@@ -92,7 +98,7 @@
 											<td>{{$ahorro}}</td>
 										</tr>
 									@endif
-								@endforeach	
+								@endforeach
 							</tbody>
 							{{-- <tfoot>
 								<tr>
@@ -105,7 +111,7 @@
 							</tfoot> --}}
                         @else
 						    <h1>No has realizado ningún viaje</h1>
-						@endif 
+						@endif
                     </table>
 					@if(Session::has('message'))
 						<div class="alert alert-danger alert-dismissible" role="alert">
@@ -120,7 +126,7 @@
             <div class="card">
                 <div class="card-body">
 						@if ($suscripcion->fecha_baja == null)
-							<h6>Estado: 
+							<h6>Estado:
 								<strong style="color: green">Activa</strong>
 							</h6>
 							<form action="{{route('combi19.prepararCancelacion', Auth::user()->email)}}" class="formulario-eliminar" method="GET">
