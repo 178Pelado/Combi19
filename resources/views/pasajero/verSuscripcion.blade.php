@@ -7,7 +7,22 @@
 	<div class="row justify-content-center">
 		<div class="col-md-20">
 			<div class="card">
-				<div class="card-header">{{ __('¿Cuánto ahorré?') }}</div>
+				@foreach ($misViajes as $viaje)
+					<?php
+						$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get()); 	
+						$insumos = (App\Models\Insumos_pasaje::withTrashed()->where('pasaje_id', '=', $pasaje[0]->id)->get());
+
+						// calculando el precio para un viaje
+						$costo_insumos = 0;
+						foreach ($insumos as $insumo) { 
+							$costo_insumos += ($insumo->precio_al_reservar * $insumo->cantidad); //sumo lo que costaron los insumos en aquel entonces
+						}
+						$total = $pasaje[0]->precio_viaje + $costo_insumos; //sumo el precio del viaje en aquel entonces + $costo_insumos
+						$totalGold = $pasaje[0]->precio; //precio Gold
+						$ahorro = $total - $totalGold; //cuánto ahorré
+					?>
+				@endforeach
+				<div class="card-header">{{ __('¿Cuánto ahorré? → ')}}<strong style="color: green; font-size: 18px"> ${{$ahorro}}</strong></div>
 				<div class="card-body">
 					{{-- @if(Session::has('messageNO'))
 					<div class="alert alert-danger alert-dismissible" role="alert">
@@ -21,7 +36,7 @@
 					</div>
 					@endif --}}
 					<table class="table table-bordered">
-						El precio gold está hardcodeado
+						El precio gold está puesto a mano en la BD
 						@if($misViajes[0] !== null)
 							<thead>
 								<tr>
@@ -80,7 +95,7 @@
 									@endif
 								@endforeach	
 							</tbody>
-							<tfoot>
+							{{-- <tfoot>
 								<tr>
 									<th colspan="3"></th>
 									<th>Totales</th>
@@ -88,7 +103,7 @@
 									<th>{{$totalViajesGold}}</th>
 									<th>{{$ahorroTotal}}</th>
 								</tr>
-							</tfoot>
+							</tfoot> --}}
                         @else
 						    <h1>No has realizado ningún viaje</h1>
 						@endif 
