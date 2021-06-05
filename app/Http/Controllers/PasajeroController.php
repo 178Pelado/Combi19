@@ -13,6 +13,7 @@ use App\Models\Comentario;
 use App\Models\Suscripcion;
 use App\Models\Tarjeta;
 use Session;
+use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePasajeros;
@@ -20,6 +21,8 @@ use App\Http\Requests\UpdatePasajeros;
 use App\Http\Requests\StoreSuscripcion;
 use App\Http\Requests\StoreTarjeta;
 use App\Http\Requests\StoreComentario;
+use App\Http\Requests\StoreTercero;
+use App\Http\Requests\ValidateTarjeta;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -40,7 +43,6 @@ class PasajeroController extends Controller
     $pasajero->dni = $request->dni;
     $pasajero->email = $request->email;
     $pasajero->contraseña = $request->clave;
-    $pasajero->fecha_de_nacimiento = $request->fecha_nacimiento;
 
     $pasajero->save();
   }
@@ -69,7 +71,8 @@ class PasajeroController extends Controller
       return view('pasajero.perfilDePasajero', compact('pasajero', 'suscripcion'));
     }
     $tarjeta = Tarjeta::where('id','=',$suscripcion->tarjeta_id)->get()->first();
-    return view('pasajero.perfilDePasajero', compact('pasajero', 'suscripcion', 'tarjeta'));
+    $comentarios = Comentario::where('pasajero_id', '=', $pasajero->id)->get();
+    return view('pasajero.perfilDePasajero', compact('pasajero', 'suscripcion', 'tarjeta', 'comentarios'));
   }
 
   public function buscarViaje(){
@@ -79,7 +82,8 @@ class PasajeroController extends Controller
     $tipo_de_combi = null;
     $fecha = null;
     $viajes = Viaje::where('estado', '=', 1)->get();
-    return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha'));
+    $pasajero = Pasajero::where('email', '=', Auth::user()->email)->first();
+    return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha', 'pasajero'));
   }
 
   public function buscarViajeConDatos(request $request){
@@ -111,7 +115,8 @@ class PasajeroController extends Controller
       }
       $viajes = $viajes2;
     }
-    return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha'));
+    $pasajero = Pasajero::where('email', '=', Auth::user()->email)->first();
+    return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha', 'pasajero'));
   }
 
   public function suscripcion($emailPasajero){
@@ -194,6 +199,10 @@ class PasajeroController extends Controller
       $tarjeta->fecha_de_vencimiento = $data->fecha_vencimiento;
       $tarjeta->save();
     }
+    $tarjeta->numero = $data->numero;
+    $tarjeta->codigo = $data->codigo;
+    $tarjeta->fecha_de_vencimiento = $data->fecha_vencimiento;
+    $tarjeta->save();
 
     //la suscripcion no se valida y al parecer no es necesario, pero de ser necesario habria que hacerlo en una funcion auxiliar
     //no es necesario xq un usuario suscripto nunca va a entrar a la página de suscribirse asi que el pasajero_id siempre va a ser nuevo
@@ -203,7 +212,7 @@ class PasajeroController extends Controller
     $suscripcion->save();
 
     $pasajero = $pasajero->email; //la ruta suscripcion recibe el mail
-
+    Session::flash('messageSI', '¡Tarjeta modificada con éxito!');
     return redirect()->route('combi19.suscripcion', compact('pasajero')); //vuelve a la suscripcion del pasajero
   }
 
@@ -230,7 +239,7 @@ class PasajeroController extends Controller
 
   public function misViajes($emailPasajero){
     $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
-    $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->paginate();
+    $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id)->where('deleted_at', '=', null))->paginate();
     // viajes realizados por el usuario
     $pasajes = Pasaje::where('estado', '=', 3)->where('pasajero_id', '=', $pasajero->id)->get();
     return view('pasajero.misViajes', compact('pasajero', 'misViajes', 'pasajes'));
@@ -247,11 +256,43 @@ class PasajeroController extends Controller
       $comentario->pasaje_id = $pasaje->id;
     	$comentario->texto = $request->comentario;
       $comentario->save();
+      Session::flash('messageSI', 'Comentario realizado con éxito');
       return redirect()->route('combi19.misViajes', [$emailPasajero]);
   }
 
-  public function updateComentario(UpdateComentario $request, $emailPasajero){
-    $pasajero->update($request->all());
+  public function updateComentario(Request $request, Comentario $comentario, $emailPasajero){
+    $comentario->texto = $request->comentario;
+    $comentario->save();
+    Session::flash('messageSI', 'Comentario actualizado con éxito');
     return redirect()->route('combi19.misViajes', [$emailPasajero]);
+  }
+
+  public function eliminarComentario(Comentario $comentario, $emailPasajero){
+    $comentario->delete();
+    Session::flash('messageSI', 'Comentario eliminado con éxito');
+    return redirect()->route('combi19.misViajes', [$emailPasajero]);
+  }
+
+  public function cargarDatosTercero($viaje_id){
+    return view('pasajero.reservarPasajeTercero', compact('viaje_id'));
+  }
+
+  public function reservarPasajeTercero(StoreTercero $request){
+    $tercero = new Pasajero();
+    $tercero->nombre = $request->nombre;
+    $tercero->apellido = $request->apellido;
+    $tercero->dni = $request->dni;
+    $tercero->email = null;
+    $tercero->contraseña = null;
+    $tercero->save();
+    return redirect()->route('cart.addViaje', [$request->viaje_id, $tercero]);
+  }
+
+  public function cargarTarjeta(){
+    return view('pasajero.cargarTarjeta');
+  }
+
+  public function validarTarjeta(ValidateTarjeta $request){
+      return redirect()->route('combi19.pagarPasajePobre');
   }
 }

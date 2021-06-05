@@ -18,9 +18,8 @@ class CreatePasajerosTable extends Migration
             $table->string('nombre');
             $table->string('apellido');
             $table->integer('dni');
-            $table->string('email')->unique();
-            $table->string('contraseña');
-            $table->date('fecha_de_nacimiento');
+            $table->string('email')->unique()->nullable();
+            $table->string('contraseña')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

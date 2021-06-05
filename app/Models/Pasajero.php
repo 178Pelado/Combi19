@@ -19,7 +19,20 @@ class Pasajero extends Model
         'dni',
         'email',
         'contraseña',
-        'fecha_de_nacimiento',
     ];
     protected $table = "pasajeros";
+
+    public function tienePasaje($viaje_id, $pasajero_id){
+        $pasaje = Pasaje::where('viaje_id', '=', $viaje_id)->where('pasajero_id', '=', $pasajero_id)->first();
+        return ($pasaje != null);
+    }
+
+    public function buscarPasajeComprado($viaje_id){
+        $pasaje = Pasaje::where('viaje_id', '=', $viaje_id)->where('pasajero_id', '=', $this->id)->first();
+        if ($pasaje->deleted_at != null){
+          return false;
+        }else{
+          return true;
+        }
+      }
 }

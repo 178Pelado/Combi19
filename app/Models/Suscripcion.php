@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Suscripcion extends Model
 {
@@ -18,4 +19,16 @@ class Suscripcion extends Model
         'tarjeta_id',
     ];
     protected $table = "suscripciones";
+
+    public function estoySuscripto(){
+        if (($this->fecha_baja != null) && ($this->fecha_baja >= new Carbon())){
+            return true;
+        }
+        else {
+            if ($this->fecha_baja == null){
+                return true;
+            }
+            return false;
+        }
+    }
 }

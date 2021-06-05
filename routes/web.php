@@ -92,6 +92,11 @@ Route::get('combi19/misViajes{pasajero}', [PasajeroController::class, 'misViajes
 Route::get('combi19/realizarComentario', [PasajeroController::class, 'realizarComentario'])->name('combi19.realizarComentario');
 Route::post('combi19/storeComentario/{pasaje}/{pasajero}', [PasajeroController::class, 'storeComentario'])->name('combi19.storeComentario');
 Route::put('combi19/updateComentario{comentario}/{pasajero}', [PasajeroController::class, 'updateComentario'])->name('combi19.updateComentario');
+Route::delete('combi19/eliminarComentario{comentario}/{pasajero}', [PasajeroController::class, 'eliminarComentario'])->name('combi19.eliminarComentario');
+Route::post('combi19/reservarPasajeTercero', [PasajeroController::class, 'reservarPasajeTercero'])->name('combi19.reservarPasajeTercero');
+Route::get('combi19/cargarDatosTercero{viaje_id}', [PasajeroController::class, 'cargarDatosTercero'])->name('combi19.cargarDatosTercero');
+Route::get('combi19/cargarTarjeta', [PasajeroController::class, 'cargarTarjeta'])->name('combi19.cargarTarjeta');
+Route::post('combi19/validarTarjeta', [PasajeroController::class, 'validarTarjeta'])->name('combi19.validarTarjeta');
 });
 Route::get('/buscarViaje', [PasajeroController::class, 'buscarViaje'])->name('buscarViaje');
 Route::post('/buscarViajeConDatos', [PasajeroController::class, 'buscarViajeConDatos'])->name('buscarViajeConDatos');
@@ -107,13 +112,18 @@ Auth::routes();
 
 Route::get('combi19/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('combi19/listarInsumosViaje{viaje_id}', [InsumoController::class, 'listarInsumosViaje'])->name('combi19.listarInsumosViaje');
+Route::get('combi19/listarInsumosViaje{viaje_id}/{pasajero_id}', [InsumoController::class, 'listarInsumosViaje'])->name('combi19.listarInsumosViaje');
 
 //Carrito de compras
+Route::get('combi19/pagarPasajePobre', [CartController::class, 'pagarPasajePobre'])->name('combi19.pagarPasajePobre');
+
+Route::get('combi19/eliminarReservaInsumo{insumo_pasaje_id}', [CartController::class, 'eliminarReservaInsumo'])->name('combi19.eliminarReservaInsumo');
+
+Route::get('combi19/pagarPasaje', [CartController::class, 'pagarPasaje'])->name('combi19.pagarPasaje');
 
 Route::post('/cart-add', [CartController::class, 'add'])->name('cart.add');
 
-Route::get('/cart-addViaje{viaje_id}', [CartController::class, 'addViaje'])->name('cart.addViaje');
+Route::get('/cart-addViaje{viaje_id}/{esUsuario}', [CartController::class, 'addViaje'])->name('cart.addViaje');
 
 Route::get('/cart-checkout', [CartController::class, 'cart'])->name('cart.checkout');
 

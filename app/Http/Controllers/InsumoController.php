@@ -60,8 +60,8 @@ class InsumoController extends Controller
     return redirect()->route('combi19.listarInsumosTotal');
   }
 
-  public function listarInsumosViaje($viaje_id){
+  public function listarInsumosViaje($viaje_id, $pasajero_id){
     $insumos = Insumos_viaje::where('viaje_id', '=', $viaje_id)->get();
-    return view('pasajero.listarInsumosViaje', compact('insumos'));
+    return view('pasajero.listarInsumosViaje', compact('insumos', 'viaje_id', 'pasajero_id'));
   }
 }
