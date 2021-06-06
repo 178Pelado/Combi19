@@ -16,6 +16,7 @@ use App\Http\Controllers\Pasajero1Controller;
 use App\Http\Controllers\VisitanteController;
 use App\Http\Controllers\HomeVisitanteController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\MailController;
 
 /*
 |--------------------------------------------------------------------------

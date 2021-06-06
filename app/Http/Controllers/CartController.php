@@ -16,6 +16,9 @@ use App\Models\Tarjeta;
 use App\Http\Requests\StoreInsumoPasaje;
 use Carbon\Carbon;
 
+use App\Mail\ComprobanteMailable;
+use Illuminate\Support\Facades\Mail;
+
 
 class CartController extends Controller
 {
@@ -132,6 +135,7 @@ class CartController extends Controller
     if(($suscripcion != null) && ($suscripcion->estoySuscripto())){
       $tarjeta = Tarjeta::find($suscripcion->tarjeta_id);
       if ($tarjeta->fecha_de_vencimiento >= new Carbon()) {
+        $contenido = Cart::getContent();
         foreach(Cart::getContent() as $item){
           $pasaje = Pasaje::find($item->id);
           $pasaje->deleted_at = null;
@@ -140,12 +144,16 @@ class CartController extends Controller
         Cart::clear();
       }else {
         Session::flash('messageNO', "Su tarjeta está vencida");
+        return back();
       }
     }
     else {
       return view('pasajero.cargarTarjeta');
     }
-    Session::flash('messageSI', "¡Pago realizado con éxito!");
+
+    $correo = new ComprobanteMailable($contenido);
+    Mail::to('mosqueirafelipe22@gmail.com')->send($correo);
+    Session::flash('messageSI', "¡Pago realizado con éxito! Se enviará un mail con el comprobante de pago.");
     return back();
   }
 
