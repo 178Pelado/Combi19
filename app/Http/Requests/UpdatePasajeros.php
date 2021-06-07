@@ -47,6 +47,7 @@ class UpdatePasajeros extends FormRequest
   public function messages(){
     return[
       'email.unique' => 'El email '.$this->email.' se encuentra en uso',
+      'contraseñaNueva.different' => 'La contraseña nueva debe ser diferente a la contraseña actual',
     ];
   }
 }
