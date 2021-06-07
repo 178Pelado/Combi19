@@ -152,19 +152,22 @@ class CartController extends Controller
     }
 
     $correo = new ComprobanteMailable($contenido);
-    Mail::to('mosqueirafelipe22@gmail.com')->send($correo);
+    Mail::to('benfrecce2012@gmail.com')->send($correo);
     Session::flash('messageSI', "¡Pago realizado con éxito! Se enviará un mail con el comprobante de pago.");
     return back();
   }
 
   public function pagarPasajePobre(){
+    $contenido = Cart::getContent();
     foreach(Cart::getContent() as $item){
       $pasaje = Pasaje::find($item->id);
       $pasaje->deleted_at = null;
       $pasaje->save();
     }
     Cart::clear();
-    Session::flash('messageSI', "¡Pago realizado con éxito!");
+    $correo = new ComprobanteMailable($contenido);
+    Mail::to('benfrecce2012@gmail.com')->send($correo);
+    Session::flash('messageSI', "¡Pago realizado con éxito! Se enviará un mail con el comprobante de pago.");
     return view('pasajero.checkout');
   }
 }
