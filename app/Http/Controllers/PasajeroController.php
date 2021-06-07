@@ -238,7 +238,7 @@ class PasajeroController extends Controller
     $suscripcion = Suscripcion::where('pasajero_id', '=', $pasajero->id)->get()->first();
     $suscripcion->delete();
     Session::flash('messageSI', 'Has cancelado tu suscripción Gold satisfactoriamente');
-    return redirect()->route('homeGeneral'); //vuelve al home
+    return redirect()->route('combi19.suscripcion', $emailPasajero); //vuelve al home
   }
 
   public function misViajes($emailPasajero){
