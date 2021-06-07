@@ -71,11 +71,11 @@ class PasajeroController extends Controller
   public function perfilDePasajero($emailPasajero){
     $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
     $suscripcion = Suscripcion::where('pasajero_id', '=', $pasajero->id)->get()->first();
+    $comentarios = Comentario::where('pasajero_id', '=', $pasajero->id)->get();
     if($suscripcion == null){
-      return view('pasajero.perfilDePasajero', compact('pasajero', 'suscripcion'));
+      return view('pasajero.perfilDePasajero', compact('pasajero', 'suscripcion', 'comentarios'));
     }
     $tarjeta = Tarjeta::where('id','=',$suscripcion->tarjeta_id)->get()->first();
-    $comentarios = Comentario::where('pasajero_id', '=', $pasajero->id)->get();
     return view('pasajero.perfilDePasajero', compact('pasajero', 'suscripcion', 'tarjeta', 'comentarios'));
   }
 
