@@ -83,7 +83,7 @@
 									}
 									?>
 									@if($viaje->estado == 3 && count($pasajeActual->comentarios) == 0)
-									<button class="btn btn-primary btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}">Comentar</button>
+										<button class="btn btn-primary btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}">Comentar</button>
 									@endif
 									@if (count($pasajeActual->comentarios) == 1)
 									<div class="btn-group-vertical">
@@ -94,6 +94,9 @@
 											<button class="btn btn-danger btn-sm shadow-none" data-toggle="tooltip">Eliminar comentario</button>
 										</form>
 									</div>
+									@endif
+									@if($viaje->estado == 1 && $pasajeActual->estado != 5)
+										<a class="btn btn-primary btn-sm shadow-none" href="{{route('combi19.cancelarPasaje', $pasajeActual)}}">Cancelar pasaje</a>
 									@endif
 								</td>
 								<!-- Modal -->

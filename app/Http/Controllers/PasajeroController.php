@@ -61,14 +61,7 @@ class PasajeroController extends Controller
     $user->email = $request->email;
     $user->password = Hash::make($request['contraseñaNueva']);
     $user->save();
-    $suscripcion = Suscripcion::where('pasajero_id', '=', $pasajero->id)->get()->first();
-    $comentarios = Comentario::where('pasajero_id', '=', $pasajero->id)->get();
-    if($suscripcion == null){
-      return view('pasajero.perfilDePasajero', compact('pasajero', 'suscripcion', 'comentarios'));
-    }
-    $tarjeta = Tarjeta::where('id','=',$suscripcion->tarjeta_id)->get()->first();
-    Session::flash('messageSI', '¡Datos modificados con éxito!');
-    return view('pasajero.perfilDePasajero', compact('pasajero', 'suscripcion', 'tarjeta', 'comentarios'));
+    return redirect()->route('combi19.perfilDePasajero', $pasajero->email);
   }
 
   public function perfilDePasajero($emailPasajero){
@@ -301,5 +294,11 @@ class PasajeroController extends Controller
 
   public function validarTarjeta(ValidateTarjeta $request){
       return redirect()->route('combi19.pagarPasajePobre');
+  }
+
+  public function cancelarPasaje(Pasaje $pasaje){
+    $pasaje->estado = 5;
+    $pasaje->save();
+    return redirect()->route('combi19.misViajes', Auth::user()->email);
   }
 }

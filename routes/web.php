@@ -98,6 +98,7 @@ Route::post('combi19/reservarPasajeTercero', [PasajeroController::class, 'reserv
 Route::get('combi19/cargarDatosTercero{viaje_id}', [PasajeroController::class, 'cargarDatosTercero'])->name('combi19.cargarDatosTercero');
 Route::get('combi19/cargarTarjeta', [PasajeroController::class, 'cargarTarjeta'])->name('combi19.cargarTarjeta');
 Route::post('combi19/validarTarjeta', [PasajeroController::class, 'validarTarjeta'])->name('combi19.validarTarjeta');
+Route::get('combi19/cancelarPasaje{pasaje}', [PasajeroController::class, 'cancelarPasaje'])->name('combi19.cancelarPasaje');
 });
 Route::get('/buscarViaje', [PasajeroController::class, 'buscarViaje'])->name('buscarViaje');
 Route::post('/buscarViajeConDatos', [PasajeroController::class, 'buscarViajeConDatos'])->name('buscarViajeConDatos');
