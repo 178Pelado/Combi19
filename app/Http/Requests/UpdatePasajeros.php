@@ -32,7 +32,7 @@ class UpdatePasajeros extends FormRequest
       'dni' => 'required|integer|gt:0',
       'email' => 'required|email|unique:pasajeros,email,'.$this->id,
       'contraseña' => 'required|min:6|es_contraseña_actual:' . $this->contraseña . ',' . $this->id,
-      'contraseñaNueva' => 'required|min:6|same:contraseñaNuevaConfirmacion',
+      'contraseñaNueva' => 'required|min:6|different:contraseña|same:contraseñaNuevaConfirmacion',
       'contraseñaNuevaConfirmacion' => 'required|min:6',
     ];
   }
