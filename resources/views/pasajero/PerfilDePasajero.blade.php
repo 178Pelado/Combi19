@@ -2,9 +2,21 @@
 @section('title', 'Perfil de pasajero')
 @section('content')
 <div class="container">
+
     <div class="main-body">
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
+              @if(Session::has('messageNO'))
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{Session::get('messageNO')}}
+              </div>
+              @elseif(Session::has('messageSI'))
+              <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{Session::get('messageSI')}}
+              </div>
+              @endif
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">

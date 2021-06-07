@@ -43,4 +43,10 @@ class UpdatePasajeros extends FormRequest
       'contraseñaNuevaConfirmacion' => 'confirmación de contraseña',
     ];
   }
+
+  public function messages(){
+    return[
+      'email.unique' => 'El email '.$this->email.' se encuentra en uso',
+    ];
+  }
 }

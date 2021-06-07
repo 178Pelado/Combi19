@@ -45,11 +45,11 @@
 <br>
 
 <!-- Intento de sistema de comentarios -->
-<div class="container">
+<div class="container" style="float:left">
   <div class="row justify-content-center">
-    <div class="col-md-20">
+    <div class="col-md-6">
       <div class="card">
-        <div class="card-header">{{ __('Comentarios') }}</div>
+        <div class="card-header"><h4>Comentarios</h4></div>
         <div class="card-body">
           @if (count($comentarios) > 0)
           @foreach ($comentarios as $comentario)
