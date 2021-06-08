@@ -296,9 +296,20 @@ class PasajeroController extends Controller
   }
 
   public function cancelarPasaje(Pasaje $pasaje){
+    $viaje = Viaje::find($pasaje->viaje_id);
+    $fecha1 = date_create($viaje->fecha);
+    $fecha2 = date_create(new Carbon());
+    $diff = $fecha2->diff($fecha1);
+    $horas = $diff->h;
+    $horas = $horas + ($diff->days*24);
+    if ($horas >= 48){
+      Session::flash('messageSI', '¡Pasaje cancelado con éxito! Se le reembolsará el 100% de su compra');
+    }
+    else {
+      Session::flash('messageSI', '¡Pasaje cancelado con éxito! Se le reembolsará el 50% de su compra');
+    }
     $pasaje->estado = 5;
     $pasaje->save();
-    Session::flash('messageSI', '¡Pasaje cancelado con éxito!');
     return redirect()->route('combi19.misViajes', Auth::user()->email);
   }
 }

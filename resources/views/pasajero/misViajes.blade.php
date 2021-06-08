@@ -26,10 +26,8 @@
 							<tr>
 								<th>Pasajero</th>
 								<th>Estado</th> {{--del pasaje--}}
-								<th>Ruta</th>
-								<th>Combi</th>
+								<th>Viaje</th>
 								<th>Insumos</th> {{--del pasaje--}}
-								<th>Fecha</th>
 								<th>Precio Viaje</th>
 								<th>Precio Total</th>
 								<th>Descuento Gold</th>
@@ -40,7 +38,7 @@
 						<tbody>
 							@foreach ($pasajes as $pasaje)
 							<?php
-							$viaje = $pasaje->viaje();
+							$viaje = $pasaje->viaje;
 							$insumos = (App\Models\Insumos_pasaje::where('pasaje_id', '=', $pasaje->id)->get());
 
 							// calculando el precio para un viaje
@@ -66,28 +64,123 @@
 								?>
 								<td>{{$pasaje->nombrePasajero()}}</td>
 								<td>{{$estado[0]->nombre}}</td>
-								<td>{{$viaje->ruta->origen->nombre}} - {{$viaje->ruta->destino->nombre}}</td>
-								<td>{{$viaje->combi->patente}}</td>
 								<td>
-									<dl class="dl-horizontal">
-										@foreach ($insumos as $insumo)
-										<dt>{{$insumo->insumo->nombre}} <small>${{$insumo->precio_al_reservar}} (x{{$insumo->cantidad}})</small></dt>
-										<dd>{{$insumo->insumo->descripcion}}</dd>
-										@endforeach
-									</dl>
+									<button type="button" data-toggle="modal" data-target="#viajeModal{{$viaje->id}}" class="btn btn-info btn-sm">MÁS INFO</button>
+
+									<!-- Modal -->
+                                    <div class="modal fade" id="viajeModal{{$viaje->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Información del viaje</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+
+                                            <div class="row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="col-form-label text-md-right">
+                                                        Ruta: {{$viaje->ruta->origen->nombre}} - {{$viaje->ruta->destino->nombre}}
+                                                    </label>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label class="col-form-label text-md-right">
+                                                        Descripción: {{$viaje->ruta->descripcion}}
+                                                    </label>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label class="col-form-label text-md-right">
+                                                        Tipo de combi: {{$viaje->combi->tipo}}
+                                                    </label>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label class="col-form-label text-md-right">
+                                                        Fecha: {{$viaje->fecha_sin_segundos()}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer btn-group" role="group">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    {{ __('Salir') }}
+                                                </button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+
 								</td>
-								<td>{{$viaje->fecha}}</td>
+								<td>
+									<button type="button" data-toggle="modal" data-target="#insumosModal{{$pasaje->id}}" class="btn btn-info btn-sm">MÁS INFO</button>
+
+									<!-- The Modal -->
+
+              <div class="modal" id="insumosModal{{$pasaje->id}}">
+                <div class="modal-dialog modal-dm">
+                  <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">Lista de insumos pasaje</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="card">
+                            <div class="card-body">
+                              <table class="table table-bordered">
+                                @if(count($pasaje->insumos_asociados()) != 0)
+                                <thead>
+                                  <tr>
+                                    <th>Nombre</th>
+                                    <th>Descripción</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  @foreach ($pasaje->insumos_pasaje() as $insumo)
+                                  <tr>
+                                    <td>{{$insumo->insumo->nombre}}</td>
+                                    <td>{{$insumo->insumo->descripcion}}</td>
+                                    <td>{{$insumo->cantidad}}</td>
+                                    <td>{{$insumo->precio_al_reservar}}</td>
+                                    @endforeach
+                                  </tr>
+                                </tbody>
+                                @else
+                                <h2>No hay insumos cargados</h2>
+                                @endif
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Modal footer -->
+                      <div class="modal-footer btn-group" role="group">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                          {{ __('Salir') }}
+                        </button>
+                      </div>
+								</td>
 								<td>{{$viaje->precio}}</td>
 								<td>{{$total}}</td>
 								<td>{{$ahorro}}</td> {{-- si no hubo descuento gold será 0 --}}
 								<td>{{$totalGold}}</td> {{-- si no hubo descuento gold será igual al total --}}
 								<td>
 									@if($viaje->estado == 3 && count($pasajeActual->comentarios) == 0)
-										<button class="btn btn-primary btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}">Comentar</button>
+										<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}">Realizar comentario</button>
 									@endif
 									@if (count($pasajeActual->comentarios) == 1)
 									<div class="btn-group-vertical">
-										<button class="btn btn-primary btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModalEdit{{$viaje->id}}">Editar comentario</button>
+										<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModalEdit{{$viaje->id}}">Editar comentario</button>
 										<form action="{{route('combi19.eliminarComentario', [$comentario, Auth::user()->email])}}" class="formulario-eliminar" method="POST">
 											@csrf
 											@method('delete')
@@ -96,9 +189,13 @@
 									</div>
 									@endif
 									@if($viaje->estado == 1 && $pasaje->estado == 1)
-										<a class="btn btn-primary btn-sm shadow-none" href="{{route('combi19.cancelarPasaje', $pasaje)}}">Cancelar pasaje</a>
+										<form action="{{route('combi19.cancelarPasaje', $pasaje)}}" class="formulario-cancelar" method="GET">
+											@csrf
+											<button class="btn btn-danger btn-sm shadow-none" data-toggle="tooltip">Cancelar pasaje</button>
+										</form>
 									@endif
 								</td>
+								
 								<!-- Modal -->
 								<div class="modal fade" id="exampleModal{{$viaje->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 									<div class="modal-dialog">
@@ -139,7 +236,7 @@
 													</div>
 												</div>
 												<div class="modal-footer btn-group" role="group">
-													<div class="container mt-5">
+													<div class="container">
 														<div class="d-flex justify-content-center row">
 															<div class="col-md-12">
 																<div class="d-flex flex-column comment-section">
@@ -147,7 +244,7 @@
 																		@csrf
 																		<div class="bg-light p-2">
 																			<div class="d-flex flex-row align-items-start">
-																				<textarea class="form-control ml-1 shadow-none textarea" name='comentario' maxlength="140" required></textarea></div>
+																				<textarea class="form-control ml-1 shadow-none textarea" name='comentario' maxlength="140" rows="4" style="resize: none" placeholder="Ingrese su comentario en 140 caracteres" required></textarea></div>
 																				@error('comentario')
 																				<small>{{$message}}</small>
 																				@enderror
@@ -165,6 +262,7 @@
 												</div>
 											</div>
 										</div>
+
 										<!-- Modal para editar -->
 										<div class="modal fade" id="exampleModalEdit{{$viaje->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 											<div class="modal-dialog">
@@ -195,7 +293,7 @@
 															</div>
 															<div class="form-group col-md-12">
 																<label class="col-form-label text-md-right">
-																	Fecha: {{$viaje->fecha}}
+																	Fecha: {{$viaje->fecha_sin_segundos()}}
 																</label>
 															</div>
 															<div class="form-group col-md-12">
@@ -205,7 +303,7 @@
 															</div>
 														</div>
 														<div class="modal-footer btn-group" role="group">
-															<div class="container mt-5">
+															<div class="container">
 																<div class="d-flex justify-content-center row">
 																	<div class="col-md-12">
 																		<div class="d-flex flex-column comment-section">
@@ -214,13 +312,13 @@
 																				@csrf @method('PUT')
 																				<div class="bg-light p-2">
 																					<div class="d-flex flex-row align-items-start">
-																						<textarea class="form-control ml-1 shadow-none textarea" name='comentario' maxlength="140" required>{{$texto}}</textarea>
+																						<textarea class="form-control ml-1 shadow-none textarea" name='comentario' maxlength="140" rows="4" style="resize: none" placeholder="Ingrese su comentario en 140 caracteres" required>{{$texto}}</textarea>
 																					</div>
 																					@error('comentario')
 																					<small>{{$message}}</small>
 																					@enderror
 																					<div class="mt-2 text-right">
-																						<button class="btn btn-primary" type="submit">Editar comentario</button>
+																						<button class="btn btn-info" type="submit">Editar comentario</button>
 																						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button></div>
 																					</div>
 																				</form>
@@ -255,4 +353,80 @@
 					</div>
 				</div>
 			</div>
+
+
+<script>
+$('.formulario-cancelar').submit(function(event){
+  event.preventDefault();
+
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  })
+
+  swalWithBootstrapButtons.fire({
+    title: '¿Estás seguro?',
+    text: "¡Este pasaje se cancelará definitivamente!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: '¡Si, cancelar!',
+    cancelButtonText: '¡No, volver!',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // swalWithBootstrapButtons.fire(
+      //   '¡Eliminado!',
+      //   '',
+      //   'success'
+      // )
+      this.submit();
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      // swalWithBootstrapButtons.fire(
+      //   'Cancelado',
+      //   '',
+      //   'error'
+      // )
+    }
+  })
+
+});
+</script>
+
+<script type="text/javascript">
+	var inputs = "input[maxlength], textarea[maxlength]";
+  $(document).on('keyup', "[maxlength]", function (e) {
+    var este = $(this),
+      maxlength = este.attr('maxlength'),
+      maxlengthint = parseInt(maxlength),
+      textoActual = este.val(),
+      currentCharacters = este.val().length;
+      remainingCharacters = maxlengthint - currentCharacters,
+      espan = este.prev('label').find('span');      
+      // Detectamos si es IE9 y si hemos llegado al final, convertir el -1 en 0 - bug ie9 porq. no coge directamente el atributo 'maxlength' de HTML5
+      if (document.addEventListener && !window.requestAnimationFrame) {
+        if (remainingCharacters <= -1) {
+          remainingCharacters = 0;            
+        }
+      }
+      espan.html(remainingCharacters);
+      if (!!maxlength) {
+        var texto = este.val(); 
+        if (texto.length >= maxlength) {
+          este.removeClass().addClass("borderojo");
+          este.val(text.substring(0, maxlength));
+          e.preventDefault();
+        }
+        else if (texto.length < maxlength) {
+          este.removeClass().addClass("bordegris");
+        } 
+      } 
+    });
+</script>
 			@endsection
+

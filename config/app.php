@@ -171,6 +171,10 @@ return [
          */
         Darryldecode\Cart\CartServiceProvider::class,
 
+        /*
+         * Bootstrap mails
+         */
+        Fedeisas\LaravelMailCssInliner\LaravelMailCssInlinerServiceProvider::class,
 
         /*
          * Application Service Providers...

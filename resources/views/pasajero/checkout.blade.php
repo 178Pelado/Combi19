@@ -102,7 +102,7 @@
 
                       <!-- Modal footer -->
                       <div class="modal-footer btn-group" role="group">
-                        <a href="{{route('combi19.listarInsumosViaje', [$pasaje->viaje_id, $pasaje->pasajero_id])}}" class="btn btn-primary">
+                        <a href="{{route('combi19.listarInsumosViaje', [$pasaje->viaje_id, $pasaje->pasajero_id])}}" class="btn btn-info">
                           {{ __('Agregar insumos') }}
                         </a>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -113,11 +113,58 @@
                     </tr>
                   </tbody>
                   </table>
-                  <a href="{{route('combi19.pagarPasaje')}}" class="btn btn-primary">Pagar</a>
+                  <form action="{{route('combi19.pagarPasaje')}}" class="formulario-pagar" method="GET">
+                    @csrf
+                    <button class="btn btn-info" data-toggle="tooltip">Pagar</button>
+                  </form>
                   @else
                   <h1>Carrito vacío</h1>
                   @endif
               </div>
             </div>
           </div>
+
+<script>
+$('.formulario-pagar').submit(function(event){
+  event.preventDefault();
+
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  })
+
+  swalWithBootstrapButtons.fire({
+    title: '¿Estás seguro?',
+    text: "¡Si cancela un pasaje dentro de las 48hs previas a viajar, solo se le reembolsará el 50%!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: '¡Si, pagar!',
+    cancelButtonText: '¡No, cancelar!',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // swalWithBootstrapButtons.fire(
+      //   '¡Eliminado!',
+      //   '',
+      //   'success'
+      // )
+      this.submit();
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      // swalWithBootstrapButtons.fire(
+      //   'Cancelado',
+      //   '',
+      //   'error'
+      // )
+    }
+  })
+
+});
+</script>
+
           @endsection

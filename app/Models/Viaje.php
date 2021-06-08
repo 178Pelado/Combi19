@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \Askedio\SoftCascade\Traits\SoftCascadeTrait;
+use Illuminate\Support\Str;
 
 class Viaje extends Model
 {
@@ -34,7 +35,7 @@ class Viaje extends Model
     }
 
     public function asientos_ocupados(){
-      $pasajes = Pasaje::where('viaje_id', '=', $this->id)->get();
+      $pasajes = Pasaje::where('viaje_id', '=', $this->id)->where('estado', '!=', '5')->get();
       return ($pasajes);
     }
 
@@ -45,4 +46,15 @@ class Viaje extends Model
     public function pasaje(){
       return $this->hasMany('App\Models\Pasaje', 'viaje_id');
     }
+
+    public function cambiar_estado_pasajes($estado){
+      $pasajes = Pasaje::where('viaje_id', '=', $this->id)->where('estado', '=', '1')->update(['estado'=>$estado]);
+    }
+
+    public function fecha_sin_segundos(){
+      $fecha = $this->fecha;
+      $fecha = Str::limit($fecha, 16, '');
+      return $fecha;
+    }
+
 }

@@ -13,7 +13,7 @@
                     @if(Session::has('viajeCargado'))
                         <div class="alert alert-success alert-dismissible" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            {{Session::get('viajeCargado')}} <a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $pasajero->id])}}">Agregar insumos al carrito</a>
+                            {{Session::get('viajeCargado')}} <a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $comprador->id])}}">Agregar insumos al carrito</a>
                         </div>
                     @endif
                     <form method="POST" action="{{route('buscarViajeConDatos')}}">
@@ -124,7 +124,7 @@
                                     <td>{{$viaje->ruta->destino->nombre}}</td>
                                     <td>{{$viaje->precio}}</td>
                                     <td>{{$viaje->combi->tipo}}</td>
-                                    <td>{{$viaje->fecha}}</td>
+                                    <td>{{$viaje->fecha_sin_segundos()}}</td>
                                     <td>
                                         <button type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}"><i class="material-icons">&#xE417;</i></button>
                                     </td>
@@ -159,7 +159,7 @@
                                                 </div>
                                                 <div class="form-group col-md-12">
                                                     <label class="col-form-label text-md-right">
-                                                        Fecha: {{$viaje->fecha}}
+                                                        Fecha: {{$viaje->fecha_sin_segundos()}}
                                                     </label>
                                                 </div>
                                                 <div class="form-group col-md-12">
@@ -198,9 +198,15 @@
                                                     </a>
                                                 @else
                                                     @if($pasajero->tienePasaje($viaje->id, $pasajero->id))
-                                                        <a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $pasajero->id])}}" class="btn btn-primary">
-                                                            {{ __('Agregar insumos') }}
-                                                        </a>
+                                                        @if($pasajero->buscarPasajeComprado($viaje->id))
+                                                            <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">
+                                                                {{ __('Pasaje comprado') }}
+                                                            </a>
+                                                        @else
+                                                            <a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $pasajero->id])}}" class="btn btn-primary">
+                                                                {{ __('Agregar insumos') }}
+                                                            </a>
+                                                        @endif
                                                     @else
                                                         <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">
                                                             {{ __('Comprar pasaje para mi') }}

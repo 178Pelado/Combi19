@@ -55,6 +55,7 @@ class CartController extends Controller
     else{
       $pasajero = Pasajero::find($esUsuario);
     }
+    $comprador = $pasajero;
     $viaje = Viaje::find($viaje_id);
     $nombre = $viaje->ruta->origen->nombre . ' - ' . $viaje->ruta->destino->nombre;
     $pasaje = new Pasaje();
@@ -88,8 +89,9 @@ class CartController extends Controller
     $tipo_de_combi = null;
     $fecha = null;
     $viajes = Viaje::where('estado', '=', 1)->get();
+    $pasajero = $usuarioAuth;
     Session::flash('viajeCargado', "$nombre ¡Se ha agregado con éxito al carrito!");
-    return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha', 'viaje', 'pasajero'));
+    return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha', 'viaje', 'pasajero', 'comprador'));
   }
 
   public function cart(){
@@ -153,7 +155,7 @@ class CartController extends Controller
     }
 
     $correo = new ComprobanteMailable($contenido);
-    Mail::to('benfrecce2012@gmail.com')->send($correo);
+    Mail::to('mosqueirafelipe22@gmail.com')->send($correo);
     Session::flash('messageSI', "¡Pago realizado con éxito! Se enviará un mail con el comprobante de pago.");
     return back();
   }
@@ -167,7 +169,7 @@ class CartController extends Controller
     }
     Cart::clear();
     $correo = new ComprobanteMailable($contenido);
-    Mail::to('benfrecce2012@gmail.com')->send($correo);
+    Mail::to('mosqueirafelipe22@gmail.com')->send($correo);
     Session::flash('messageSI', "¡Pago realizado con éxito! Se enviará un mail con el comprobante de pago.");
     return view('pasajero.checkout');
   }

@@ -56,6 +56,9 @@ class ViajeController extends Controller
     }
     else{
       Session::flash('messageSI', 'El viaje se ha eliminado. En caso de haber pasajes vendidos, se deben realizar los reembolsos correspondientes.');
+      $viaje->estado = '4';
+      $viaje->cambiar_estado_pasajes('4');
+      $viaje->save();
       $viaje->delete();
     }
     return redirect()->route('combi19.listarViajes');
