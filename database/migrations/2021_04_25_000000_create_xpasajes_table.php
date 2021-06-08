@@ -20,6 +20,7 @@ class CreateXpasajesTable extends Migration
             $table->double('precio_viaje');
             $table->double('precio');
             $table->foreignId('estado')->constrained('estados');
+            $table->foreignId('comprador_id')->constrained('pasajeros');
             $table->softDeletes();
             $table->timestamps();
         });

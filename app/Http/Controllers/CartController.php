@@ -73,6 +73,7 @@ class CartController extends Controller
     $pasaje->pasajero_id = $pasajero->id;
     $pasaje->precio_viaje = $viaje->precio;
     $pasaje->estado = $viaje->estado;
+    $pasaje->comprador_id = $usuarioAuth->id;
     $pasaje->deleted_at = new Carbon();
     $pasaje->save();
     Cart::add(

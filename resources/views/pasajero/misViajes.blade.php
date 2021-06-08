@@ -24,6 +24,7 @@
 						@if($misViajes[0] !== null)
 						<thead>
 							<tr>
+								<th>Pasajero</th>
 								<th>Estado</th> {{--del pasaje--}}
 								<th>Ruta</th>
 								<th>Combi</th>
@@ -37,24 +38,33 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($misViajes as $viaje)
+							@foreach ($pasajes as $pasaje)
 							<?php
-							$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get());
-							$insumos = (App\Models\Insumos_pasaje::where('pasaje_id', '=', $pasaje[0]->id)->get());
+							$viaje = $pasaje->viaje();
+							$insumos = (App\Models\Insumos_pasaje::where('pasaje_id', '=', $pasaje->id)->get());
 
 							// calculando el precio para un viaje
 							$costo_insumos = 0;
 							foreach ($insumos as $insumo) {
 								$costo_insumos += ($insumo->precio_al_reservar * $insumo->cantidad); //sumo lo que costaron los insumos en aquel entonces
 							}
-							$total = $pasaje[0]->precio_viaje + $costo_insumos; //sumo el precio del viaje en aquel entonces + $costo_insumos
-							$totalGold = $pasaje[0]->precio; //precio Gold
+							$total = $pasaje->precio_viaje + $costo_insumos; //sumo el precio del viaje en aquel entonces + $costo_insumos
+							$totalGold = $pasaje->precio; //precio Gold
 							$ahorro = $total - $totalGold; //cuánto ahorré
 							?>
 							<tr>
 								<?php
-								$estado = (App\Models\Estado::where('id','=', $pasaje[0]->estado)->get());
+								$estado = (App\Models\Estado::where('id','=', $pasaje->estado)->get());
+								$pasajeActual = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=', $pasajero->id)->get()->first());
+								$comentario = (App\Models\Comentario::where('viaje_id','=', $viaje->id)->where('pasajero_id','=', $pasajero->id)->first());
+								if($comentario !== null){
+									$texto = $comentario->texto;
+								}
+								else {
+									$texto = '';
+								}
 								?>
+								<td>{{$pasaje->nombrePasajero()}}</td>
 								<td>{{$estado[0]->nombre}}</td>
 								<td>{{$viaje->ruta->origen->nombre}} - {{$viaje->ruta->destino->nombre}}</td>
 								<td>{{$viaje->combi->patente}}</td>
@@ -72,16 +82,6 @@
 								<td>{{$ahorro}}</td> {{-- si no hubo descuento gold será 0 --}}
 								<td>{{$totalGold}}</td> {{-- si no hubo descuento gold será igual al total --}}
 								<td>
-									<?php
-									$pasajeActual = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=', $pasajero->id)->get()->first());
-									$comentario = (App\Models\Comentario::where('viaje_id','=', $viaje->id)->where('pasajero_id','=', $pasajero->id)->first());
-									if($comentario !== null){
-										$texto = $comentario->texto;
-									}
-									else {
-										$texto = '';
-									}
-									?>
 									@if($viaje->estado == 3 && count($pasajeActual->comentarios) == 0)
 										<button class="btn btn-primary btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}">Comentar</button>
 									@endif
@@ -95,8 +95,8 @@
 										</form>
 									</div>
 									@endif
-									@if($viaje->estado == 1 && $pasajeActual->estado != 5)
-										<a class="btn btn-primary btn-sm shadow-none" href="{{route('combi19.cancelarPasaje', $pasajeActual)}}">Cancelar pasaje</a>
+									@if($viaje->estado == 1 && $pasaje->estado == 1)
+										<a class="btn btn-primary btn-sm shadow-none" href="{{route('combi19.cancelarPasaje', $pasaje)}}">Cancelar pasaje</a>
 									@endif
 								</td>
 								<!-- Modal -->
@@ -235,6 +235,7 @@
 												</div>
 											</div>
 										</tr>
+
 										@endforeach
 									</tbody>
 									@else

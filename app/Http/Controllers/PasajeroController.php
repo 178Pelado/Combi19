@@ -241,7 +241,7 @@ class PasajeroController extends Controller
     $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
     $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id)->where('deleted_at', '=', null))->paginate();
     // viajes realizados por el usuario
-    $pasajes = Pasaje::where('estado', '=', 3)->where('pasajero_id', '=', $pasajero->id)->get();
+    $pasajes = Pasaje::where('comprador_id', '=', $pasajero->id)->get();
     return view('pasajero.misViajes', compact('pasajero', 'misViajes', 'pasajes'));
   }
 
@@ -299,6 +299,7 @@ class PasajeroController extends Controller
   public function cancelarPasaje(Pasaje $pasaje){
     $pasaje->estado = 5;
     $pasaje->save();
+    Session::flash('messageSI', '¡Pasaje cancelado con éxito!');
     return redirect()->route('combi19.misViajes', Auth::user()->email);
   }
 }
