@@ -93,6 +93,9 @@ class AppServiceProvider extends ServiceProvider
 
     Validator::extend('es_contraseña_actual', function ($attribute, $value, $parameters) {
       $pasajero = Pasajero::where('id', '=', $parameters[1])->where('contraseña', '=', $parameters[0])->get();
+      if($parameters[0] == ""){
+        return true;
+      }
       if(count($pasajero) == 0){
         return false;
       }

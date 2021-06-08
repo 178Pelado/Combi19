@@ -45,9 +45,9 @@
 <br>
 
 <!-- Intento de sistema de comentarios -->
-<div class="container" style="float:left">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
+<div class="container">
+<div class="row gutters-sm">
+    <div class="col-md-6 mb-3">
       <div class="card">
         <div class="card-header"><h4>Comentarios</h4></div>
         <div class="card-body">
@@ -70,7 +70,40 @@
         </div>
       </div>
     </div>
-  </div>
+  <div class="col-md-6 mb-3">
+    <div class="card">
+        <div class="card-header"><h4>Información de contacto</h4></div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Correo:</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              info@combi19.com.ar
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Dirección:</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              Calle Falsa 123
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Teléfono:</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              0800-combi19
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
 </div>
-
+</div>
 @endsection

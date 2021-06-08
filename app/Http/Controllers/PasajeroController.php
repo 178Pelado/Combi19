@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePasajeros;
 use App\Http\Requests\UpdatePasajeros;
+use App\Http\Requests\UpdatePasajeroContraseña;
 use App\Http\Requests\StoreSuscripcion;
 use App\Http\Requests\StoreTarjeta;
 use App\Http\Requests\StoreComentario;
@@ -55,10 +56,17 @@ class PasajeroController extends Controller
   public function updatePasajero(UpdatePasajeros $request, Pasajero $pasajero){
     $user = User::where('email', '=', $pasajero->email)->get()->first();
     $pasajero->update($request->all());
-    $pasajero->contraseña = $request->contraseñaNueva;
-    $pasajero->save();
     $user->name = $request->nombre;
     $user->email = $request->email;
+    $user->save();
+    return redirect()->route('combi19.perfilDePasajero', $pasajero->email);
+  }
+
+  public function updatePasajeroContraseña(UpdatePasajeroContraseña $request){
+    $pasajero = Pasajero::find($request->id);
+    $user = User::where('email', '=', $pasajero->email)->get()->first();
+    $pasajero->contraseña = $request->contraseñaNueva;
+    $pasajero->save();
     $user->password = Hash::make($request['contraseñaNueva']);
     $user->save();
     return redirect()->route('combi19.perfilDePasajero', $pasajero->email);
