@@ -195,7 +195,7 @@
 										</form>
 									@endif
 								</td>
-								
+
 								<!-- Modal -->
 								<div class="modal fade" id="exampleModal{{$viaje->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 									<div class="modal-dialog">
@@ -244,11 +244,14 @@
 																		@csrf
 																		<div class="bg-light p-2">
 																			<div class="d-flex flex-row align-items-start">
-																				<textarea class="form-control ml-1 shadow-none textarea" name='comentario' maxlength="140" rows="4" style="resize: none" placeholder="Ingrese su comentario en 140 caracteres" required></textarea></div>
+																				<textarea id="mensaje" class="form-control ml-1 shadow-none textarea" name='comentario' maxlength="140" rows="4" style="resize: none" placeholder="Ingrese su comentario en 140 caracteres" required></textarea>
+																			</div>
 																				@error('comentario')
 																				<small>{{$message}}</small>
 																				@enderror
 																				<div class="mt-2 text-right">
+																					<div id="contador"></div>
+																					<br>
 																					<button class="btn btn-primary" type="submit">Comentar</button>
 																					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button></div>
 																				</div>
@@ -312,12 +315,14 @@
 																				@csrf @method('PUT')
 																				<div class="bg-light p-2">
 																					<div class="d-flex flex-row align-items-start">
-																						<textarea class="form-control ml-1 shadow-none textarea" name='comentario' maxlength="140" rows="4" style="resize: none" placeholder="Ingrese su comentario en 140 caracteres" required>{{$texto}}</textarea>
+																						<textarea id="mensaje2" class="form-control ml-1 shadow-none textarea" name='comentario' maxlength="140" rows="4" style="resize: none" placeholder="Ingrese su comentario en 140 caracteres" required>{{$texto}}</textarea>
 																					</div>
-																					@error('comentario')
-																					<small>{{$message}}</small>
-																					@enderror
-																					<div class="mt-2 text-right">
+																						@error('comentario')
+																						<small>{{$message}}</small>
+																						@enderror
+																						<div class="mt-2 text-right">
+																							<div id="contador2"></div>
+																							<br>
 																						<button class="btn btn-info" type="submit">Editar comentario</button>
 																						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button></div>
 																					</div>
@@ -340,7 +345,6 @@
 									<h1>No has realizado ningún viaje</h1>
 									@endif
 								</table>
-								Las acciones serían comentar si finalizó y cancelar si está pendiente
 								@if(Session::has('message'))
 								<div class="alert alert-danger alert-dismissible" role="alert">
 									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -399,34 +403,26 @@ $('.formulario-cancelar').submit(function(event){
 </script>
 
 <script type="text/javascript">
-	var inputs = "input[maxlength], textarea[maxlength]";
-  $(document).on('keyup', "[maxlength]", function (e) {
-    var este = $(this),
-      maxlength = este.attr('maxlength'),
-      maxlengthint = parseInt(maxlength),
-      textoActual = este.val(),
-      currentCharacters = este.val().length;
-      remainingCharacters = maxlengthint - currentCharacters,
-      espan = este.prev('label').find('span');      
-      // Detectamos si es IE9 y si hemos llegado al final, convertir el -1 en 0 - bug ie9 porq. no coge directamente el atributo 'maxlength' de HTML5
-      if (document.addEventListener && !window.requestAnimationFrame) {
-        if (remainingCharacters <= -1) {
-          remainingCharacters = 0;            
-        }
-      }
-      espan.html(remainingCharacters);
-      if (!!maxlength) {
-        var texto = este.val(); 
-        if (texto.length >= maxlength) {
-          este.removeClass().addClass("borderojo");
-          este.val(text.substring(0, maxlength));
-          e.preventDefault();
-        }
-        else if (texto.length < maxlength) {
-          este.removeClass().addClass("bordegris");
-        } 
-      } 
-    });
+const mensaje = document.getElementById('mensaje');
+const contador = document.getElementById('contador');
+
+mensaje.addEventListener('input', function(e) {
+	const target = e.target;
+	const longitudMax = target.getAttribute('maxlength');
+	const longitudAct = target.value.length;
+	contador.innerHTML = `${longitudAct}/${longitudMax}`;
+});
+</script>
+
+<script type="text/javascript">
+const mensaje2 = document.getElementById('mensaje2');
+const contador2 = document.getElementById('contador2');
+
+mensaje2.addEventListener('input', function(e) {
+	const target2 = e.target;
+	const longitudMax2 = target2.getAttribute('maxlength');
+	const longitudAct2 = target2.value.length;
+	contador2.innerHTML = `${longitudAct2}/${longitudMax2}`;
+});
 </script>
 			@endsection
-
