@@ -125,7 +125,7 @@ class PasajeroController extends Controller
     if (empty($suscripcion)){
       return view('pasajero.suscribirPasajero')->with('pasajero', $pasajero);
     } else {
-      $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id))->where('estado','=',3)->paginate();
+      $pasajes = Pasaje::where('comprador_id', '=', $pasajero->id)->where('estado', '=', 3)->paginate();
       // viajes finalizados realizados por el usuario
       $tarjeta = Tarjeta::where('id', '=', $suscripcion->tarjeta_id)->get()->first();
 
@@ -135,10 +135,10 @@ class PasajeroController extends Controller
       $fechaBD = date($suscripcion->fecha_baja);
       // si no hay una fecha de baja programada entra sin problemas
       if ($suscripcion->fecha_baja == null) {
-        return view('pasajero.verSuscripcion', compact('pasajero', 'misViajes', 'tarjeta', 'suscripcion'));
+        return view('pasajero.verSuscripcion', compact('pasajero', 'pasajes', 'tarjeta', 'suscripcion'));
       } elseif ($fechaBD>=$fechaActual) {
         // sino, si la fecha programada aún no llegó
-        return view('pasajero.verSuscripcion', compact('pasajero', 'misViajes', 'tarjeta', 'suscripcion'));
+        return view('pasajero.verSuscripcion', compact('pasajero', 'pasajes', 'tarjeta', 'suscripcion'));
       } else {
         // por ultimo, si la fecha si llegó
         return redirect()->route('combi19.eliminarSuscripcion', $pasajero->email); //elimino la suscripción
@@ -239,10 +239,9 @@ class PasajeroController extends Controller
 
   public function misViajes($emailPasajero){
     $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
-    $misViajes = Viaje::whereIn('id', Pasaje::select('viaje_id')->where('pasajero_id','=',$pasajero->id)->where('deleted_at', '=', null))->paginate();
     // viajes realizados por el usuario
-    $pasajes = Pasaje::where('comprador_id', '=', $pasajero->id)->get();
-    return view('pasajero.misViajes', compact('pasajero', 'misViajes', 'pasajes'));
+    $pasajes = Pasaje::where('comprador_id', '=', $pasajero->id)->paginate();
+    return view('pasajero.misViajes', compact('pasajero', 'pasajes'));
   }
 
   public function realizarComentario(){

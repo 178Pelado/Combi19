@@ -7,19 +7,18 @@
 	<div class="row justify-content-center">
 		<div class="col-md-20">
 			<div class="card">
-				@if($misViajes[0] !== null)
-						@foreach ($misViajes as $viaje)
+				@if($pasajes[0] !== null)
+						@foreach ($pasajes as $pasaje)
 							<?php
-								$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get());
-								$insumos = (App\Models\Insumos_pasaje::where('pasaje_id', '=', $pasaje[0]->id)->get());
+								$insumos = (App\Models\Insumos_pasaje::where('pasaje_id', '=', $pasaje->id)->get());
 
 								// calculando el precio para un viaje
 								$costo_insumos = 0;
 								foreach ($insumos as $insumo) {
 									$costo_insumos += ($insumo->precio_al_reservar * $insumo->cantidad); //sumo lo que costaron los insumos en aquel entonces
 								}
-								$total = $pasaje[0]->precio_viaje + $costo_insumos; //sumo el precio del viaje en aquel entonces + $costo_insumos
-								$totalGold = $pasaje[0]->precio; //precio Gold
+								$total = $pasaje->precio_viaje + $costo_insumos; //sumo el precio del viaje en aquel entonces + $costo_insumos
+								$totalGold = $pasaje->precio; //precio Gold
 								$ahorro = $total - $totalGold; //cuánto ahorré
 							?>
 						@endforeach
@@ -40,9 +39,10 @@
 					</div>
 					@endif
 					<table class="table table-bordered">
-						@if($misViajes[0] !== null)
+						@if($pasajes[0] !== null)
 							<thead>
 								<tr>
+									<th>Pasajero</th>
 									<th>Ruta</th>
 									<th>Combi</th>
 									<th>Insumos</th> {{-- del pasaje --}}
@@ -58,22 +58,21 @@
 									$totalViajesGold = 0;
 									$ahorroTotal = 0;
 								?>
-								@foreach ($misViajes as $viaje)
+								@foreach ($pasajes as $pasaje)
 									<?php
-										$pasaje = (App\Models\Pasaje::where('viaje_id','=', $viaje->id)->where('pasajero_id','=',$pasajero->id)->get());
-										$insumos = (App\Models\Insumos_pasaje::where('pasaje_id', '=', $pasaje[0]->id)->get());
+										$insumos = (App\Models\Insumos_pasaje::where('pasaje_id', '=', $pasaje->id)->get());
 
 										// calculando el precio para un viaje
 										$costo_insumos = 0;
 										foreach ($insumos as $insumo) {
 											$costo_insumos += ($insumo->precio_al_reservar * $insumo->cantidad); //sumo lo que costaron los insumos en aquel entonces
 										}
-										$total = $pasaje[0]->precio_viaje + $costo_insumos; //sumo el precio del viaje en aquel entonces + $costo_insumos
-										$totalGold = $pasaje[0]->precio; //precio Gold
+										$total = $pasaje->precio_viaje + $costo_insumos; //sumo el precio del viaje en aquel entonces + $costo_insumos
+										$totalGold = $pasaje->precio; //precio Gold
 										$ahorro = $total - $totalGold; //cuánto ahorré
 
 									?>
-									@if ($ahorro > 0 && $pasaje[0]->estado == 3)
+									@if ($ahorro > 0 && $pasaje->estado == 3)
 										<?php
 											$totalViajes += $total; //sumo el precio del viaje al total de los viajes
 											$totalViajesGold += $totalGold; //sumo el precio gold del viaje al total gold de los viajes
@@ -81,8 +80,9 @@
 										?>
 										{{-- muestro el viaje --}}
 										<tr>
-											<td>{{$viaje->ruta->origen->nombre}} - {{$viaje->ruta->destino->nombre}}</td>
-											<td>{{$viaje->combi->patente}}</td>
+											<td>{{$pasaje->nombrePasajero()}}</td>
+											<td>{{$pasaje->viaje()->ruta->origen->nombre}} - {{$pasaje->viaje()->ruta->destino->nombre}}</td>
+											<td>{{$pasaje->viaje()->combi->patente}}</td>
 											<td>
 												<dl class="dl-horizontal">
 													@foreach ($insumos as $insumo)
@@ -91,7 +91,7 @@
 													@endforeach
 												</dl>
 											</td>
-											<td>{{$viaje->fecha}}</td>
+											<td>{{$pasaje->viaje()->fecha}}</td>
 											<td>{{$total}}</td>
 											<td>{{$totalGold}}</td>
 											<td>{{$ahorro}}</td>
@@ -119,7 +119,7 @@
 						</div>
 					@endif
 
-					{{$misViajes->links()}}
+					{{$pasajes->links()}}
 				</div>
 			</div>
             <div class="card">

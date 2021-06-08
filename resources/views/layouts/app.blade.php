@@ -85,7 +85,7 @@
               <a class="nav-link" href="{{ route('buscarViaje') }}">{{ __('Buscar Viajes') }}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('combi19.misViajes', Auth::user()->email) }}">{{ __('Mis Viajes') }}</a>
+              <a class="nav-link" href="{{ route('combi19.misViajes', Auth::user()->email) }}">{{ __('Historial de compras') }}</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ route('combi19.suscripcion', Auth::user()->email) }}">{{ __('Suscripción') }}</a>

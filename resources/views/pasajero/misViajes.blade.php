@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Mis viajes')
+@section('title', 'Historial de compras')
 
 @section('content')
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-md-20">
 			<div class="card">
-				<div class="card-header">{{ __('Mis viajes') }}</div>
+				<div class="card-header">{{ __('Historial de compras') }}</div>
 				<div class="card-body">
 					@if(Session::has('messageNO'))
 					<div class="alert alert-danger alert-dismissible" role="alert">
@@ -21,7 +21,7 @@
 					</div>
 					@endif
 					<table class="table table-bordered">
-						@if($misViajes[0] !== null)
+						@if($pasajes[0] !== null)
 						<thead>
 							<tr>
 								<th>Pasajero</th>
@@ -249,7 +249,7 @@
 									{{Session::get('message')}}
 								</div>
 								@endif
-								{{$misViajes->links()}}
+								{{$pasajes->links()}}
 							</div>
 						</div>
 					</div>
