@@ -43,7 +43,7 @@
             <hr style="width:100%;">
             @endforeach
             @else
-            <h1>No hay comentarios</h1>
+            <h3><small>No hay comentarios</small></h3>
             @endif
           </div>
         </div>

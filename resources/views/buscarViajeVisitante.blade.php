@@ -33,7 +33,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="col-form-label text-md-right">Precio:</label>
+                                <label class="col-form-label text-md-right">Precio máximo:</label>
                                 <div>
                                     @if($precio !== null)
                                         <input type="number" class="form-control" name="precio"  value="{{$precio}}">
