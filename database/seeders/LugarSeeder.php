@@ -24,5 +24,11 @@ class LugarSeeder extends Seeder
         Lugar::create([
             'nombre' => 'Roque Pérez',
         ]);
+        Lugar::create([
+            'nombre' => 'Bahía Blanca',
+        ]);
+        Lugar::create([
+            'nombre' => 'Lanús',
+        ]);
     }
 }

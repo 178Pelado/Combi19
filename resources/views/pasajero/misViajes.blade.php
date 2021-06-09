@@ -178,7 +178,7 @@
 													@if($pasaje->estado == 3 && count($pasajeActual->comentarios) == 0 && $pasaje->comprador_id == $pasaje->pasajero_id)
 													<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}">Realizar comentario</button>
 													@endif
-													@if (count($pasajeActual->comentarios) == 1)
+													@if (count($pasajeActual->comentarios) == 1 && $pasaje->comprador_id == $pasaje->pasajero_id)
 													<div class="btn-group-vertical">
 														<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModalEdit{{$viaje->id}}">Editar comentario</button>
 														<form action="{{route('combi19.eliminarComentario', [$comentario, Auth::user()->email])}}" class="formulario-eliminar" method="POST">

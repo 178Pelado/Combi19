@@ -17,7 +17,7 @@ class TarjetaSeeder extends Seeder
         Tarjeta::create([
         	'numero' => '2222222222222222',
         	'codigo' => '000',
-        	'fecha_de_vencimiento' => '2021-08-17',
+        	'fecha_de_vencimiento' => '2021-06-01',
         ]);
     }
 }

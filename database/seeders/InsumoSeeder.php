@@ -24,7 +24,7 @@ class InsumoSeeder extends Seeder
         Insumo::create([
             'nombre' => 'Papas Lays',
             'descripcion' => '150gr',
-            'cantidad' => '100',
+            'cantidad' => '5',
             'precio' => '100',
         ]);
     }

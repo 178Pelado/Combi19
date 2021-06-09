@@ -24,9 +24,23 @@ class PasajeroSeeder extends Seeder
         Pasajero::create([
         	'nombre' => 'pasajero',
         	'apellido' => 'Mosqueira Jurado',
-        	'dni' => '123456',
+        	'dni' => '1234567',
         	'email' => 'pasajero@gmail.com',
         	'contraseña' => '12345678',
+        ]);
+        Pasajero::create([
+            'nombre' => 'Gerónimo',
+            'apellido' => 'Vega',
+            'dni' => '43194505',
+            'email' => 'gerogv@gmail.com',
+            'contraseña' => '123456',
+        ]);
+        Pasajero::create([
+            'nombre' => 'Luis Miguel',
+            'apellido' => 'Rodríguez',
+            'dni' => '99999999',
+            'email' => null,
+            'contraseña' => null,
         ]);
     }
 }

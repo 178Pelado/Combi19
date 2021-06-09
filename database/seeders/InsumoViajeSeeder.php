@@ -15,17 +15,12 @@ class InsumoViajeSeeder extends Seeder
     public function run()
     {
         Insumos_viaje::create([
-            'viaje_id' => '1',
+            'viaje_id' => '4',
             'insumo_id' => '1',
         ]);
         Insumos_viaje::create([
-            'viaje_id' => '2',
-            'insumo_id' => '1',
-        ]);
-        Insumos_viaje::create([
-            'viaje_id' => '2',
+            'viaje_id' => '5',
             'insumo_id' => '2',
         ]);
     }
 }
-
