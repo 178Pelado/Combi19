@@ -59,6 +59,7 @@ class PasajeroController extends Controller
     $user->name = $request->nombre;
     $user->email = $request->email;
     $user->save();
+    Session::flash('messageSI', '¡Datos modificados con éxito!');
     return redirect()->route('combi19.perfilDePasajero', $pasajero->email);
   }
 
@@ -69,6 +70,7 @@ class PasajeroController extends Controller
     $pasajero->save();
     $user->password = Hash::make($request['contraseñaNueva']);
     $user->save();
+    Session::flash('messageSI', '¡Contraseña modificada con éxito!');
     return redirect()->route('combi19.perfilDePasajero', $pasajero->email);
   }
 
@@ -181,8 +183,8 @@ class PasajeroController extends Controller
     $suscripcion->pasajero_id = $pasajero;
     $suscripcion->tarjeta_id = $tarjeta->id;
     $suscripcion->save();
-
-    return redirect()->route('homeGeneral'); //vuelve al home
+    Session::flash('messageSI', '¡Suscripción realizada con éxito!');
+    return redirect()->route('combi19.suscripcion', Auth::user()->email);
   }
 
   public function modificarTarjeta($emailPasajero){

@@ -103,6 +103,9 @@ Route::get('combi19/cancelarPasaje{pasaje}', [PasajeroController::class, 'cancel
 });
 Route::get('/buscarViaje', [PasajeroController::class, 'buscarViaje'])->name('buscarViaje');
 Route::post('/buscarViajeConDatos', [PasajeroController::class, 'buscarViajeConDatos'])->name('buscarViajeConDatos');
+Route::get('/buscarViajeVisitante', [VisitanteController::class, 'buscarViajeVisitante'])->name('buscarViajeVisitante');
+Route::post('/buscarViajeVisitanteConDatos', [VisitanteController::class, 'buscarViajeVisitanteConDatos'])->name('buscarViajeVisitanteConDatos');
+
 
 
 Route::get('homeGeneral', [HomeVisitanteController::class, 'homeGeneral'])->name('homeGeneral');

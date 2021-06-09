@@ -8,15 +8,8 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Buscar Viaje') }}</div>
-
                 <div class="card-body">
-                    @if(Session::has('viajeCargado'))
-                        <div class="alert alert-success alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            {{Session::get('viajeCargado')}} <a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $comprador->id])}}">Agregar insumos al carrito</a>
-                        </div>
-                    @endif
-                    <form method="POST" action="{{route('buscarViajeConDatos')}}">
+                    <form method="POST" action="{{route('buscarViajeVisitanteConDatos')}}">
                         @csrf
                         <div class="row">
                             <div class="form-group col-md-4">
@@ -177,45 +170,6 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer btn-group" role="group">
-                                                @if($asientos_disponibles > 0)
-                                                    @if($pasajero->tienePasaje($viaje->id, $pasajero->id))
-                                                        @if($pasajero->buscarPasajeComprado($viaje->id))
-                                                        <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">
-                                                            {{ __('Pasaje comprado') }}
-                                                        </a>
-                                                        @else
-                                                            <a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $pasajero->id])}}" class="btn btn-primary">
-                                                                {{ __('Agregar insumos') }}
-                                                            </a>
-                                                        @endif
-                                                    @else
-                                                        <a href="{{route('cart.addViaje', [$viaje->id, 1])}}" class="btn btn-primary">
-                                                            {{ __('Comprar pasaje para mi') }}
-                                                        </a>
-                                                    @endif
-                                                    <a href="{{route('combi19.cargarDatosTercero', $viaje->id)}}" class="btn btn-primary">
-                                                        {{ __('Comprar pasaje para otro') }}
-                                                    </a>
-                                                @else
-                                                    @if($pasajero->tienePasaje($viaje->id, $pasajero->id))
-                                                        @if($pasajero->buscarPasajeComprado($viaje->id))
-                                                            <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">
-                                                                {{ __('Pasaje comprado') }}
-                                                            </a>
-                                                        @else
-                                                            <a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $pasajero->id])}}" class="btn btn-primary">
-                                                                {{ __('Agregar insumos') }}
-                                                            </a>
-                                                        @endif
-                                                    @else
-                                                        <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">
-                                                            {{ __('Comprar pasaje para mi') }}
-                                                        </a>
-                                                    @endif
-                                                    <a href="#" class="btn btn-primary disabled" role="button" aria-disabled="true">
-                                                        {{ __('Comprar pasaje para otro') }}
-                                                    </a>
-                                                @endif
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                     {{ __('Cancelar') }}
                                                 </button>

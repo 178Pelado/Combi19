@@ -104,5 +104,23 @@ class AppServiceProvider extends ServiceProvider
       }
     });
 
+    Validator::extend('pasajero_registrado', function ($attribute, $value, $parameters) {
+      $pasajero = Pasajero::where('dni', '=', $parameters[0])->first();
+      if ($pasajero != null && $pasajero->contraseña != null) {
+        return false;
+      }else {
+        return true;
+      }
+    });
+
+    Validator::extend('puede_comprar', function ($attribute, $value, $parameters) {
+      $pasajero = Pasajero::where('dni', '=', $parameters[0])->first();
+      if ($pasajero != null && $pasajero->tienePasaje($parameters[1], $pasajero->id)) {
+        return false;
+      }else{
+        return true;
+      }
+    });
+
   }
 }

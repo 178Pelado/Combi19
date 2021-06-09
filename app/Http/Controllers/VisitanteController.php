@@ -3,15 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Viaje;
+use App\Models\Combi;
+use App\Models\Ruta;
+use App\Models\Lugar;
+use Illuminate\Support\Str;
 //Necesitamos agregar el middleware que creamos anteriormente.
 use Illuminate\Http\Middleware\Visitante;
 
 class VisitanteController extends Controller
 {
-    public function __construct(){
-        $this->middleware('auth');
-        $this->middleware('visitante', ['only' => 'index']);
-    }
+  public function __construct()
+  {
+      $this->middleware('guest')->except('logout');
+  }
 
     /**
      * Display a listing of the resource.
@@ -21,9 +26,50 @@ class VisitanteController extends Controller
     public function index()
     {
         //
-        return view('visitante'); 
+        return view('visitante');
     }
 
+    public function buscarViajeVisitante(){
+      $ciudadO = null;
+      $ciudadD = null;
+      $precio = null;
+      $tipo_de_combi = null;
+      $fecha = null;
+      $viajes = Viaje::where('estado', '=', 1)->get();
+      return view('buscarViajeVisitante', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha'));
+    }
+
+    public function buscarViajeVisitanteConDatos(request $request){
+      $ciudadO = $request->ciudadO;
+      $ciudadD = $request->ciudadD;
+      $tipo_de_combi = $request->tipo_de_combi;
+      $fecha = $request->fecha;
+      $precio = $request->precio;
+      $viajes2 = array();
+      $viajes1 = Viaje::where('estado', '=', 1)
+                ->whereIn('combi_id', Combi::select('id')->where('tipo', '=', $tipo_de_combi))
+                ->whereIn('ruta_id', Ruta::select('id')->whereIn('origen_id', Lugar::select('id')->where('nombre', 'like', '%' . $ciudadO . '%')))
+                ->whereIn('ruta_id', Ruta::select('id')->whereIn('destino_id', Lugar::select('id')->where('nombre', 'like', '%' . $ciudadD . '%')))
+                ->get();
+      $viajes = $viajes1;
+      if($precio != null){
+        $viajes1 = $viajes1->where('precio', '<=', $precio);
+        $viajes1 = collect([$viajes1], []);
+        $viajes1 = $viajes1->collapse();
+        $viajes = $viajes1;
+      }
+      if($fecha != null){
+        for($i = 0; $i < count($viajes1); $i++){
+          $soloFecha = $viajes1[$i]->fecha;
+          $soloFecha = Str::limit($soloFecha, 10, '');
+          if($soloFecha == $fecha){
+            array_push($viajes2, $viajes1[$i]);
+          }
+        }
+        $viajes = $viajes2;
+      }
+      return view('buscarViajeVisitante', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha'));
+    }
     /**
      * Show the form for creating a new resource.
      *

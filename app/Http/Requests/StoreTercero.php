@@ -26,7 +26,7 @@ class StoreTercero extends FormRequest
     return [
       'nombre' => 'required|alpha_spaces',
       'apellido' => 'required|alpha_spaces',
-      'dni' => 'required|integer|gt:0|unique:pasajeros',
+      'dni' => 'required|integer|gt:0|puede_comprar:' . $this->dni . ',' . $this->viaje_id . '|pasajero_registrado:' . $this->dni,
     ];
   }
 }

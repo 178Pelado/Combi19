@@ -56,6 +56,9 @@
           <!-- Left Side Of Navbar -->
           <ul class="navbar-nav mr-auto">
             @guest
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('buscarViajeVisitante') }}">{{ __('Buscar Viajes') }}</a>
+            </li>
             @else
             @if(Auth::user()->tipo == 1)
             <li class="nav-item">

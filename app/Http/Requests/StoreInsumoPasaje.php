@@ -36,7 +36,7 @@ class StoreInsumoPasaje extends FormRequest
     $insumo = Insumo::where('id', '=', $this->insumo_id)->get()->first();
     $cantidad = $insumo->cantidad;
     return [
-      'cantidad.gt' => 'La cantidad debe ser mayor a 0',
+      'cantidad.gt' => 'La cantidad mínima de insumos seleccionados debe ser 1',
       'cantidad.lte' => 'La cantidad pedida supera el stock disponible. Stock: ' . $cantidad,
     ];
   }

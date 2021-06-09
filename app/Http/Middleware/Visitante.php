@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 //Necesitamos colocar esta ruta.
 use Illuminate\Support\Facades\Auth;
-use Closure;    
+use Closure;
 use Illuminate\Http\Request;
 
 
@@ -20,7 +20,7 @@ class Visitante
     public function handle(Request $request, Closure $next)
     {
         switch(auth::user()->tipo){
-           case('1'): 
+           case('1'):
                 return redirect('admin');
                 break;
             case('2'):
@@ -32,6 +32,6 @@ class Visitante
             case('4'):
                 return $next($request);
                 break;
-       }  
+       }
     }
 }
