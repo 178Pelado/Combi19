@@ -21,10 +21,10 @@
 							$totalGold = $pasaje->precio; //precio Gold
 							$ahorro = $total - $totalGold; //cuánto ahorré
 							$ahorroTotal += $ahorro;
-						}	
+						}
 					?>
 				@else
-						<?php $ahorro = 0; ?>
+						<?php $ahorroTotal = 0; ?>
 				@endif
 				<div class="card-header">{{ __('¿Cuánto ahorré? → ')}}<strong style="color: green; font-size: 18px"> ${{$ahorroTotal}}</strong></div>
 				<div class="card-body">
@@ -161,7 +161,7 @@
 								</tr>
 							</tfoot> --}}
                         @else
-						    <h1>No has realizado ningún viaje</h1>
+						    <h1>No has comprado ningún viaje con descuento</h1>
 						@endif
                     </table>
 					@if(Session::has('message'))
