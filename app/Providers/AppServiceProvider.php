@@ -8,6 +8,7 @@ use App\Models\Insumo;
 use App\Models\Viaje;
 use App\Models\Combi;
 use App\Models\Pasajero;
+use App\Models\Pasaje;
 use Carbon\Carbon;
 
 class AppServiceProvider extends ServiceProvider
@@ -114,7 +115,8 @@ class AppServiceProvider extends ServiceProvider
     });
 
     Validator::extend('puede_comprar', function ($attribute, $value, $parameters) {
-      $pasajero = Pasajero::where('dni', '=', $parameters[0])->first();
+      $pasajero = Pasajero::where('dni', '=', $parameters[0])->whereIn('id', Pasaje::select('pasajero_id')->where('viaje_id', '=', $parameters[1]))->get();
+      $pasajero = $pasajero->last(); 
       if ($pasajero != null && $pasajero->tienePasaje($parameters[1], $pasajero->id)) {
         return false;
       }else{

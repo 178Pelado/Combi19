@@ -22,5 +22,9 @@ class InsumoViajeSeeder extends Seeder
             'viaje_id' => '5',
             'insumo_id' => '2',
         ]);
+        Insumos_viaje::create([
+            'viaje_id' => '3',
+            'insumo_id' => '1',
+        ]);
     }
 }

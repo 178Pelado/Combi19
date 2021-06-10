@@ -147,7 +147,7 @@ class CartController extends Controller
         Cart::clear();
       }else {
         Session::flash('messageNO', "Su tarjeta está vencida");
-        return back();
+        return view('pasajero.checkout');
       }
     }
     else {
@@ -155,7 +155,7 @@ class CartController extends Controller
     }
 
     $correo = new ComprobanteMailable($contenido);
-    Mail::to('mosqueirafelipe22@gmail.com')->send($correo);
+    Mail::to('gerogv612@gmail.com')->send($correo);
     Session::flash('messageSI', "¡Pago realizado con éxito! Se enviará un mail con el comprobante de pago.");
     return back();
   }
@@ -169,7 +169,7 @@ class CartController extends Controller
     }
     Cart::clear();
     $correo = new ComprobanteMailable($contenido);
-    Mail::to('mosqueirafelipe22@gmail.com')->send($correo);
+    Mail::to('gerogv612@gmail.com')->send($correo);
     Session::flash('messageSI', "¡Pago realizado con éxito! Se enviará un mail con el comprobante de pago.");
     return view('pasajero.checkout');
   }

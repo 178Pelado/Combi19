@@ -46,11 +46,18 @@ class VisitanteController extends Controller
       $fecha = $request->fecha;
       $precio = $request->precio;
       $viajes2 = array();
-      $viajes1 = Viaje::where('estado', '=', 1)
+      if($tipo_de_combi == null){
+        $viajes1 = Viaje::where('estado', '=', 1)
+                ->whereIn('ruta_id', Ruta::select('id')->whereIn('origen_id', Lugar::select('id')->where('nombre', 'like', '%' . $ciudadO . '%')))
+                ->whereIn('ruta_id', Ruta::select('id')->whereIn('destino_id', Lugar::select('id')->where('nombre', 'like', '%' . $ciudadD . '%')))
+                ->get();
+      } else {
+        $viajes1 = Viaje::where('estado', '=', 1)
                 ->whereIn('combi_id', Combi::select('id')->where('tipo', '=', $tipo_de_combi))
                 ->whereIn('ruta_id', Ruta::select('id')->whereIn('origen_id', Lugar::select('id')->where('nombre', 'like', '%' . $ciudadO . '%')))
                 ->whereIn('ruta_id', Ruta::select('id')->whereIn('destino_id', Lugar::select('id')->where('nombre', 'like', '%' . $ciudadD . '%')))
                 ->get();
+      }
       $viajes = $viajes1;
       if($precio != null){
         $viajes1 = $viajes1->where('precio', '<=', $precio);

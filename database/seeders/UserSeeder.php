@@ -57,5 +57,12 @@ class UserSeeder extends Seeder
           'tipo' => '3',
           'codigo' => 'adm6',
         ]);
+        User::create([
+        	'name' => 'Gerónimo',
+        	'email' => 'gerogv@gmail.com',
+          'password' => Hash::make('123456'),
+          'tipo' => '3',
+          'codigo' => 'adm7',
+        ]);
     }
 }

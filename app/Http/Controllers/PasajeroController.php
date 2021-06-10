@@ -258,7 +258,7 @@ class PasajeroController extends Controller
   public function misViajes($emailPasajero){
     $pasajero = Pasajero::where('email', '=', $emailPasajero)->get()->first();
     // viajes realizados por el usuario
-    $pasajes = Pasaje::where('comprador_id', '=', $pasajero->id)->paginate();
+    $pasajes = Pasaje::where('comprador_id', '=', $pasajero->id)->where('deleted_at', '=', null)->paginate();
     return view('pasajero.misViajes', compact('pasajero', 'pasajes'));
   }
 
