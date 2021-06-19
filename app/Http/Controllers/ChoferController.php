@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Chofer;
 use App\Models\Combi;
+use App\Models\Viaje;
 use Session;
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreChoferes;
 use App\Http\Requests\UpdateChoferes;
@@ -65,5 +67,19 @@ class ChoferController extends Controller
     public function updateChofer(UpdateChoferes $request, Chofer $chofer){
         $chofer->update($request->all());
         return redirect()->route('combi19.listarChoferes');
+    }
+
+    public function misViajesChofer(){
+        $chofer = Chofer::where('email', '=', Auth::user()->email)->first();
+        $viajes = Viaje::where('chofer_id', '=', $chofer->id)->get();
+        return view('chofer.misViajes', compact('viajes'));
+    }
+
+    public function iniciarViaje($viaje_id){
+        $viaje = Viaje::find($viaje_id);
+        $viaje->estado = '2';
+        $viaje->cambiar_estado_pasajes('2');
+        $viaje->save();
+        return redirect()->route('combi19.misViajesChofer');
     }
 }

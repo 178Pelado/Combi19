@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \Askedio\SoftCascade\Traits\SoftCascadeTrait;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
+use Auth;
 
 class Viaje extends Model
 {
@@ -43,6 +45,10 @@ class Viaje extends Model
       return $this->hasMany('App\Models\Comentario', 'viaje_id');
     }
 
+    public function imprevisto(){
+      return $this->belongsTo('App\Models\Imprevisto', 'viaje_id');
+    }
+
     public function pasaje(){
       return $this->hasMany('App\Models\Pasaje', 'viaje_id');
     }
@@ -57,4 +63,38 @@ class Viaje extends Model
       return $fecha;
     }
 
+    public function iniciable(){
+      $fecha_ok = $this->fecha < (new Carbon());
+      $estado_ok = $this->estado == 1;
+      return ($fecha_ok && $estado_ok);
+    }
+
+    public function finalizable(){
+      $estado_ok = $this->estado == 2;
+      return ($estado_ok);
+    }
+
+    public function no_imprevistos(){
+      return ($this->imprevisto == null);
+    }
+
+    public function siguiente_chofer(){
+      $chofer = Chofer::where('email', '=', Auth::user()->email)->first();
+      $viaje = Viaje::where('chofer_id', '=', $chofer->id)->where('estado', '=', '1')->get();
+      $viaje = $viaje->sortByDesc('fecha')->last();
+      return $viaje;
+    }
+
+    public function estado(){
+      switch ($this->estado) {
+        case 1:
+            return "Pendiente";
+        case 2:
+            return "En curso";
+        case 3:
+            return "Finalizado";
+        case 4:
+            return "Suspendido";
+    }
+  }
 }

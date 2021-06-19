@@ -50,7 +50,7 @@ class ViajeController extends Controller
   }
 
   public function eliminarViaje(Viaje $viaje){
-    if ($viaje->en_curso == 1){
+    if ($viaje->estado == 2){
       Session::flash('messageNO','El viaje se encuentra en curso.');
       return redirect()->route('combi19.listarViajes');
     }

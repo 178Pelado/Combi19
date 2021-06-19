@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 //Necesitamos agregar el middleware que creamos anteriormente.
 use Illuminate\Http\Middleware\Chofer;
+use App\Models\Viaje;
+use Auth;
 
 class Chofer1Controller extends Controller
 {
@@ -20,8 +22,9 @@ class Chofer1Controller extends Controller
      */
     public function index()
     {
-        //
-        return view('chofer'); 
+        $viaje = new Viaje();
+        $viaje = $viaje->siguiente_chofer();
+        return view('chofer', compact('viaje'));
     }
 
     /**

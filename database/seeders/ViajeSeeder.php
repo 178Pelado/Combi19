@@ -16,6 +16,7 @@ class ViajeSeeder extends Seeder
     {
         Viaje::create([
         	'combi_id' => '1',
+            'chofer_id' => '1',
         	'ruta_id' => '1',
         	'precio' => '100.000',
             'fecha' => '2021-06-15 18:00:00',
@@ -23,6 +24,7 @@ class ViajeSeeder extends Seeder
         ]);
         Viaje::create([
         	'combi_id' => '3',
+            'chofer_id' => '3',
         	'ruta_id' => '2',
         	'precio' => '250.000',
             'fecha' => '2021-06-20 15:00:00',
@@ -30,6 +32,7 @@ class ViajeSeeder extends Seeder
         ]);
         Viaje::create([
             'combi_id' => '2',
+            'chofer_id' => '2',
             'ruta_id' => '3',
             'precio' => '1000.000',
             'fecha' => '2021-07-31 16:00:00',
@@ -37,6 +40,7 @@ class ViajeSeeder extends Seeder
         ]);
         Viaje::create([
             'combi_id' => '2',
+            'chofer_id' => '2',
             'ruta_id' => '3',
             'precio' => '100.000',
             'fecha' => '2021-05-31 16:00:00',
@@ -44,6 +48,7 @@ class ViajeSeeder extends Seeder
         ]);
         Viaje::create([
             'combi_id' => '2',
+            'chofer_id' => '2',
             'ruta_id' => '4',
             'precio' => '100.000',
             'fecha' => '2021-06-17 16:00:00',
@@ -51,6 +56,7 @@ class ViajeSeeder extends Seeder
         ]);
         Viaje::create([
             'combi_id' => '2',
+            'chofer_id' => '2',
             'ruta_id' => '4',
             'precio' => '100.000',
             'fecha' => '2021-06-02 16:00:00',

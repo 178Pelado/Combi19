@@ -115,8 +115,7 @@ class AppServiceProvider extends ServiceProvider
     });
 
     Validator::extend('puede_comprar', function ($attribute, $value, $parameters) {
-      $pasajero = Pasajero::where('dni', '=', $parameters[0])->whereIn('id', Pasaje::select('pasajero_id')->where('viaje_id', '=', $parameters[1]))->get();
-      $pasajero = $pasajero->last(); 
+      $pasajero = Pasajero::where('dni', '=', $parameters[0])->whereIn('id', Pasaje::select('pasajero_id')->where('viaje_id', '=', $parameters[1]))->get()->first();
       if ($pasajero != null && $pasajero->tienePasaje($parameters[1], $pasajero->id)) {
         return false;
       }else{
