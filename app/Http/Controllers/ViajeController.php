@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Viaje;
 use App\Models\Insumos_viaje;
+use App\Models\Combi;
 use Session;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreViajes;
@@ -20,9 +21,12 @@ class ViajeController extends Controller
   }
 
   public function storeViaje(StoreViajes $request){
+    $combi = Combi::find($request->combi_id);
+
     $viaje = new Viaje();
 
-    $viaje->combi_id = $request->combi_id;
+    $viaje->combi_id = $combi->id;
+    $viaje->chofer_id = $combi->chofer->id;
     $viaje->ruta_id = $request->ruta_id;
     $viaje->precio = $request->precio;
     $viaje->fecha = $request->fecha;
