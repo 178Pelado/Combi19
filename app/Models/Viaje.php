@@ -36,6 +36,15 @@ class Viaje extends Model
       return $this->belongsTo('App\Models\Ruta', 'ruta_id')->withTrashed();
     }
 
+    public function cantidad_asientos_totales(){
+      return $this->combi->cantidad_asientos;
+    }
+
+    public function cantidad_asientos_ocupados(){
+      $pasajes = Pasaje::where('viaje_id', '=', $this->id)->where('estado', '!=', '5')->get();
+      return count($pasajes);
+    }
+
     public function asientos_ocupados(){
       $pasajes = Pasaje::where('viaje_id', '=', $this->id)->where('estado', '!=', '5')->get();
       return ($pasajes);
@@ -83,6 +92,13 @@ class Viaje extends Model
       $viaje = Viaje::where('chofer_id', '=', $chofer->id)->where('estado', '=', '1')->get();
       $viaje = $viaje->sortByDesc('fecha')->last();
       return $viaje;
+    }
+
+    public function capacidad(){
+      $totales = $this->cantidad_asientos_totales();
+      $ocupados = $this->cantidad_asientos_ocupados();
+      $string = ($totales - $ocupados) . '/' . $totales;
+      return $string;
     }
 
     public function estado(){

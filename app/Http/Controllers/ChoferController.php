@@ -80,6 +80,7 @@ class ChoferController extends Controller
         $viaje->estado = '2';
         $viaje->cambiar_estado_pasajes('2');
         $viaje->save();
+        Session::flash('messageSI','El viaje se inició correctamente');
         return redirect()->route('combi19.misViajesChofer');
     }
 }
