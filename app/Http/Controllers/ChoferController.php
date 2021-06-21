@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Chofer;
 use App\Models\Combi;
 use App\Models\Viaje;
+use App\Models\Pasajero;
 use Session;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreChoferes;
 use App\Http\Requests\UpdateChoferes;
 use App\Models\User;
+use App\Http\Requests\StorePasajeroExpress;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class ChoferController extends Controller
 {
@@ -91,5 +94,21 @@ class ChoferController extends Controller
         $viaje->save();
         Session::flash('messageSI','El viaje se finalizó correctamente');
         return redirect()->route('combi19.misViajesChofer');
+    }
+
+    public function registroExpress(){
+      return view('chofer.registroExpress');
+    }
+
+    public function storeExpress(StorePasajeroExpress $request){
+      $pasajeroExpress = new Pasajero();
+      $pasajeroExpress->nombre = $request->nombre;
+      $pasajeroExpress->apellido = $request->apellido;
+      $pasajeroExpress->dni = $request->dni;
+      $pasajeroExpress->email = $request->email;
+      $pasajeroExpress->contraseña = Str::random(6);
+      $pasajeroExpress->save();
+      Session::flash('messageSI','El pasajero express se cargó correctamente');
+      return redirect()->route('combi19.misViajesChofer');
     }
 }
