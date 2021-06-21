@@ -45,6 +45,10 @@ class Viaje extends Model
       return count($pasajes);
     }
 
+    public function cantidad_asientos_disponibles(){
+      return $this->cantidad_asientos_totales() - $this->cantidad_asientos_ocupados();
+    }
+
     public function asientos_ocupados(){
       $pasajes = Pasaje::where('viaje_id', '=', $this->id)->where('estado', '!=', '5')->get();
       return ($pasajes);
