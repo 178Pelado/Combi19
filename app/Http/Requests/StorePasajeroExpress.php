@@ -27,7 +27,7 @@ class StorePasajeroExpress extends FormRequest
       'nombre' => 'required|alpha_spaces',
       'apellido' => 'required|alpha_spaces',
       'email' => 'required|unique:pasajeros|email',
-      'dni' => 'required|integer|gt:0',
+      'dni' => 'required|integer|gt:0,
     ];
   }
 }

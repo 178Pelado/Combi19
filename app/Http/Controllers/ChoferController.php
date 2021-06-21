@@ -16,6 +16,8 @@ use App\Models\User;
 use App\Http\Requests\StorePasajeroExpress;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Mail\ComprobanteMailable2;
+use Illuminate\Support\Facades\Mail;
 
 class ChoferController extends Controller
 {
@@ -131,6 +133,8 @@ class ChoferController extends Controller
       $usuario->password = Hash::make($contraseña);
       $usuario->save();
 
+      $correo = new ComprobanteMailable2($pasajeroExpress);
+      Mail::to($pasajeroExpress->email)->send($correo);
       Session::flash('messageSI','El pasajero express se cargó correctamente');
       return redirect()->route('combi19.misViajesChofer');
     }
