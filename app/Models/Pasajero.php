@@ -37,11 +37,13 @@ class Pasajero extends Model
           return true;
         }
     }
-    
+
     public function noEstaSuspendido($viaje){
-      $pasajero = Pasajero::where('email', '=', Auth::user()->email)->first();
+      if($this->fecha_suspension == null){
+        return true;
+      }
       $fecha1 = date_create($viaje->fecha);
-      $fecha2 = date_create($pasajero->fecha_suspension);
+      $fecha2 = date_create($this->fecha_suspension);
       $diff = $fecha2->diff($fecha1);
       $dias = $diff->days;
       return ($dias > 15);
