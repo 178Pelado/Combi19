@@ -20,6 +20,7 @@ class PasajeroSeeder extends Seeder
         	'dni' => '123456',
         	'email' => 'fm@gmail.com',
         	'contraseña' => '123456',
+            'fecha_suspension' => null,
         ]);
         Pasajero::create([
         	'nombre' => 'pasajero',
@@ -27,6 +28,7 @@ class PasajeroSeeder extends Seeder
         	'dni' => '25123456',
         	'email' => 'pasajero@gmail.com',
         	'contraseña' => '123456',
+            'fecha_suspension' => null,
         ]);
         Pasajero::create([
             'nombre' => 'Gerónimo',
@@ -34,6 +36,7 @@ class PasajeroSeeder extends Seeder
             'dni' => '43194505',
             'email' => 'gerogv@gmail.com',
             'contraseña' => '123456',
+            'fecha_suspension' => null,
         ]);
         Pasajero::create([
             'nombre' => 'Luis Miguel',
@@ -41,6 +44,7 @@ class PasajeroSeeder extends Seeder
             'dni' => '99999999',
             'email' => null,
             'contraseña' => null,
+            'fecha_suspension' => null,
         ]);
     }
 }

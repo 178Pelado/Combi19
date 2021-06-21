@@ -20,6 +20,7 @@ class CreatePasajerosTable extends Migration
             $table->integer('dni');
             $table->string('email')->unique()->nullable();
             $table->string('contraseña')->nullable();
+            $table->date('fecha_suspension')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

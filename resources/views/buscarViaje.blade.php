@@ -15,6 +15,13 @@
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             {{Session::get('viajeCargado')}} <a href="{{route('combi19.listarInsumosViaje', [$viaje->id, $comprador->id])}}">Agregar insumos al carrito</a>
                         </div>
+                    @else
+                        @if(Session::has('suspendidoCovid')) 
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                {{Session::get('suspendidoCovid')}}
+                            </div>
+                        @endif
                     @endif
                     <form method="POST" action="{{route('buscarViajeConDatos')}}">
                         @csrf

@@ -55,34 +55,39 @@ class CartController extends Controller
     else{
       $pasajero = Pasajero::find($esUsuario);
     }
-    $comprador = $pasajero;
     $viaje = Viaje::find($viaje_id);
-    $nombre = $viaje->ruta->origen->nombre . ' - ' . $viaje->ruta->destino->nombre;
-    $pasaje = new Pasaje();
+    $comprador = $pasajero;
+    if($pasajero->noEstaSuspendido($viaje)){
+      $nombre = $viaje->ruta->origen->nombre . ' - ' . $viaje->ruta->destino->nombre;
+      $pasaje = new Pasaje();
 
-    $suscripcion = Suscripcion::where('pasajero_id', '=', $usuarioAuth->id)->first();
-    if($suscripcion != null){
-      if ($suscripcion->estoySuscripto()){
-        $pasaje->precio = $viaje->precio * 0.9;
+      $suscripcion = Suscripcion::where('pasajero_id', '=', $usuarioAuth->id)->first();
+      if($suscripcion != null){
+        if ($suscripcion->estoySuscripto()){
+          $pasaje->precio = $viaje->precio * 0.9;
+        }
       }
-    }
-    else{
-      $pasaje->precio = $viaje->precio;
-    }
+      else{
+        $pasaje->precio = $viaje->precio;
+      }
 
-    $pasaje->viaje_id = $viaje_id;
-    $pasaje->pasajero_id = $pasajero->id;
-    $pasaje->precio_viaje = $viaje->precio;
-    $pasaje->estado = $viaje->estado;
-    $pasaje->comprador_id = $usuarioAuth->id;
-    $pasaje->deleted_at = new Carbon();
-    $pasaje->save();
-    Cart::add(
-      $pasaje->id,
-      $nombre,
-      $pasaje->precio,
-      1,
-    );
+      $pasaje->viaje_id = $viaje_id;
+      $pasaje->pasajero_id = $pasajero->id;
+      $pasaje->precio_viaje = $viaje->precio;
+      $pasaje->estado = $viaje->estado;
+      $pasaje->comprador_id = $usuarioAuth->id;
+      $pasaje->deleted_at = new Carbon();
+      $pasaje->save();
+      Cart::add(
+        $pasaje->id,
+        $nombre,
+        $pasaje->precio,
+        1,
+      );
+      Session::flash('viajeCargado', "$nombre ¡Se ha agregado con éxito al carrito!");
+    } else {
+      Session::flash('suspendidoCovid', "No puedes reservar este viaje debido a tu suspensión por COVID-19");
+    }
     $ciudadO = null;
     $ciudadD = null;
     $precio = null;
@@ -90,7 +95,6 @@ class CartController extends Controller
     $fecha = null;
     $viajes = Viaje::where('estado', '=', 1)->get();
     $pasajero = $usuarioAuth;
-    Session::flash('viajeCargado', "$nombre ¡Se ha agregado con éxito al carrito!");
     return view('buscarViaje', compact('viajes', 'ciudadO', 'ciudadD', 'precio', 'tipo_de_combi', 'fecha', 'viaje', 'pasajero', 'comprador'));
   }
 
