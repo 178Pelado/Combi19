@@ -28,6 +28,8 @@
 								<th>Combi</th>
 								<th>Fecha</th>
 								<th>Estado</th>
+								<th>Pasajeros</th>
+								<th>Asientos disponibles</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
@@ -38,11 +40,14 @@
 								<td>{{$viaje->combi->patente}}</td>
 								<td>{{$viaje->fecha_sin_segundos()}}</td>
 								<td>{{$viaje->estado()}}</td>
+								<td><a href="{{route('combi19.listaPasajeros', [$viaje->id])}}" class="btn btn-info btn-sm shadow-none" type="button">Ver listado</a></td>
+								<td>{{$viaje->cantidad_asientos_disponibles()}}</td>
 								<td>
 									@if ($viaje->iniciable())
 										<a href="{{route('combi19.iniciarViaje', [$viaje])}}" class="btn btn-info btn-sm shadow-none" type="button">Iniciar viaje</a>
 									@elseif ($viaje->finalizable())
 											<a href="{{route('combi19.finalizarViaje', [$viaje])}}" class="btn btn-info btn-sm shadow-none" type="button">Finalizar viaje</a>
+											<a href="#" class="btn btn-info btn-sm shadow-none" type="button">Registro express</a>
 										@elseif (($viaje->estado == 3) && ($viaje->no_imprevistos()))
 												<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}">Notificar imprevisto</button>
 											@elseif (($viaje->estado == 3) && (!$viaje->no_imprevistos()))
@@ -65,12 +70,6 @@
 							<h1>No tienes viajes asignados</h1>
 						@endif
 					</table>
-					@if(Session::has('message'))
-					<div class="alert alert-danger alert-dismissible" role="alert">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						{{Session::get('message')}}
-					</div>
-					@endif
 				</div>
 			</div>
 		</div>

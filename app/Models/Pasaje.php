@@ -27,6 +27,10 @@ class Pasaje extends Model
     //     return Viaje::where('id','=',$this->viaje_id)->get()->first();
     // }
 
+    public function pasajero(){
+        return $this->belongsTo('App\Models\Pasajero', 'pasajero_id');
+    }
+
     public function viaje(){
         return $this->belongsTo('App\Models\Viaje', 'viaje_id')->withTrashed();
     }
@@ -58,5 +62,16 @@ class Pasaje extends Model
         $pasajero = Pasajero::find($this->pasajero_id);
         $nom_ape = $pasajero->nombre . ' ' . $pasajero->apellido;
         return $nom_ape;
+    }
+
+    public function estado_covid(){
+        switch ($this->estado_covid) {
+            case 0:
+                return "Sin evaluar";
+            case 1:
+                return "Negativo";
+            case 2:
+                return "Positivo";
+        }
     }
 }

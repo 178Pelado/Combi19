@@ -20,6 +20,7 @@ class PasajeSeeder extends Seeder
             'precio_viaje' => '100.0',
             'precio' => '290.0',
         	'estado' => '3',
+            'estado_covid' => '0',
             'comprador_id' => '1',
         ]);
         Pasaje::create([
@@ -28,6 +29,7 @@ class PasajeSeeder extends Seeder
             'precio_viaje' => '100.0',
             'precio' => '90.0',
             'estado' => '3',
+            'estado_covid' => '0',
             'comprador_id' => '1',
         ]);
         Pasaje::create([
@@ -36,6 +38,7 @@ class PasajeSeeder extends Seeder
             'precio_viaje' => '100.0',
             'precio' => '90.0',
             'estado' => '3',
+            'estado_covid' => '0',
             'comprador_id' => '1',
         ]);
     }

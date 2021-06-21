@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Chofer;
 use App\Models\Combi;
 use App\Models\Viaje;
+use App\Models\Pasaje;
 use Session;
 use Auth;
 use Illuminate\Http\Request;
@@ -91,5 +92,10 @@ class ChoferController extends Controller
         $viaje->save();
         Session::flash('messageSI','El viaje se finalizó correctamente');
         return redirect()->route('combi19.misViajesChofer');
+    }
+
+    public function listaPasajeros($viaje_id){
+        $pasajes = Pasaje::where('viaje_id', '=', $viaje_id)->get();
+        return view('chofer.listaPasajeros', compact('pasajes'));
     }
 }
