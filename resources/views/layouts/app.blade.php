@@ -143,9 +143,15 @@ body {
   <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
       <div class="container">
-        <a class="navbar-brand" href="{{ url('homeGeneral') }}">
-          <img src="https://i.imgur.com/MluPAaD.png" alt="logo_combi19" style="height: 50px; padding-right: 10px">
-        </a>
+        @if((Auth::user() != null) && (Auth::user()->tipo == 2))
+          <a class="navbar-brand" href="{{ url('chofer') }}">
+            <img src="https://i.imgur.com/MluPAaD.png" alt="logo_combi19" style="height: 50px; padding-right: 10px">
+          </a>
+        @else 
+          <a class="navbar-brand" href="{{ url('homeGeneral') }}">
+            <img src="https://i.imgur.com/MluPAaD.png" alt="logo_combi19" style="height: 50px; padding-right: 10px">
+          </a>
+        @endif
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
           <span class="navbar-toggler-icon"></span>
         </button>

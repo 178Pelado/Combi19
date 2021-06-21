@@ -112,6 +112,7 @@ Route::post('/buscarViajeVisitanteConDatos', [VisitanteController::class, 'busca
 Route::group(['middleware' => 'chofer', 'prefix' => 'chofer', 'namespace' => 'Chofer'], function () {
 Route::get('combi19/misViajesChofer', [ChoferController::class, 'misViajesChofer'])->name('combi19.misViajesChofer');
 Route::get('combi19/iniciarViaje{viaje}', [ChoferController::class, 'iniciarViaje'])->name('combi19.iniciarViaje');
+Route::get('combi19/finalizarViaje{viaje}', [ChoferController::class, 'finalizarViaje'])->name('combi19.finalizarViaje');
 });
 
 

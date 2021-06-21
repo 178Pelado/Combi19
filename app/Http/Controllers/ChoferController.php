@@ -83,4 +83,13 @@ class ChoferController extends Controller
         Session::flash('messageSI','El viaje se inició correctamente');
         return redirect()->route('combi19.misViajesChofer');
     }
+
+    public function finalizarViaje($viaje_id){
+        $viaje = Viaje::find($viaje_id);
+        $viaje->estado = '3';
+        $viaje->cambiar_estado_pasajes('3');
+        $viaje->save();
+        Session::flash('messageSI','El viaje se finalizó correctamente');
+        return redirect()->route('combi19.misViajesChofer');
+    }
 }

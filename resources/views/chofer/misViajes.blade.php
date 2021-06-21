@@ -42,7 +42,7 @@
 									@if ($viaje->iniciable())
 										<a href="{{route('combi19.iniciarViaje', [$viaje])}}" class="btn btn-info btn-sm shadow-none" type="button">Iniciar viaje</a>
 									@elseif ($viaje->finalizable())
-											<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}">Finalizar viaje</button>
+											<a href="{{route('combi19.finalizarViaje', [$viaje])}}" class="btn btn-info btn-sm shadow-none" type="button">Finalizar viaje</a>
 										@elseif (($viaje->estado == 3) && ($viaje->no_imprevistos()))
 												<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModal{{$viaje->id}}">Notificar imprevisto</button>
 											@elseif (($viaje->estado == 3) && (!$viaje->no_imprevistos()))
