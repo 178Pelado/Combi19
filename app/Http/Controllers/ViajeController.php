@@ -80,7 +80,10 @@ class ViajeController extends Controller
   }
 
   public function updateViaje(UpdateViajes $request, Viaje $viaje){
+    $combi = Combi::find($request->combi_id);
     $viaje->update($request->all());
+    $viaje->chofer_id = $combi->chofer->id;
+    $viaje->save();
     return redirect()->route('combi19.listarViajes');
   }
 }
