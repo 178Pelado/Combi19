@@ -6,13 +6,16 @@ use App\Models\Chofer;
 use App\Models\Combi;
 use App\Models\Viaje;
 use App\Models\Pasaje;
+use App\Models\Pasajero;
 use Session;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreChoferes;
 use App\Http\Requests\UpdateChoferes;
 use App\Models\User;
+use App\Http\Requests\StorePasajeroExpress;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class ChoferController extends Controller
 {
@@ -23,7 +26,6 @@ class ChoferController extends Controller
 
     public function storeChofer(StoreChoferes $request){
     	$chofer = new Chofer();
-
     	$chofer->nombre = $request->nombre;
     	$chofer->apellido = $request->apellido;
     	$chofer->telefono = $request->telefono;
@@ -32,7 +34,6 @@ class ChoferController extends Controller
     	$chofer->save();
 
       $user = new User();
-
       $user->name = $request->nombre;
       $user->email = $request->email;
       $user->tipo = '2';
@@ -97,5 +98,40 @@ class ChoferController extends Controller
     public function listaPasajeros($viaje_id){
         $pasajes = Pasaje::where('viaje_id', '=', $viaje_id)->get();
         return view('chofer.listaPasajeros', compact('pasajes'));
+    }
+
+    public function registroExpress($viaje){
+      return view('chofer.registroExpress', compact('viaje'));
+    }
+
+    public function storeExpress(StorePasajeroExpress $request, Viaje $viaje){
+      $contraseña = Str::random(6);
+      $pasajeroExpress = new Pasajero();
+      $pasajeroExpress->nombre = $request->nombre;
+      $pasajeroExpress->apellido = $request->apellido;
+      $pasajeroExpress->dni = $request->dni;
+      $pasajeroExpress->email = $request->email;
+      $pasajeroExpress->contraseña = $contraseña;
+      $pasajeroExpress->save();
+
+      $pasaje = new Pasaje();
+      $pasaje->viaje_id = $viaje->id;
+      $pasaje->pasajero_id = $pasajeroExpress->id;
+      $pasaje->precio_viaje = $viaje->precio;
+      $pasaje->precio = $viaje->precio;
+      $pasaje->estado = $viaje->estado;
+      $pasaje->estado_covid = 0;
+      $pasaje->comprador_id = $pasajeroExpress->id;
+      $pasaje->save();
+
+      $usuario = new User();
+      $usuario->name = $request->nombre;
+      $usuario->email = $request->email;
+      $usuario->tipo = 3;
+      $usuario->password = Hash::make($contraseña);
+      $usuario->save();
+
+      Session::flash('messageSI','El pasajero express se cargó correctamente');
+      return redirect()->route('combi19.misViajesChofer');
     }
 }
