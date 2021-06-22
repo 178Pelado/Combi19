@@ -232,12 +232,21 @@ body {
                   @csrf
                 </form>
                 @if(Auth::user()->tipo != 1)
-                <a class="dropdown-item" href="{{ route('combi19.perfilDePasajero', Auth::user()->email) }}">
-                  {{ __('Mi perfil') }}
-                </a>
-                <a class="dropdown-item" href="{{ route('combi19.modificarDatosDeCuentaPasajero', Auth::user()->email) }}">
-                  {{ __('Editar Datos Personales') }}
-                </a>
+                  @if (Auth::user()->tipo == 2)
+                    <a class="dropdown-item" href="{{ route('combi19.perfilDeChofer', Auth::user()->email) }}">
+                    {{ __('Mi perfil') }}
+                  </a>
+                  <a class="dropdown-item" href="{{ route('combi19.modificarDatosDeCuentaChofer', Auth::user()->email) }}">
+                    {{ __('Editar Datos Personales') }}
+                  </a>
+                  @else
+                    <a class="dropdown-item" href="{{ route('combi19.perfilDePasajero', Auth::user()->email) }}">
+                      {{ __('Mi perfil') }}
+                    </a>
+                    <a class="dropdown-item" href="{{ route('combi19.modificarDatosDeCuentaPasajero', Auth::user()->email) }}">
+                      {{ __('Editar Datos Personales') }}
+                    </a>
+                  @endif
                 @endif
                 <a class="dropdown-item" href="{{ route('logout') }}"
                 onclick="event.preventDefault();

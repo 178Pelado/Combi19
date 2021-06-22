@@ -12,6 +12,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreChoferes;
 use App\Http\Requests\UpdateChoferes;
+use App\Http\Requests\UpdateChoferContraseña;
 use App\Models\User;
 use App\Http\Requests\StorePasajeroExpress;
 use Illuminate\Support\Facades\Hash;
@@ -99,7 +100,7 @@ class ChoferController extends Controller
     }
 
     public function listaPasajeros($viaje_id){
-        $pasajes = Pasaje::where('viaje_id', '=', $viaje_id)->get();
+        $pasajes = Pasaje::where('viaje_id', '=', $viaje_id)->where('estado', '<=', 3)->get();
         return view('chofer.listaPasajeros', compact('pasajes'));
     }
 
@@ -140,6 +141,7 @@ class ChoferController extends Controller
       return redirect()->route('combi19.misViajesChofer');
     }
 
+
     function cargarSintomas(Pasaje $pasaje){
       return view('chofer.cargarSintomas', compact('pasaje'));
     }
@@ -163,4 +165,36 @@ class ChoferController extends Controller
       $pasaje->save();
       return redirect()->route('combi19.listaPasajeros', $pasaje->viaje_id);
     }
+
+    public function modificarDatosDeCuentaChofer($emailChofer){
+        $chofer = Chofer::where('email', '=', $emailChofer)->first();
+        return view('chofer.modificarDatosDeCuentaChofer', compact('chofer'));
+      }
+
+      public function updateChofer2(UpdateChoferes $request, Chofer $chofer){
+        $user = User::where('email', '=', $chofer->email)->get()->first();
+        $chofer->update($request->all());
+        $user->name = $request->nombre;
+        $user->email = $request->email;
+        $user->save();
+        Session::flash('messageSI', '¡Datos modificados con éxito!');
+        return redirect()->route('combi19.perfilDeChofer', $chofer->email);
+      }
+
+      public function updateChoferContraseña(UpdateChoferContraseña $request){
+        $chofer = Chofer::find($request->id);
+        $user = User::where('email', '=', $chofer->email)->get()->first();
+        $chofer->contraseña = $request->contraseñaNueva;
+        $chofer->save();
+        $user->password = Hash::make($request['contraseñaNueva']);
+        $user->save();
+        Session::flash('messageSI', '¡Contraseña modificada con éxito!');
+        return redirect()->route('combi19.perfilDeChofer', $chofer->email);
+      }
+
+      public function perfilDeChofer($emailChofer){
+        $chofer = Chofer::where('email', '=', $emailChofer)->get()->first();
+        return view('chofer.perfilDeChofer', compact('chofer'));
+      }
+
 }

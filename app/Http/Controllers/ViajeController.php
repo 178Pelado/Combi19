@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Viaje;
 use App\Models\Insumos_viaje;
 use App\Models\Combi;
+use App\Models\Pasaje;
 use Session;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreViajes;
@@ -85,5 +86,10 @@ class ViajeController extends Controller
     $viaje->chofer_id = $combi->chofer->id;
     $viaje->save();
     return redirect()->route('combi19.listarViajes');
+  }
+
+  public function listadoPasajeros($viaje_id){
+    $pasajes = Pasaje::where('viaje_id', '=', $viaje_id)->get();
+    return view('administrador.listadoPasajeros', compact('pasajes'));
   }
 }

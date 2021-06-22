@@ -68,7 +68,7 @@
             <hr>
             <div class="row">
               <div class="col-sm-12">
-                <a class="btn btn-info " href="{{ route('combi19.modificarDatosDeCuentaChofer', $chofer) }}">Editar datos</a>
+                <a class="btn btn-info " href="{{ route('combi19.modificarDatosDeCuentaChofer', $chofer->email) }}">Editar datos</a>
               </div>
             </div>
           </div>

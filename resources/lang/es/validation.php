@@ -125,6 +125,7 @@ return [
     'uuid'                 => 'El campo :attribute debe ser un UUID válido.',
     'viaje_distinto_fecha' => 'La combi :attribute no se encuentra disponible en ese horario.',
     'es_contraseña_actual'   => 'La contraseña ingresada no coincide',
+    'es_contraseña_actual_chofer'   => 'La contraseña ingresada no coincide',
     'puede_comprar'         => 'El dni ingresado ya tiene un pasaje para este viaje',
     'pasajero_registrado'   => 'Ya hay una cuenta registrada con este dni',
 
