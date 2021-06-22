@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Carbon\Carbon;
 
-class UpdatePasajeroContraseña extends FormRequest
+class UpdateChoferContraseña extends FormRequest
 {
   /**
   * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class UpdatePasajeroContraseña extends FormRequest
   public function rules()
   {
     return [
-      'contraseña' => 'required|es_contraseña_actual:' . $this->contraseña . ',' . $this->id,
+      'contraseña' => 'required|es_contraseña_actual_chofer:' . $this->contraseña . ',' . $this->id,
       'contraseñaNueva' => 'required|min:6|different:contraseña|same:contraseñaNuevaConfirmacion',
       'contraseñaNuevaConfirmacion' => 'required',
     ];

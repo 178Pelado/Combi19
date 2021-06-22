@@ -35,6 +35,8 @@ Route::post('combi19/store', [PasajeroController::class, 'store'])->name('combi1
 
 Route::get('combi19/iniciarSesion', [iniciarSesionController::class, 'iniciarSesion'])->name('combi19.iniciarSesion');
 
+Route::get('combi19/listadoPasajeros{viaje}', [ViajeController::class, 'listadoPasajeros'])->name('combi19.listadoPasajeros');
+
 Route::get('combi19/registroChofer', [ChoferController::class, 'registroChofer'])->name('combi19.registroChofer');
 Route::post('combi19/storeChofer', [ChoferController::class, 'storeChofer'])->name('combi19.storeChofer');
 Route::get('combi19/listarChoferes', [ChoferController::class, 'listarChoferes'])->name('combi19.listarChoferes');
@@ -110,6 +112,10 @@ Route::post('/buscarViajeVisitanteConDatos', [VisitanteController::class, 'busca
 
 
 Route::group(['middleware' => 'chofer', 'prefix' => 'chofer', 'namespace' => 'Chofer'], function () {
+Route::get('combi19/modificarDatosDeCuentaChofer{chofer}', [ChoferController::class, 'modificarDatosDeCuentaChofer'])->name('combi19.modificarDatosDeCuentaChofer');
+Route::put('combi19/updateChofer2{chofer}', [ChoferController::class, 'updateChofer2'])->name('combi19.updateChofer2');
+Route::post('combi19/updateChoferContraseña', [ChoferController::class, 'updateChoferContraseña'])->name('combi19.updateChoferContraseña');
+Route::get('combi19/perfilDeChofer{chofer}', [ChoferController::class, 'perfilDeChofer'])->name('combi19.perfilDeChofer');
 Route::get('combi19/misViajesChofer', [ChoferController::class, 'misViajesChofer'])->name('combi19.misViajesChofer');
 Route::get('combi19/iniciarViaje{viaje}', [ChoferController::class, 'iniciarViaje'])->name('combi19.iniciarViaje');
 Route::get('combi19/finalizarViaje{viaje}', [ChoferController::class, 'finalizarViaje'])->name('combi19.finalizarViaje');

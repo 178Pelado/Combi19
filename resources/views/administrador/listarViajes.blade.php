@@ -29,6 +29,8 @@
 								<th>Combi</th>
 								<th>Insumos</th>
 								<th>Fecha</th>
+								<th>Estado</th>
+								<th>Pasajeros</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
@@ -49,14 +51,18 @@
 										@endforeach
 									</dl>
 								</td>
-								<td>{{$viaje->fecha}}</td>
+								<td>{{$viaje->fecha_sin_segundos()}}</td>
+								<td>{{$viaje->estado()}}</td>
+								<td><a href="{{route('combi19.listadoPasajeros', [$viaje->id])}}" class="btn btn-info btn-sm shadow-none" type="button">Ver listado</a></td>
 								<td>
-									<a href="{{route('combi19.modificarViaje', $viaje)}}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-									<form action="{{route('combi19.eliminarViaje', $viaje)}}" class="formulario-eliminar" method="POST">
-										@csrf
-										@method('delete')
-										<button class="delete" title="Delete" data-toggle="tooltip" style="border:none;background-color: Transparent;"><i class="material-icons">&#xE872;</i></button>
-									</form>
+									@if ($viaje->estado == 1)
+										<a href="{{route('combi19.modificarViaje', $viaje)}}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+										<form action="{{route('combi19.eliminarViaje', $viaje)}}" class="formulario-eliminar" method="POST">
+											@csrf
+											@method('delete')
+											<button class="delete" title="Delete" data-toggle="tooltip" style="border:none;background-color: Transparent;"><i class="material-icons">&#xE872;</i></button>
+										</form>
+									@endif
 								</td>
 								@endforeach
 							</tr>

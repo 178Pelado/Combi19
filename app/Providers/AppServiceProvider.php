@@ -7,6 +7,7 @@ use Validator;
 use App\Models\Insumo;
 use App\Models\Viaje;
 use App\Models\Combi;
+use App\Models\Chofer;
 use App\Models\Pasajero;
 use App\Models\Pasaje;
 use Carbon\Carbon;
@@ -98,6 +99,19 @@ class AppServiceProvider extends ServiceProvider
         return true;
       }
       if(count($pasajero) == 0){
+        return false;
+      }
+      else{
+        return true;
+      }
+    });
+
+    Validator::extend('es_contraseña_actual_chofer', function ($attribute, $value, $parameters) {
+      $chofer = Chofer::where('id', '=', $parameters[1])->where('contraseña', '=', $parameters[0])->get();
+      if($parameters[0] == ""){
+        return true;
+      }
+      if(count($chofer) == 0){
         return false;
       }
       else{

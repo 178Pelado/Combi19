@@ -17,6 +17,7 @@ class Pasaje extends Model
         'viaje_id',
         'pasajero_id',
         'estado',
+        'estado_covid',
         'precio_viaje',
         'precio',
         'deleted_at',
@@ -26,6 +27,10 @@ class Pasaje extends Model
     // public function viaje(){
     //     return Viaje::where('id','=',$this->viaje_id)->get()->first();
     // }
+
+    public function estados(){
+        return $this->belongsTo('App\Models\Estado', 'estado');
+    }
 
     public function pasajero(){
         return $this->belongsTo('App\Models\Pasajero', 'pasajero_id');
