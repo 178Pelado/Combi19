@@ -116,6 +116,8 @@ Route::get('combi19/finalizarViaje{viaje}', [ChoferController::class, 'finalizar
 Route::get('combi19/listaPasajeros{viaje}', [ChoferController::class, 'listaPasajeros'])->name('combi19.listaPasajeros');
 Route::post('combi19/storeExpress{viaje}', [ChoferController::class, 'storeExpress'])->name('combi19.storeExpress');
 Route::get('combi19/registroExpress{viaje}', [ChoferController::class, 'registroExpress'])->name('combi19.registroExpress');
+Route::get('combi19/cargarSintomas{pasaje}', [ChoferController::class, 'cargarSintomas'])->name('combi19.cargarSintomas');
+Route::post('combi19/storeSintomas{pasajero}', [ChoferController::class, 'storeSintomas'])->name('combi19.storeSintomas');
 });
 
 

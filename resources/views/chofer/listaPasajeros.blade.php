@@ -40,7 +40,7 @@
 								<td>{{$pasaje->estado_covid()}}</td>
 								<td>
 									@if ($pasaje->estado_covid == 0)
-										<a href="#" class="btn btn-info btn-sm shadow-none" type="button">Cargar síntomas</a>
+										<a href="{{route('combi19.cargarSintomas', [$pasaje])}}" class="btn btn-info btn-sm shadow-none" type="button">Cargar síntomas</a>
 									@else
 										<a href="#" class="btn btn-info btn-sm shadow-none disabled" role="button" aria-disabled="true">Síntomas cargados</a>
 									@endif

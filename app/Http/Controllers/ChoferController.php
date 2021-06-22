@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Mail\ComprobanteMailable2;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class ChoferController extends Controller
 {
@@ -137,5 +138,29 @@ class ChoferController extends Controller
       Mail::to($pasajeroExpress->email)->send($correo);
       Session::flash('messageSI','El pasajero express se cargó correctamente');
       return redirect()->route('combi19.misViajesChofer');
+    }
+
+    function cargarSintomas(Pasaje $pasaje){
+      return view('chofer.cargarSintomas', compact('pasaje'));
+    }
+
+    function storeSintomas(Request $request){
+      $cantidadSintomas = count($request->sintomas);
+      if ($request->fiebre > 37.5){
+        $cantidadSintomas++;
+      }
+      $pasaje = Pasaje::find($request->pasaje_id);
+      if ($cantidadSintomas > 2){
+        $pasajero = Pasajero::find($pasaje->pasajero_id);
+        $pasaje->estado_covid = 2;
+        $pasajero->fecha_suspension = new Carbon();
+        $pasajero->save();
+        Session::flash('messageNO','El pasajero no está apto para viajar y su cuenta se suspenderá');
+      }else{
+        $pasaje->estado_covid = 1;
+        Session::flash('messageSI','El pasajero está apto para viajar');
+      }
+      $pasaje->save();
+      return redirect()->route('combi19.listaPasajeros', $pasaje->viaje_id);
     }
 }
