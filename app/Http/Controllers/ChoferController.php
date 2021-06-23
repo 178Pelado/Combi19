@@ -211,6 +211,20 @@ class ChoferController extends Controller
     $imprevisto->comentario = $request->comentario;
     $imprevisto->resuelto = false;
     $imprevisto->save();
+    Session::flash('messageSI', '¡Imprevisto publicado con éxito!');
+    return redirect()->route('combi19.misViajesChofer');
+  }
+
+  public function updateImprevisto(Request $request, Imprevisto $imprevisto){
+    $imprevisto->comentario = $request->comentario;
+    $imprevisto->save();
+    Session::flash('messageSI', '¡Imprevisto actualizado con éxito!');
+    return redirect()->route('combi19.misViajesChofer');
+  }
+
+  public function eliminarImprevisto(Imprevisto $imprevisto){
+    $imprevisto->delete();
+    Session::flash('messageSI', '¡Imprevisto eliminado con éxito!');
     return redirect()->route('combi19.misViajesChofer');
   }
 

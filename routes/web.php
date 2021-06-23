@@ -125,6 +125,8 @@ Route::get('combi19/registroExpress{viaje}', [ChoferController::class, 'registro
 Route::get('combi19/cargarSintomas{pasaje}', [ChoferController::class, 'cargarSintomas'])->name('combi19.cargarSintomas');
 Route::post('combi19/storeSintomas{pasajero}', [ChoferController::class, 'storeSintomas'])->name('combi19.storeSintomas');
 Route::post('combi19/storeImprevisto{viaje}', [ChoferController::class, 'storeImprevisto'])->name('combi19.storeImprevisto');
+Route::put('combi19/updateImprevisto{imprevisto}', [ChoferController::class, 'updateImprevisto'])->name('combi19.updateImprevisto');
+Route::delete('combi19/eliminarImprevisto{imprevisto}', [ChoferController::class, 'eliminarImprevisto'])->name('combi19.eliminarImprevisto');
 });
 
 
