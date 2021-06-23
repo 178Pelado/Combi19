@@ -21,7 +21,7 @@
 					</div>
 					@endif
 					<table class="table table-bordered">
-						@if(count($pasajes) !== 0)
+						@if(count($imprevistos) !== 0)
 						<thead>
 							<tr>
 								<th>Nombre</th>

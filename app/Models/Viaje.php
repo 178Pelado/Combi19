@@ -58,9 +58,9 @@ class Viaje extends Model
       return $this->hasMany('App\Models\Comentario', 'viaje_id');
     }
 
-    public function imprevisto(){
-      return $this->belongsTo('App\Models\Imprevisto', 'viaje_id');
-    }
+    // public function imprevisto(){
+    //   return $this->belongsTo('App\Models\Imprevisto', 'viaje_id');
+    // }
 
     public function pasaje(){
       return $this->hasMany('App\Models\Pasaje', 'viaje_id');
@@ -68,6 +68,10 @@ class Viaje extends Model
 
     public function cambiar_estado_pasajes($estado){
       $pasajes = Pasaje::where('viaje_id', '=', $this->id)->where('estado', '=', '1')->update(['estado'=>$estado]);
+    }
+
+    public function finalizar_viaje($estado){
+      $pasajes = Pasaje::where('viaje_id', '=', $this->id)->where('estado', '=', '2')->update(['estado'=>$estado]);
     }
 
     public function fecha_sin_segundos(){
@@ -116,5 +120,10 @@ class Viaje extends Model
         case 4:
             return "Suspendido";
     }
+  }
+
+  public function imprevistos(){
+    $imprevistos = Imprevisto::where('viaje_id', '=', $this->id)->get();
+    return $imprevistos;
   }
 }

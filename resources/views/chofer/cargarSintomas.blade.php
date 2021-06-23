@@ -12,9 +12,9 @@
 					<form action="{{route('combi19.storeSintomas', [$pasaje])}}" method="POST">
 						@csrf
 						<div class="form-group row">
-							<label class="col-md-6 col-form-label">Fiebre:</label>
+							<label class="col-md-7 col-form-label">Temperatura:</label>
 							<div class="col-md-7">
-								<input type="text" name="fiebre" value="{{old('fiebre')}}" size="2" maxlength="4" max="50"> °C
+								<input type="text" name="fiebre" value="{{old('fiebre')}}" size="2" maxlength="4" max="50" required> °C
 							</div>
 						</div>
 						<div class="form-check">
@@ -38,49 +38,13 @@
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="sintomas[]">
 							<label class="form-check-label" for="flexCheckDefault">
-								Escalofríos
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="sintomas[]">
-							<label class="form-check-label" for="flexCheckDefault">
 								Dolores corporales
 							</label>
 						</div>
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="sintomas[]">
 							<label class="form-check-label" for="flexCheckDefault">
-								Flujo nasal
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="sintomas[]">
-							<label class="form-check-label" for="flexCheckDefault">
 								Dolor de garganta
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="sintomas[]">
-							<label class="form-check-label" for="flexCheckDefault">
-								Nausea
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="sintomas[]">
-							<label class="form-check-label" for="flexCheckDefault">
-								Vómito
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="sintomas[]">
-							<label class="form-check-label" for="flexCheckDefault">
-								Fatiga
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="sintomas[]">
-							<label class="form-check-label" for="flexCheckDefault">
-								Diarrea
 							</label>
 						</div>
 						<input type="hidden" name="pasaje_id" value={{$pasaje->id}}>
