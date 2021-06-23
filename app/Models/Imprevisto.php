@@ -24,4 +24,8 @@ class Imprevisto extends Model
     public function viaje(){
       return $this->belongsTo('App\Models\Viaje', 'viaje_id');
     }
+
+    public function chofer(){
+      return $this->belongsTo('App\Models\Chofer', 'chofer_id');
+    }
 }

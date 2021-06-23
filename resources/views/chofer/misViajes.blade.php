@@ -76,14 +76,22 @@
 															<tr>
 																<td>{{$imprevisto->comentario}}</td>
 																<td>{{$imprevisto->fecha}}</td>
-																<td>{{$imprevisto->resuelto}}</td>
 																<td>
-																	<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#editarImprevisto{{$imprevisto->id}}">Editar</button>
-																	<form action="{{route('combi19.eliminarImprevisto', [$imprevisto])}}" class="formulario-eliminar" method="POST">
-																		@csrf
-																		@method('delete')
-																		<button class="btn btn-danger btn-sm shadow-none" data-toggle="tooltip">Eliminar</button>
-																	</form>
+																	@if ($imprevisto->resuelto == 1)
+																		<p style="color: green">SI</p>
+																	@else
+																		<p style="color: red">NO</p>
+																	@endif
+																</td>
+																<td>
+																	@if ($imprevisto->resuelto == 0)
+																		<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#editarImprevisto{{$imprevisto->id}}">Editar</button>
+																		<form action="{{route('combi19.eliminarImprevisto', [$imprevisto])}}" class="formulario-eliminar" method="POST">
+																			@csrf
+																			@method('delete')
+																			<button class="btn btn-danger btn-sm shadow-none" data-toggle="tooltip">Eliminar</button>
+																		</form>
+																	@endif
 																	<div class="modal fade" id="editarImprevisto{{$imprevisto->id}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
 																		<div class="modal-dialog modal-lg modal-dialog-centered">
 																			<div class="modal-content">

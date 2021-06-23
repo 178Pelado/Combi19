@@ -37,6 +37,9 @@ Route::get('combi19/iniciarSesion', [iniciarSesionController::class, 'iniciarSes
 
 Route::get('combi19/listadoPasajeros{viaje}', [ViajeController::class, 'listadoPasajeros'])->name('combi19.listadoPasajeros');
 
+Route::get('combi19/listarImprevistos', [AdminController::class, 'listarImprevistos'])->name('combi19.listarImprevistos');
+Route::get('combi19/resolverImprevisto{imprevisto}', [AdminController::class, 'resolverImprevisto'])->name('combi19.resolverImprevisto');
+
 Route::get('combi19/registroChofer', [ChoferController::class, 'registroChofer'])->name('combi19.registroChofer');
 Route::post('combi19/storeChofer', [ChoferController::class, 'storeChofer'])->name('combi19.storeChofer');
 Route::get('combi19/listarChoferes', [ChoferController::class, 'listarChoferes'])->name('combi19.listarChoferes');

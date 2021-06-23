@@ -20,7 +20,7 @@ class CreateZimprevistosTable extends Migration
             $table->foreignId('viaje_id')->constrained('viajes');
             $table->dateTime('fecha');
             $table->string('comentario');
-            $table->boolean('resuelto');
+            $table->string('resuelto');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Imprevisto;
 use Illuminate\Http\Request;
 //Necesitamos agregar el middleware que creamos anteriormente.
 use Illuminate\Http\Middleware\Admin;
@@ -88,5 +89,20 @@ class AdminController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function listarImprevistos()
+    {
+        $imprevistos = Imprevisto::paginate();
+        return view('administrador.listarImprevistos', compact('imprevistos'));
+    }
+
+    public function resolverImprevisto($imprevisto_id)
+    {
+        $imprevisto = Imprevisto::where("id", "=", $imprevisto_id)->first();
+        $imprevisto->resuelto = 1;
+        $imprevisto->save();
+        //Session::flash('messageSI','Se ha marcado el imprevisto como resuelto');
+        return redirect()->route('combi19.listarImprevistos');
     }
 }
