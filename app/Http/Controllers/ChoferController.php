@@ -157,7 +157,7 @@ class ChoferController extends Controller
         $pasaje->estado_covid = 2;
         $pasajero->fecha_suspension = new Carbon();
         $pasajero->save();
-        Session::flash('messageNO','El pasajero no está apto para viajar y su cuenta se suspenderá');
+        Session::flash('messageNO','El pasajero no está apto para viajar y su cuenta se suspenderá. Se le reembolsará el 100% del dinero');
       }else{
         $pasaje->estado_covid = 1;
         Session::flash('messageSI','El pasajero está apto para viajar');
