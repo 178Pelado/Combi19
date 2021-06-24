@@ -326,13 +326,17 @@ class PasajeroController extends Controller
     $diff = $fecha2->diff($fecha1);
     $horas = $diff->h;
     $horas = $horas + ($diff->days*24);
-    if ($horas >= 48){
-      Session::flash('messageSI', '¡Pasaje cancelado con éxito! Se le reembolsará el 100% de su compra');
-      $pasaje->reembolso_total();
-    }
+    if ($pasaje->estado_pago == 1)
+      if ($horas >= 48){
+        Session::flash('messageSI', '¡Pasaje cancelado con éxito! Se le reembolsará el 100% de su compra');
+        $pasaje->reembolso_total();
+      }
+      else {
+        Session::flash('messageSI', '¡Pasaje cancelado con éxito! Se le reembolsará el 50% de su compra');
+        $pasaje->reembolso_mitad();
+      }
     else {
-      Session::flash('messageSI', '¡Pasaje cancelado con éxito! Se le reembolsará el 50% de su compra');
-      $pasaje->reembolso_mitad();
+      Session::flash('messageSI', '¡Pasaje cancelado con éxito! No se le reembolsará debido a que el administrador no ha realizado el cobro');
     }
     $pasaje->estado = 5;
     $pasaje->save();

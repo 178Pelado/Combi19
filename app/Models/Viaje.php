@@ -73,14 +73,16 @@ class Viaje extends Model
     public function reembolsar_pasajes(){
       $pasajes = Pasaje::where('viaje_id', '=', $this->id)->where('estado', '=', '4')->get();
       foreach ($pasajes as $pasaje){
-        $reembolso = new Reembolso();
-        $reembolso->tarjeta_id = $pasaje->tarjeta_id;
-        $reembolso->fecha_cancelacion = new Carbon();
-        $reembolso->estado = 0;
-        $reembolso->monto = $pasaje->precio;
-        $reembolso->save();
-        $pasaje->reembolso_id = $reembolso->id;
-        $pasaje->save();
+        if ($pasaje->estado_pago == 1){
+          $reembolso = new Reembolso();
+          $reembolso->tarjeta_id = $pasaje->tarjeta_id;
+          $reembolso->fecha_cancelacion = new Carbon();
+          $reembolso->estado = 0;
+          $reembolso->monto = $pasaje->precio;
+          $reembolso->save();
+          $pasaje->reembolso_id = $reembolso->id;
+          $pasaje->save();
+        }
       }
     }
 

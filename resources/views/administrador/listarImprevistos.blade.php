@@ -40,7 +40,7 @@
 								@if ($imprevisto->resuelto == 1)
 									<td><p style="color: green">SI</p> </td>
 									<td>
-										<button type="button" data-toggle="modal" data-target="#viajeModal{{$imprevisto->viaje_id}}" class="btn btn-info btn-sm">MÁS INFO</button>
+										<button type="button" data-toggle="modal" data-target="#viajeModal{{$imprevisto->id}}" class="btn btn-info btn-sm">MÁS INFO</button>
 										<a href="#" class="btn btn-info btn-sm shadow-none disabled" role="button" aria-disabled="true">Marcado como resuelto</a>
 									</td>
 								@else
@@ -48,14 +48,14 @@
 									<td>
 										<form action="{{route('combi19.resolverImprevisto', $imprevisto->id)}}" class="formulario-resolver" method="GET">
 											@csrf
-											<button type="button" data-toggle="modal" data-target="#viajeModal{{$imprevisto->viaje_id}}" class="btn btn-info btn-sm">MÁS INFO</button>
+											<button type="button" data-toggle="modal" data-target="#viajeModal{{$imprevisto->id}}" class="btn btn-info btn-sm">MÁS INFO</button>
 											<button class="btn btn-info btn-sm" data-toggle="tooltip">Marcar como resuelto</button>
 										</form>
 									</td>
 								@endif
 
 									<!-- Modal -->
-									<div class="modal fade" id="viajeModal{{$imprevisto->viaje_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal fade" id="viajeModal{{$imprevisto->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 										<div class="modal-dialog">
 											<div class="modal-content">
 												<div class="modal-header">

@@ -21,7 +21,7 @@
 					</div>
 					@endif
 					<table class="table table-bordered">
-						@if($viajes[0] !== null)
+						@if(count($viajes) !== 0)
 						<thead>
 							<tr>
 								<th>Ruta</th>

@@ -105,7 +105,7 @@ class AdminController extends Controller
         $imprevisto = Imprevisto::where("id", "=", $imprevisto_id)->first();
         $imprevisto->resuelto = 1;
         $imprevisto->save();
-        Session::flash('messageSI','Se ha marcado el imprevisto como resuelto');
+        Session::flash('messageSI','¡Imprevisto solucionado con éxito!');
         return redirect()->route('combi19.listarImprevistos');
     }
 

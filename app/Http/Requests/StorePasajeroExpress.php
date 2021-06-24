@@ -30,4 +30,9 @@ class StorePasajeroExpress extends FormRequest
       'dni' => 'required|integer|gt:0',
     ];
   }
+  public function messages(){
+    return [
+      'email.unique' => 'Este email ya está registrado en el sistema',
+    ];
+  }
 }

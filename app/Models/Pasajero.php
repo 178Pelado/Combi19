@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
+use Carbon\Carbon;
 
 class Pasajero extends Model
 {
@@ -47,5 +48,20 @@ class Pasajero extends Model
       $diff = $fecha2->diff($fecha1);
       $dias = $diff->days;
       return ($dias > 15);
+    }
+
+    public function cancelarPasajes(){
+      $fecha = new Carbon();
+      $fecha = $fecha->addDays(15)->format('Y-m-d H:i:s');
+      $pasajes = Pasaje::where('pasajero_id', '=', $this->id)->whereIn('viaje_id', Viaje::select('id')->where('fecha', '<=', $fecha))->where('estado', '<', '3')->get();
+      foreach($pasajes as $pasaje){
+        if($pasaje->estado_pago == 1){
+          $pasaje->reembolso_total();
+        }
+        $pasaje->estado = '6';
+        $pasaje->estado_covid = '2';
+        $pasaje->save();
+      }
+      return count($pasajes);
     }
 }

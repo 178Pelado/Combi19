@@ -122,10 +122,13 @@ class ChoferController extends Controller
     $pasaje = new Pasaje();
     $pasaje->viaje_id = $viaje->id;
     $pasaje->pasajero_id = $pasajeroExpress->id;
+    $pasaje->tarjeta_id = null;
     $pasaje->precio_viaje = $viaje->precio;
     $pasaje->precio = $viaje->precio;
     $pasaje->estado = $viaje->estado;
     $pasaje->estado_covid = 0;
+    $pasaje->estado_pago = 0;
+    $pasaje->reembolso_id = null;
     $pasaje->comprador_id = $pasajeroExpress->id;
     $pasaje->save();
 
@@ -138,7 +141,7 @@ class ChoferController extends Controller
 
     $correo = new ComprobanteMailable2($pasajeroExpress);
     Mail::to($pasajeroExpress->email)->send($correo);
-    Session::flash('messageSI','El pasajero express se cargó correctamente');
+    Session::flash('messageSI','Registro express realizado exitosamente');
     return redirect()->route('combi19.misViajesChofer');
   }
 
@@ -156,12 +159,17 @@ class ChoferController extends Controller
       }
       if ($cantidadSintomas >= 2){
         $pasajero = Pasajero::find($pasaje->pasajero_id);
-        $pasaje->estado_covid = 2;
-        $pasaje->estado = 6;
+        $cantidad = $pasajero->cancelarPasajes();
+        $pasaje->estado_covid = '2';
+        $pasaje->estado = '6';
         $pasajero->fecha_suspension = new Carbon();
         $pasajero->save();
-        $pasaje->reembolso_total();
-        Session::flash('messageNO','El pasajero no está apto para viajar y su cuenta se suspenderá. Se le reembolsará el 100% del dinero');
+        if ($pasaje->estado_pago == 1){
+          Session::flash('messageNO','El pasajero no está apto para viajar y su cuenta se suspenderá. Se le reembolsará el 100% del dinero por este pasaje. Pasajes suspendidos: ' . $cantidad);
+        }
+        else{
+          Session::flash('messageNO','El pasajero no está apto para viajar y su cuenta se suspenderá. No se le reembolsará este pasaje debido a que el administrador no ha realizado el cobro. Pasajes suspendidos: ' . $cantidad);
+        }
         $pasaje->save();
         return redirect()->route('combi19.listaPasajeros', $pasaje->viaje_id);
       }
@@ -212,7 +220,7 @@ class ChoferController extends Controller
     $imprevisto->comentario = $request->comentario;
     $imprevisto->resuelto = false;
     $imprevisto->save();
-    Session::flash('messageSI', '¡Imprevisto publicado con éxito!');
+    Session::flash('messageSI', '¡Imprevisto notificado con éxito!');
     return redirect()->route('combi19.misViajesChofer');
   }
 

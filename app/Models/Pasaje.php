@@ -108,4 +108,12 @@ class Pasaje extends Model
         $reembolso->save();
         $this->reembolso_id = $reembolso->id;
     }
+
+    public function una_semana(){
+        $viaje = Viaje::find($this->viaje_id);
+        $hoy = new Carbon();
+        $fecha_viaje = date_create($viaje->fecha);
+        $una_semana_ok = $hoy->diff($fecha_viaje)->days <= 7;
+        return $una_semana_ok;
+    }
 }

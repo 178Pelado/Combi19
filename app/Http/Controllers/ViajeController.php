@@ -95,7 +95,7 @@ class ViajeController extends Controller
   }
 
   public function listarPasajerosReembolso(){
-    $pasajes = Pasaje::where('estado', '>', 3)->get();
+    $pasajes = Pasaje::where('estado', '>', 3)->where('estado_pago', '=', '1')->get();
     return view('administrador.listarPasajerosReembolso', compact('pasajes'));
   }
 }

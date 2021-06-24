@@ -24,7 +24,6 @@
 						@if(count($pasajes) !== 0)
 						<thead>
 							<tr>
-								<th>Pasajero</th>
 								<th>Tarjeta</th>
 								<th>Fecha Cancelación</th>
 								<th>Monto</th>
@@ -35,33 +34,70 @@
 						<tbody>
 							@foreach ($pasajes as $pasaje)
 							<tr>
+								<td>{{$pasaje->tarjeta->numero}}</td>
+								<td>{{$pasaje->reembolso->fecha_cancelacion}}</td>
+								<td>{{$pasaje->reembolso->monto}}</td>
+								<td>{{$pasaje->estados->nombre}}</td>
 								<td>
+
 									<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#pasajero{{$pasaje->id}}">MÁS INFO</button>
 
+									<!-- Modal pasajero/viaje -->
 									<div class="modal fade" id="pasajero{{$pasaje->id}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
 																		<div class="modal-dialog modal-dialog-centered">
 																			<div class="modal-content">
 																				<div class="modal-header">
-																					<h5 class="modal-title" id="exampleModalToggleLabel2">Datos del pasajero</h5>
+																					<h5 class="modal-title" id="exampleModalToggleLabel2">Información</h5>
 																					<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
 																				</div>
 																				<div class="modal-body">
 																					<div class="row">
-																						<div class="form-group col-md-12">
-																							<label class="col-form-label text-md-right">
-																								Nombre: {{$pasaje->pasajero->nombre}}
-																							</label>
-																						</div>
-																						<div class="form-group col-md-12">
-																							<label class="col-form-label text-md-right">
-																								Apellido: {{$pasaje->pasajero->apellido}}
-																							</label>
-																						</div>
-																						<div class="form-group col-md-12">
-																							<label class="col-form-label text-md-right">
-																								DNI: {{$pasaje->pasajero->dni}}
-																							</label>
-																						</div>
+																						<fieldset>
+																							<legend>Pasajero</legend>
+																							<div class="form-group col-md-12">
+																								<label class="col-form-label text-md-right">
+																									Nombre: {{$pasaje->pasajero->nombre}}
+																								</label>
+																							</div>
+																							<div class="form-group col-md-12">
+																								<label class="col-form-label text-md-right">
+																									Apellido: {{$pasaje->pasajero->apellido}}
+																								</label>
+																							</div>
+																							<div class="form-group col-md-12">
+																								<label class="col-form-label text-md-right">
+																									DNI: {{$pasaje->pasajero->dni}}
+																								</label>
+																							</div>
+																						</fieldset>
+																						<fieldset>
+																							<legend>Viaje</legend>
+																							<div class="form-group col-md-12">
+																								<label class="col-form-label text-md-right">
+																									Ruta: {{$pasaje->viaje->ruta->origen->nombre}} - {{$pasaje->viaje->ruta->destino->nombre}}
+																								</label>
+																							</div>
+																							<div class="form-group col-md-12">
+																								<label class="col-form-label text-md-right">
+																									Descripción: {{$pasaje->viaje->ruta->descripcion}}
+																								</label>
+																							</div>
+																							<div class="form-group col-md-12">
+																								<label class="col-form-label text-md-right">
+																									Tipo de combi: {{$pasaje->viaje->combi->tipo}}
+																								</label>
+																							</div>
+																							<div class="form-group col-md-12">
+																								<label class="col-form-label text-md-right">
+																									Patente de combi: {{$pasaje->viaje->combi->patente}}
+																								</label>
+																							</div>
+																							<div class="form-group col-md-12">
+																								<label class="col-form-label text-md-right">
+																									Fecha: {{$pasaje->viaje->fecha_sin_segundos()}}
+																								</label>
+																							</div>
+																						</fieldset>		
 																					</div>
 																					<div class="modal-footer">
 																					<button class="btn btn-secondary" type="button"data-dismiss="modal">Cerrar</button>
@@ -70,12 +106,7 @@
 																								</div>
 																							</div>
 																						</div>
-								</td>
-								<td>{{$pasaje->tarjeta->numero}}</td>
-								<td>{{$pasaje->reembolso->fecha_cancelacion}}</td>
-								<td>{{$pasaje->reembolso->monto}}</td>
-								<td>{{$pasaje->estados->nombre}}</td>
-								<td>
+
 									@if ($pasaje->reembolso->estado == 0)
 										<form action="{{route('combi19.reembolsar', [$pasaje])}}" class="formulario-reembolsar" method="GET">
 											@csrf
@@ -89,7 +120,7 @@
 							</tr>
 						</tbody>
 						@else
-							<h1>No hay pasajeros para reembolsar</h1>
+							<h1>No hay pasajes para reembolsar</h1>
 						@endif
 					</table>
 				</div>

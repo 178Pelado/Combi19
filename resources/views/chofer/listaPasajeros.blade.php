@@ -40,7 +40,7 @@
 								<td>{{$pasaje->estado_covid()}}</td>
 								<td>
 									@if ($pasaje->estado_covid == 0)
-										@if (($pasaje->estado == 1) || ($pasaje->estado == 2))
+										@if ((($pasaje->estado == 1) || ($pasaje->estado == 2)) && ($pasaje->una_semana()))
 											<a href="{{route('combi19.cargarSintomas', [$pasaje])}}" class="btn btn-info btn-sm shadow-none" type="button">Cargar síntomas</a>
 										@else
 											<a href="#" class="btn btn-info btn-sm shadow-none disabled" role="button" aria-disabled="true">Cargar síntomas</a>

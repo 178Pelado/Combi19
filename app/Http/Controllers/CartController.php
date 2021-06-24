@@ -76,6 +76,7 @@ class CartController extends Controller
       $pasaje->precio_viaje = $viaje->precio;
       $pasaje->estado = $viaje->estado;
       $pasaje->estado_covid = 0;
+      $pasaje->estado_pago = 0;
       $pasaje->comprador_id = $usuarioAuth->id;
       $pasaje->deleted_at = new Carbon();
       $pasaje->save();
@@ -87,7 +88,9 @@ class CartController extends Controller
       );
       Session::flash('viajeCargado', "$nombre ¡Se ha agregado con éxito al carrito!");
     } else {
-      Session::flash('suspendidoCovid', "No puedes reservar este viaje debido a tu suspensión por COVID-19");
+      $fecha = new Carbon($pasajero->fecha_suspension);
+      $fecha = $fecha->addDays(15)->format('d-m-Y');
+      Session::flash('suspendidoCovid', "No se pudo reservar el pasaje debido a que tienes una suspensión activa hasta el: " . $fecha);
     }
     $ciudadO = null;
     $ciudadD = null;
