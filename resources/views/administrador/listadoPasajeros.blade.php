@@ -27,8 +27,8 @@
 								<th>Nombre</th>
 								<th>Apellido</th>
 								<th>DNI</th>
-								<th>Estado Covid</th>
-								<th>Estado pasaje</th>
+								<th>Estado</th>
+								<th>Acciones</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -37,8 +37,17 @@
 								<td>{{$pasaje->pasajero->nombre}}</td>
 								<td>{{$pasaje->pasajero->apellido}}</td>
 								<td>{{$pasaje->pasajero->dni}}</td>
-								<td>{{$pasaje->estado_covid()}}</td>
 								<td>{{$pasaje->estados->nombre}}</td>
+								<td>
+									@if ($pasaje->estado_pago == 0)
+										<form action="{{route('combi19.cobrar', [$pasaje])}}" class="formulario-cobrar" method="GET">
+											@csrf
+											<button class="btn btn-success btn-sm shadow-none" data-toggle="tooltip">Cobrar</button>
+										</form>
+									@else
+										<a href="#" class="btn btn-info btn-sm shadow-none disabled" role="button" aria-disabled="true">Pago realizado</a>
+									@endif
+								</td>
 								@endforeach
 							</tr>
 						</tbody>

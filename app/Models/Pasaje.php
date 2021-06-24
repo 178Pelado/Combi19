@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Pasaje extends Model
 {
@@ -38,6 +39,14 @@ class Pasaje extends Model
 
     public function viaje(){
         return $this->belongsTo('App\Models\Viaje', 'viaje_id')->withTrashed();
+    }
+
+    public function tarjeta(){
+        return $this->belongsTo('App\Models\Tarjeta', 'tarjeta_id');
+    }
+
+    public function reembolso(){
+        return $this->belongsTo('App\Models\Reembolso', 'reembolso_id');
     }
 
     public function comentarios(){
@@ -78,5 +87,25 @@ class Pasaje extends Model
             case 2:
                 return "Positivo";
         }
+    }
+
+    public function reembolso_total(){
+        $reembolso = new Reembolso();
+        $reembolso->tarjeta_id = $this->tarjeta_id;
+        $reembolso->fecha_cancelacion = new Carbon();
+        $reembolso->estado = 0;
+        $reembolso->monto = $this->precio;
+        $reembolso->save();
+        $this->reembolso_id = $reembolso->id;
+    }
+
+    public function reembolso_mitad(){
+        $reembolso = new Reembolso();
+        $reembolso->tarjeta_id = $this->tarjeta_id;
+        $reembolso->fecha_cancelacion = new Carbon();
+        $reembolso->estado = 0;
+        $reembolso->monto = $this->precio / 2;
+        $reembolso->save();
+        $this->reembolso_id = $reembolso->id;
     }
 }

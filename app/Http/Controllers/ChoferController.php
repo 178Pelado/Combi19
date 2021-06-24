@@ -101,7 +101,7 @@ class ChoferController extends Controller
   }
 
   public function listaPasajeros($viaje_id){
-    $pasajes = Pasaje::where('viaje_id', '=', $viaje_id)->where('estado', '<=', 3)->get();
+    $pasajes = Pasaje::where('viaje_id', '=', $viaje_id)->where('estado', '!=', 4)->where('estado', '!=', 5)->get();
     return view('chofer.listaPasajeros', compact('pasajes'));
   }
 
@@ -160,6 +160,7 @@ class ChoferController extends Controller
         $pasaje->estado = 6;
         $pasajero->fecha_suspension = new Carbon();
         $pasajero->save();
+        $pasaje->reembolso_total();
         Session::flash('messageNO','El pasajero no está apto para viajar y su cuenta se suspenderá. Se le reembolsará el 100% del dinero');
         $pasaje->save();
         return redirect()->route('combi19.listaPasajeros', $pasaje->viaje_id);

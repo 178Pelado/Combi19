@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Imprevisto extends Model
 {
@@ -27,5 +28,11 @@ class Imprevisto extends Model
 
     public function chofer(){
       return $this->belongsTo('App\Models\Chofer', 'chofer_id');
+    }
+
+    public function comentario(){
+      $descripcion = $this->comentario;
+      $descripcion = Str::limit($descripcion, 30, '');
+      return $descripcion;
     }
 }

@@ -186,6 +186,9 @@ body {
             <li class="nav-item">
               <a class="nav-link" href="{{ route('combi19.listarImprevistos') }}">{{ __('Imprevistos') }}</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('combi19.listarPasajerosReembolso') }}">{{ __('Reembolsos') }}</a>
+            </li>
             @elseif(Auth::user()->tipo == 2)
             <li class="nav-item">
               <a class="nav-link" href="{{ route('combi19.misViajesChofer') }}">{{ __('Mis Viajes') }}</a>

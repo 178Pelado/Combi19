@@ -36,9 +36,13 @@ Route::post('combi19/store', [PasajeroController::class, 'store'])->name('combi1
 Route::get('combi19/iniciarSesion', [iniciarSesionController::class, 'iniciarSesion'])->name('combi19.iniciarSesion');
 
 Route::get('combi19/listadoPasajeros{viaje}', [ViajeController::class, 'listadoPasajeros'])->name('combi19.listadoPasajeros');
+Route::get('combi19/listarPasajerosReembolso', [ViajeController::class, 'listarPasajerosReembolso'])->name('combi19.listarPasajerosReembolso');
 
 Route::get('combi19/listarImprevistos', [AdminController::class, 'listarImprevistos'])->name('combi19.listarImprevistos');
 Route::get('combi19/resolverImprevisto{imprevisto}', [AdminController::class, 'resolverImprevisto'])->name('combi19.resolverImprevisto');
+
+Route::get('combi19/reembolsar{pasaje}', [AdminController::class, 'reembolsar'])->name('combi19.reembolsar');
+Route::get('combi19/cobrar{pasaje}', [AdminController::class, 'cobrar'])->name('combi19.cobrar');
 
 Route::get('combi19/registroChofer', [ChoferController::class, 'registroChofer'])->name('combi19.registroChofer');
 Route::post('combi19/storeChofer', [ChoferController::class, 'storeChofer'])->name('combi19.storeChofer');
@@ -146,7 +150,7 @@ Route::get('combi19/home', [HomeController::class, 'index'])->name('home');
 Route::get('combi19/listarInsumosViaje{viaje_id}/{pasajero_id}', [InsumoController::class, 'listarInsumosViaje'])->name('combi19.listarInsumosViaje');
 
 //Carrito de compras
-Route::get('combi19/pagarPasajePobre', [CartController::class, 'pagarPasajePobre'])->name('combi19.pagarPasajePobre');
+Route::get('combi19/pagarPasajePobre{tarjeta}', [CartController::class, 'pagarPasajePobre'])->name('combi19.pagarPasajePobre');
 
 Route::get('combi19/eliminarReservaInsumo{insumo_pasaje_id}', [CartController::class, 'eliminarReservaInsumo'])->name('combi19.eliminarReservaInsumo');
 

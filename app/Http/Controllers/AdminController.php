@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Imprevisto;
 use Illuminate\Http\Request;
 //Necesitamos agregar el middleware que creamos anteriormente.
 use Illuminate\Http\Middleware\Admin;
+use App\Models\Imprevisto;
+use App\Models\Pasaje;
+use App\Models\Viaje;
+use Session;
 
 class AdminController extends Controller
 {
@@ -102,7 +105,24 @@ class AdminController extends Controller
         $imprevisto = Imprevisto::where("id", "=", $imprevisto_id)->first();
         $imprevisto->resuelto = 1;
         $imprevisto->save();
-        //Session::flash('messageSI','Se ha marcado el imprevisto como resuelto');
+        Session::flash('messageSI','Se ha marcado el imprevisto como resuelto');
         return redirect()->route('combi19.listarImprevistos');
+    }
+
+    public function reembolsar(Pasaje $pasaje){
+        $reembolso = $pasaje->reembolso;
+        $reembolso->estado = 1;
+        $reembolso->save();
+        Session::flash('messageSI','¡Reembolso realizado con éxito!');
+        return redirect()->route('combi19.listarPasajerosReembolso');
+    }
+
+    public function cobrar(Pasaje $pasaje){
+        $viaje = Viaje::find($pasaje->viaje_id);
+        $viaje = $viaje->id;
+        $pasaje->estado_pago = 1;
+        $pasaje->save();
+        Session::flash('messageSI','¡Cobro realizado con éxito!');
+        return redirect()->route('combi19.listadoPasajeros', compact('viaje'));
     }
 }

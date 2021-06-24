@@ -41,7 +41,7 @@ class Viaje extends Model
     }
 
     public function cantidad_asientos_ocupados(){
-      $pasajes = Pasaje::where('viaje_id', '=', $this->id)->where('estado', '!=', '5')->get();
+      $pasajes = Pasaje::where('viaje_id', '=', $this->id)->where('estado', '!=', '5')->where('estado', '!=', '6')->get();
       return count($pasajes);
     }
 
@@ -50,7 +50,7 @@ class Viaje extends Model
     }
 
     public function asientos_ocupados(){
-      $pasajes = Pasaje::where('viaje_id', '=', $this->id)->where('estado', '!=', '5')->get();
+      $pasajes = Pasaje::where('viaje_id', '=', $this->id)->where('estado', '!=', '5')->where('estado', '!=', '6')->get();
       return ($pasajes);
     }
 
@@ -68,6 +68,20 @@ class Viaje extends Model
 
     public function cambiar_estado_pasajes($estado){
       $pasajes = Pasaje::where('viaje_id', '=', $this->id)->where('estado', '=', '1')->update(['estado'=>$estado]);
+    }
+
+    public function reembolsar_pasajes(){
+      $pasajes = Pasaje::where('viaje_id', '=', $this->id)->where('estado', '=', '4')->get();
+      foreach ($pasajes as $pasaje){
+        $reembolso = new Reembolso();
+        $reembolso->tarjeta_id = $pasaje->tarjeta_id;
+        $reembolso->fecha_cancelacion = new Carbon();
+        $reembolso->estado = 0;
+        $reembolso->monto = $pasaje->precio;
+        $reembolso->save();
+        $pasaje->reembolso_id = $reembolso->id;
+        $pasaje->save();
+      }
     }
 
     public function finalizar_viaje($estado){

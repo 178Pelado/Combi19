@@ -47,10 +47,20 @@
 									<a href="{{route('combi19.iniciarViaje', [$viaje])}}" class="btn btn-info btn-sm shadow-none" type="button">Iniciar</a>
 									@elseif ($viaje->finalizable())
 									<a href="{{route('combi19.finalizarViaje', [$viaje])}}" class="btn btn-info btn-sm shadow-none" type="button">Finalizar</a>
-									<a href="{{route('combi19.registroExpress', [$viaje])}}" class="btn btn-info btn-sm shadow-none" type="button">Express</a>
+										@if ($viaje->cantidad_asientos_disponibles() > 0)
+											<a href="{{route('combi19.registroExpress', [$viaje])}}" class="btn btn-info btn-sm shadow-none" type="button">Express</a>
+										@else
+											<a href="#" class="btn btn-info btn-sm shadow-none disabled" role="button" aria-disabled="true">Express</a>
+										@endif
 									<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModalToggle{{$viaje->id}}">Imprevistos</button>
 									@elseif ($viaje->estado == 3)
 									<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModalToggle{{$viaje->id}}">Imprevistos</button>
+									@else
+									<a href="#" class="btn btn-info btn-sm shadow-none disabled" role="button" aria-disabled="true">
+										{{ __('Iniciar') }}
+									</a>
+									@endif
+									<!-- Modal imprevistos -->
 									<div class="modal fade"id="exampleModalToggle{{$viaje->id}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
 										<div class="modal-dialog modal-lg modal-dialog-centered">
 											<div class="modal-content">
@@ -74,7 +84,7 @@
 														<tbody>
 															@foreach ($viaje->imprevistos() as $imprevisto)
 															<tr>
-																<td>{{$imprevisto->comentario}}</td>
+																<td>{{$imprevisto->comentario()}}</td>
 																<td>{{$imprevisto->fecha}}</td>
 																<td>
 																	@if ($imprevisto->resuelto == 1)
@@ -171,6 +181,8 @@
 											</div>
 										</div>
 									</div>
+
+									<!-- Modal agregar imprevisto -->
 									<div class="modal fade" id="agregarImprevisto{{$viaje->id}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
 										<div class="modal-dialog modal-dialog-centered">
 											<div class="modal-content">
@@ -237,12 +249,6 @@
 											</div>
 										</div>
 									</div>
-
-									@else
-									<a href="#" class="btn btn-info btn-sm shadow-none disabled" role="button" aria-disabled="true">
-										{{ __('Iniciar') }}
-									</a>
-									@endif
 								</td>
 								@endforeach
 							</tr>
@@ -256,12 +262,4 @@
 		</div>
 	</div>
 </div>
-<script>
-$(document).ready(function (e) {
-  $('#myModal').on('show.bs.modal', function(e) {
-     var id = $(e.relatedTarget).data().id;
-      $(e.currentTarget).find('#lista').val(id);
-  });
-});
-</script>
 @endsection

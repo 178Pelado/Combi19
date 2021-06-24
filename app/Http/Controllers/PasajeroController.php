@@ -12,6 +12,7 @@ use App\Models\Pasaje;
 use App\Models\Comentario;
 use App\Models\Suscripcion;
 use App\Models\Tarjeta;
+use App\Models\Reembolso;
 use Session;
 use Auth;
 use Illuminate\Support\Facades\DB;
@@ -310,7 +311,12 @@ class PasajeroController extends Controller
   }
 
   public function validarTarjeta(ValidateTarjeta $request){
-      return redirect()->route('combi19.pagarPasajePobre');
+      $tarjeta = new Tarjeta();
+      $tarjeta->numero = $request->numero;
+      $tarjeta->codigo = $request->codigo;
+      $tarjeta->fecha_de_vencimiento = $request->fecha_vencimiento;
+      $tarjeta->save();
+      return redirect()->route('combi19.pagarPasajePobre', compact('tarjeta'));
   }
 
   public function cancelarPasaje(Pasaje $pasaje){
@@ -322,9 +328,11 @@ class PasajeroController extends Controller
     $horas = $horas + ($diff->days*24);
     if ($horas >= 48){
       Session::flash('messageSI', '¡Pasaje cancelado con éxito! Se le reembolsará el 100% de su compra');
+      $pasaje->reembolso_total();
     }
     else {
       Session::flash('messageSI', '¡Pasaje cancelado con éxito! Se le reembolsará el 50% de su compra');
+      $pasaje->reembolso_mitad();
     }
     $pasaje->estado = 5;
     $pasaje->save();

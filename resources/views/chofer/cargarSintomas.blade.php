@@ -9,7 +9,7 @@
 			<div class="card">
 				<div class="card-header">{{ __('Cargar síntomas') }}</div>
 				<div class="card-body d-flex align-items-center">
-					<form action="{{route('combi19.storeSintomas', [$pasaje])}}" method="POST">
+					<form action="{{route('combi19.storeSintomas', [$pasaje])}}" class="formulario-sintomas" method="POST">
 						@csrf
 						<div class="form-group row">
 							<label class="col-md-7 col-form-label">Temperatura:</label>
@@ -18,33 +18,27 @@
 							</div>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="sintomas[]">
-							<label class="form-check-label" for="flexCheckDefault">
-								Tos
+							<input class="form-check-input" type="checkbox" value="" id="flexCheckFiebre" name="sintomas[]">
+							<label class="form-check-label" for="flexCheckFiebre">
+								Fiebre en la última semana
 							</label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="sintomas[]">
-							<label class="form-check-label" for="flexCheckDefault">
-								Dificultad para respirar
+							<input class="form-check-input" type="checkbox" value="" id="flexCheckGustoOlfato" name="sintomas[]">
+							<label class="form-check-label" for="flexCheckGustoOlfato">
+								Perdida de gusto u olfato
 							</label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="sintomas[]">
-							<label class="form-check-label" for="flexCheckDefault">
-								Dolor de cabeza
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="sintomas[]">
-							<label class="form-check-label" for="flexCheckDefault">
-								Dolores corporales
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="sintomas[]">
-							<label class="form-check-label" for="flexCheckDefault">
+							<input class="form-check-input" type="checkbox" value="" id="flexCheckGarganta" name="sintomas[]">
+							<label class="form-check-label" for="flexCheckGarganta">
 								Dolor de garganta
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="flexCheckRespiratoria" name="sintomas[]">
+							<label class="form-check-label" for="flexCheckRespiratoria">
+								Dificultad respiratoria
 							</label>
 						</div>
 						<input type="hidden" name="pasaje_id" value={{$pasaje->id}}>
@@ -61,4 +55,49 @@
 		</div>
 	</div>
 </div>
+
+<script>
+
+$('.formulario-sintomas').submit(function(event){
+  event.preventDefault();
+
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  })
+
+  swalWithBootstrapButtons.fire({
+    title: '¿Estás seguro?',
+    text: "¡Este formulario será enviado y no podrá modificarse!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: '¡Si, enviar!',
+    cancelButtonText: '¡No, cancelar!',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // swalWithBootstrapButtons.fire(
+      //   '¡Eliminado!',
+      //   '',
+      //   'success'
+      // )
+      this.submit();
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        'Cancelado',
+        '',
+        'error'
+      )
+    }
+  })
+
+});
+</script>
+
 @endsection

@@ -17,10 +17,13 @@ class CreateXpasajesTable extends Migration
             $table->id();
             $table->foreignId('viaje_id')->constrained('viajes');
             $table->foreignId('pasajero_id')->constrained('pasajeros');
+            $table->foreignId('tarjeta_id')->nullable()->constrained('tarjetas');
             $table->double('precio_viaje');
             $table->double('precio');
             $table->foreignId('estado')->constrained('estados');
             $table->string('estado_covid');
+            $table->string('estado_pago');
+            $table->foreignId('reembolso_id')->nullable()->constrained('reembolsos');
             $table->foreignId('comprador_id')->constrained('pasajeros');
             $table->softDeletes();
             $table->timestamps();

@@ -125,6 +125,7 @@ setInterval(function () {
                                             </div>
                                         </div>
                                         <div class="modal-footer btn-group" role="group">
+                                            <a href="{{route('combi19.listaPasajeros', [$viaje->id])}}" class="btn btn-primary shadow-none" type="button">Lista de pasajeros</a>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                 {{ __('Salir') }}
                                             </button>

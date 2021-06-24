@@ -21,29 +21,45 @@
 					</div>
 					@endif
 					<table class="table table-bordered">
-						@if($imprevistos !== null)
+						@if($imprevistos[0] != null)
 						<thead>
 							<tr>
-								<th>Viaje</th>
 								<th>Chofer</th>
 								<th>Fecha</th>
 								<th>Descripción</th>
-								<th>Estado</th>
+								<th>Resuelto</th>
 								<th>Acciones</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($imprevistos as $imprevisto)
 							<tr>
-								<td>
-									<button type="button" data-toggle="modal" data-target="#viajeModal{{$imprevisto->viaje_id}}" class="btn btn-info btn-sm">MÁS INFO</button>
+								<td>{{$imprevisto->chofer->nombre}} {{$imprevisto->chofer->apellido}}</td>
+								<td>{{$imprevisto->fecha}}</td>
+								<td>{{$imprevisto->comentario()}}</td>
+								@if ($imprevisto->resuelto == 1)
+									<td><p style="color: green">SI</p> </td>
+									<td>
+										<button type="button" data-toggle="modal" data-target="#viajeModal{{$imprevisto->viaje_id}}" class="btn btn-info btn-sm">MÁS INFO</button>
+										<a href="#" class="btn btn-info btn-sm shadow-none disabled" role="button" aria-disabled="true">Marcado como resuelto</a>
+									</td>
+								@else
+									<td><p style="color: red">NO</p> </td>
+									<td>
+										<form action="{{route('combi19.resolverImprevisto', $imprevisto->id)}}" class="formulario-resolver" method="GET">
+											@csrf
+											<button type="button" data-toggle="modal" data-target="#viajeModal{{$imprevisto->viaje_id}}" class="btn btn-info btn-sm">MÁS INFO</button>
+											<button class="btn btn-info btn-sm" data-toggle="tooltip">Marcar como resuelto</button>
+										</form>
+									</td>
+								@endif
 
 									<!-- Modal -->
 									<div class="modal fade" id="viajeModal{{$imprevisto->viaje_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 										<div class="modal-dialog">
 											<div class="modal-content">
 												<div class="modal-header">
-													<h5 class="modal-title" id="exampleModalLabel">Información del viaje</h5>
+													<h5 class="modal-title" id="exampleModalLabel">Información</h5>
 													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 														<span aria-hidden="true">&times;</span>
 													</button>
@@ -67,8 +83,24 @@
 														</div>
 														<div class="form-group col-md-12">
 															<label class="col-form-label text-md-right">
+																Patente de combi: {{$imprevisto->viaje->combi->patente}}
+															</label>
+														</div>
+														<div class="form-group col-md-12">
+															<label class="col-form-label text-md-right">
 																Fecha: {{$imprevisto->viaje->fecha_sin_segundos()}}
 															</label>
+														</div>
+														<div class="form-group col-md-12">
+															<label class="col-form-label text-md-right">
+																Asientos disponibles: {{$imprevisto->viaje->capacidad()}}
+															</label>
+														</div>
+														<div class="form-group col-md-12">
+															<label class="col-form-label text-md-right">
+																Descripción imprevisto: 
+															</label>
+															{{$imprevisto->comentario}}
 														</div>
 													</div>
 													<div class="modal-footer btn-group" role="group">
@@ -80,17 +112,7 @@
 											</div>
 										</div>
 									</div>
-								</td>
-								<td>{{$imprevisto->chofer->nombre}} {{$imprevisto->chofer->apellido}}</td>
-								<td>{{$imprevisto->fecha}}</td>
-								<td>{{$imprevisto->comentario}}</td>
-								@if ($imprevisto->resuelto == 1)
-									<td><p style="color: green">SI</p> </td>
-									<td><a class="btn btn-secondary " href="" style="pointer-events: none">Marcar como resuelto</a></td>
-								@else
-									<td><p style="color: red">NO</p> </td>
-									<td><a class="btn btn-info " href="{{ route('combi19.resolverImprevisto', $imprevisto->id) }}" >Marcar como resuelto</a></td>
-								@endif
+
 								@endforeach
 							</tr>
 						</tbody>
@@ -109,4 +131,49 @@
 		</div>
 	</div>
 </div>
+
+<script>
+
+$('.formulario-resolver').submit(function(event){
+  event.preventDefault();
+
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  })
+
+  swalWithBootstrapButtons.fire({
+    title: '¿Estás seguro?',
+    text: "¡Este elemento se marcará como resuelto y no se podrá deshacer!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: '¡Si, confirmar!',
+    cancelButtonText: '¡No, cancelar!',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // swalWithBootstrapButtons.fire(
+      //   '¡Eliminado!',
+      //   '',
+      //   'success'
+      // )
+      this.submit();
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        'Cancelado',
+        '',
+        'error'
+      )
+    }
+  })
+
+});
+</script>
+
 @endsection

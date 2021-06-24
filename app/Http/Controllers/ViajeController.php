@@ -63,6 +63,7 @@ class ViajeController extends Controller
       Session::flash('messageSI', 'El viaje se ha eliminado. En caso de haber pasajes vendidos, se deben realizar los reembolsos correspondientes.');
       $viaje->estado = '4';
       $viaje->cambiar_estado_pasajes('4');
+      $viaje->reembolsar_pasajes();
       $viaje->save();
       $viaje->delete();
     }
@@ -89,7 +90,12 @@ class ViajeController extends Controller
   }
 
   public function listadoPasajeros($viaje_id){
-    $pasajes = Pasaje::where('viaje_id', '=', $viaje_id)->get();
+    $pasajes = Pasaje::where('viaje_id', '=', $viaje_id)->where('estado', '<=', 3)->get();
     return view('administrador.listadoPasajeros', compact('pasajes'));
+  }
+
+  public function listarPasajerosReembolso(){
+    $pasajes = Pasaje::where('estado', '>', 3)->get();
+    return view('administrador.listarPasajerosReembolso', compact('pasajes'));
   }
 }

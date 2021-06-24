@@ -147,6 +147,7 @@ class CartController extends Controller
         foreach(Cart::getContent() as $item){
           $pasaje = Pasaje::find($item->id);
           $pasaje->deleted_at = null;
+          $pasaje->tarjeta_id = $tarjeta->id;
           $pasaje->save();
         }
         Cart::clear();
@@ -165,11 +166,12 @@ class CartController extends Controller
     return back();
   }
 
-  public function pagarPasajePobre(){
+  public function pagarPasajePobre(Tarjeta $tarjeta){
     $contenido = Cart::getContent();
     foreach(Cart::getContent() as $item){
       $pasaje = Pasaje::find($item->id);
       $pasaje->deleted_at = null;
+      $pasaje->tarjeta_id = $tarjeta->id;
       $pasaje->save();
     }
     Cart::clear();
