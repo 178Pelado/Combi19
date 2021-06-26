@@ -25,8 +25,8 @@ class ChoferSeeder extends Seeder
             'nombre' => 'Dominic',
             'apellido' => 'Toretto',
             'telefono' => '123456',
-            'email' => 'chofer@gmail.com',
-            'contraseña' => '123456',
+            'email' => 'dominic@gmail.com',
+            'contraseña' => '12345678',
         ]);
         Chofer::create([
             'nombre' => 'Oscar',

@@ -39,9 +39,17 @@
 								<td>{{$pasaje->reembolso->monto}}</td>
 								<td>{{$pasaje->estados->nombre}}</td>
 								<td>
-
-									<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#pasajero{{$pasaje->id}}">MÁS INFO</button>
-
+									@if ($pasaje->reembolso->estado == 0)
+										<form action="{{route('combi19.reembolsar', [$pasaje])}}" class="formulario-reembolsar" method="GET">
+											@csrf
+											<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#pasajero{{$pasaje->id}}">MÁS INFO</button>
+											<button class="btn btn-danger btn-sm shadow-none" data-toggle="tooltip">Reembolsar</button>
+										</form>
+									@else
+										<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#pasajero{{$pasaje->id}}">MÁS INFO</button>
+										<a href="#" class="btn btn-info btn-sm shadow-none disabled" role="button" aria-disabled="true">Reembolsado</a>
+									@endif
+									
 									<!-- Modal pasajero/viaje -->
 									<div class="modal fade" id="pasajero{{$pasaje->id}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
 																		<div class="modal-dialog modal-dialog-centered">
@@ -102,19 +110,10 @@
 																					<div class="modal-footer">
 																					<button class="btn btn-secondary" type="button"data-dismiss="modal">Cerrar</button>
 																				</div>
-																									</div>
-																								</div>
-																							</div>
-																						</div>
-
-									@if ($pasaje->reembolso->estado == 0)
-										<form action="{{route('combi19.reembolsar', [$pasaje])}}" class="formulario-reembolsar" method="GET">
-											@csrf
-											<button class="btn btn-danger btn-sm shadow-none" data-toggle="tooltip">Reembolsar</button>
-										</form>
-									@else
-										<a href="#" class="btn btn-info btn-sm shadow-none disabled" role="button" aria-disabled="true">Reembolsado</a>
-									@endif
+																			</div>
+																		</div>
+																	</div>
+																</div>									
 								</td>
 								@endforeach
 							</tr>

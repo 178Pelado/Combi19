@@ -141,7 +141,7 @@ class ChoferController extends Controller
 
     $correo = new ComprobanteMailable2($pasajeroExpress);
     Mail::to($pasajeroExpress->email)->send($correo);
-    Session::flash('messageSI','Registro express realizado exitosamente');
+    Session::flash('messageSI','Registro express realizado exitosamente. Se enviará un mail al usuario con los datos de su cuenta.');
     return redirect()->route('combi19.misViajesChofer');
   }
 
@@ -165,10 +165,10 @@ class ChoferController extends Controller
         $pasajero->fecha_suspension = new Carbon();
         $pasajero->save();
         if ($pasaje->estado_pago == 1){
-          Session::flash('messageNO','El pasajero no está apto para viajar y su cuenta se suspenderá. Se le reembolsará el 100% del dinero por este pasaje. Pasajes suspendidos: ' . $cantidad);
+          Session::flash('messageNO','El pasajero no está apto para viajar y su cuenta se suspenderá 15 días. Se le reembolsará el 100% del dinero por este pasaje. Pasajes suspendidos: ' . $cantidad);
         }
         else{
-          Session::flash('messageNO','El pasajero no está apto para viajar y su cuenta se suspenderá. No se le reembolsará este pasaje debido a que el administrador no ha realizado el cobro. Pasajes suspendidos: ' . $cantidad);
+          Session::flash('messageNO','El pasajero no está apto para viajar y su cuenta se suspenderá 15 días. No se le reembolsará este pasaje debido a que el administrador no ha realizado el cobro. Pasajes suspendidos: ' . $cantidad);
         }
         $pasaje->save();
         return redirect()->route('combi19.listaPasajeros', $pasaje->viaje_id);

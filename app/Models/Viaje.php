@@ -72,6 +72,7 @@ class Viaje extends Model
 
     public function reembolsar_pasajes(){
       $pasajes = Pasaje::where('viaje_id', '=', $this->id)->where('estado', '=', '4')->get();
+      $cant = 0;
       foreach ($pasajes as $pasaje){
         if ($pasaje->estado_pago == 1){
           $reembolso = new Reembolso();
@@ -82,8 +83,10 @@ class Viaje extends Model
           $reembolso->save();
           $pasaje->reembolso_id = $reembolso->id;
           $pasaje->save();
+          $cant+= 1;
         }
       }
+      return $cant;
     }
 
     public function finalizar_viaje($estado){

@@ -23,8 +23,8 @@ class UserSeeder extends Seeder
           'codigo' => 'adm1',
         ]);
         User::create([
-        	'name' => 'chofer',
-        	'email' => 'chofer@gmail.com',
+        	'name' => 'Dominic Toretto',
+        	'email' => 'dominic@gmail.com',
           'password' => Hash::make('12345678'),
           'tipo' => '2',
           'codigo' => 'adm2',

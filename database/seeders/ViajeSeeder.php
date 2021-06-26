@@ -15,52 +15,52 @@ class ViajeSeeder extends Seeder
     public function run()
     {
         Viaje::create([
-        	'combi_id' => '1',
-            'chofer_id' => '1',
-        	'ruta_id' => '1',
-        	'precio' => '100.000',
-            'fecha' => '2021-06-15 18:00:00',
+            'combi_id' => '2',
+            'chofer_id' => '2',
+            'ruta_id' => '1',
+            'precio' => '100.000',
+            'fecha' => '2021-07-01 8:40:00',
             'estado' => '1',
         ]);
         Viaje::create([
-        	'combi_id' => '3',
-            'chofer_id' => '3',
-        	'ruta_id' => '2',
-        	'precio' => '250.000',
-            'fecha' => '2021-06-20 15:00:00',
+            'combi_id' => '2',
+            'chofer_id' => '2',
+            'ruta_id' => '2',
+            'precio' => '200.000',
+            'fecha' => '2021-07-14 16:00:00',
             'estado' => '1',
         ]);
         Viaje::create([
             'combi_id' => '2',
             'chofer_id' => '2',
             'ruta_id' => '3',
-            'precio' => '1000.000',
+            'precio' => '300.000',
+            'fecha' => '2021-07-17 16:00:00',
+            'estado' => '1',
+        ]);
+        Viaje::create([
+            'combi_id' => '2',
+            'chofer_id' => '2',
+            'ruta_id' => '4',
+            'precio' => '400.000',
             'fecha' => '2021-07-31 16:00:00',
             'estado' => '1',
         ]);
         Viaje::create([
             'combi_id' => '2',
             'chofer_id' => '2',
-            'ruta_id' => '3',
-            'precio' => '100.000',
-            'fecha' => '2021-05-31 16:00:00',
-            'estado' => '3',
-        ]);
-        Viaje::create([
-            'combi_id' => '2',
-            'chofer_id' => '2',
-            'ruta_id' => '4',
-            'precio' => '100.000',
-            'fecha' => '2021-06-17 16:00:00',
+            'ruta_id' => '2',
+            'precio' => '500.000',
+            'fecha' => '2021-07-07 16:00:00',
             'estado' => '1',
         ]);
         Viaje::create([
             'combi_id' => '2',
             'chofer_id' => '2',
-            'ruta_id' => '4',
-            'precio' => '100.000',
-            'fecha' => '2021-06-02 16:00:00',
-            'estado' => '3',
+            'ruta_id' => '2',
+            'precio' => '600.000',
+            'fecha' => '2021-07-22 16:00:00',
+            'estado' => '1',
         ]);
     }
 }

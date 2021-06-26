@@ -35,7 +35,6 @@
                                 </li>
                             </ul> -->
                         </div>
-                    
 
 <script type="text/javascript">
 // set the date we're counting down to
@@ -66,24 +65,66 @@ setInterval(function () {
        
     minutes = parseInt(seconds_left / 60);
     seconds = parseInt(seconds_left % 60);
-    
+
     if ((seconds < 0) && ({{$viaje->estado}} == 1)){
         countdown.innerHTML =   '<p>El viaje está listo para empezar</p>' +
-                                '<ul class="list-inline">' + 
-                                    '<li class="list-inline-item pt-2">' + 
-                                        '<a id="btn-reset" type="button" class="btn btn-demo" href="{{route('combi19.iniciarViaje', [$viaje])}}"><i class="glyphicon glyphicon-repeat"></i>Iniciar viaje</a>' +
-                                    '</li>';
+                                '<form action="{{route('combi19.iniciarViaje', [$viaje])}}" class="formulario-iniciar" method="GET">' +
+                                    '@csrf' +
+                                    '<button class="btn btn-demo" type="submit">Iniciar</button>' +
+                                '</form>';
         }
     else {
         // format countdown string + set tag value
-    countdown.innerHTML = '<p>Tiempo hasta el próximo viaje</p> <p class="days">' + days +  ' <label>Días</label></p> <p class="hours">' + hours + ' <label>Horas</label></p> <p class="minutes">' + minutes + ' <label>Minutos</label></p> <p class="seconds">' + seconds + ' <label>Segundos</label></p>';
+    countdown.innerHTML = '<p>Tiempo hasta el próximo viaje</p> <p class="days">' + days + ' <label>Días</label></p> <p class="hours">' + hours + ' <label>Horas</label></p> <p class="minutes">' + minutes + ' <label>Minutos</label></p> <p class="seconds">' + seconds + ' <label>Segundos</label></p>';
     }
     countdown.innerHTML = countdown.innerHTML + '<li class="list-inline-item pt-2">' +
                                                     '<button type="button" data-toggle="modal" data-target="#viajeModal{{$viaje->id}}" class="btn btn-demo">Info del viaje</button>' +
                                                 '</li>' +
                                                 '<li class="list-inline-item pt-2">' +
                                                     '<a id="btn-pause" type="button" class="btn btn-demo" href="{{ route('combi19.misViajesChofer') }}"><i class="glyphicon glyphicon-repeat"></i>Ver mis viajes</a>';
-}, 1000);
+
+
+$('.formulario-iniciar').submit(function(event){
+  event.preventDefault();
+
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  })
+
+  swalWithBootstrapButtons.fire({
+    title: '¿Estás seguro?',
+    text: "¡Esta acción no se puede deshacer!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: '¡Si, iniciar!',
+    cancelButtonText: '¡No, cancelar!',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // swalWithBootstrapButtons.fire(
+      //   '¡Eliminado!',
+      //   '',
+      //   'success'
+      // )
+      this.submit();
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        'Cancelado',
+        '',
+        'error'
+      )
+    }
+  })
+});
+
+}, 1500);
 </script>
 
                         <!-- Modal -->

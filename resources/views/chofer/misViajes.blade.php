@@ -44,15 +44,21 @@
 								<td>{{$viaje->cantidad_asientos_disponibles()}}</td>
 								<td>
 									@if ($viaje->iniciable())
-									<a href="{{route('combi19.iniciarViaje', [$viaje])}}" class="btn btn-info btn-sm shadow-none" type="button">Iniciar</a>
+										<form action="{{route('combi19.iniciarViaje', [$viaje])}}" class="formulario-iniciar" method="GET">
+											@csrf
+											<button class="btn btn-info btn-sm shadow-none" type="submit">Iniciar</button>
+										</form>
 									@elseif ($viaje->finalizable())
-									<a href="{{route('combi19.finalizarViaje', [$viaje])}}" class="btn btn-info btn-sm shadow-none" type="button">Finalizar</a>
-										@if ($viaje->cantidad_asientos_disponibles() > 0)
+										<form action="{{route('combi19.finalizarViaje', [$viaje])}}" class="formulario-finalizar" method="GET">
+											@csrf
+											<button class="btn btn-info btn-sm shadow-none" type="submit">Finalizar</button>
+											@if ($viaje->cantidad_asientos_disponibles() > 0)
 											<a href="{{route('combi19.registroExpress', [$viaje])}}" class="btn btn-info btn-sm shadow-none" type="button">Express</a>
-										@else
-											<a href="#" class="btn btn-info btn-sm shadow-none disabled" role="button" aria-disabled="true">Express</a>
-										@endif
-									<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModalToggle{{$viaje->id}}">Imprevistos</button>
+											@else
+												<a href="#" class="btn btn-info btn-sm shadow-none disabled" role="button" aria-disabled="true">Express</a>
+											@endif
+											<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModalToggle{{$viaje->id}}">Imprevistos</button>
+										</form>
 									@elseif ($viaje->estado == 3)
 									<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#exampleModalToggle{{$viaje->id}}">Imprevistos</button>
 									@else
@@ -95,10 +101,10 @@
 																</td>
 																<td>
 																	@if ($imprevisto->resuelto == 0)
-																		<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#editarImprevisto{{$imprevisto->id}}">Editar</button>
 																		<form action="{{route('combi19.eliminarImprevisto', [$imprevisto])}}" class="formulario-eliminar" method="POST">
 																			@csrf
 																			@method('delete')
+																			<button class="btn btn-info btn-sm shadow-none" type="button" data-toggle="modal" data-target="#editarImprevisto{{$imprevisto->id}}">Editar</button>
 																			<button class="btn btn-danger btn-sm shadow-none" data-toggle="tooltip">Eliminar</button>
 																		</form>
 																	@endif
@@ -262,4 +268,93 @@
 		</div>
 	</div>
 </div>
+
+<script>
+
+$('.formulario-iniciar').submit(function(event){
+  event.preventDefault();
+
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  })
+
+  swalWithBootstrapButtons.fire({
+    title: '¿Estás seguro?',
+    text: "¡Esta acción no se puede deshacer!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: '¡Si, iniciar!',
+    cancelButtonText: '¡No, cancelar!',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // swalWithBootstrapButtons.fire(
+      //   '¡Eliminado!',
+      //   '',
+      //   'success'
+      // )
+      this.submit();
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        'Cancelado',
+        '',
+        'error'
+      )
+    }
+  })
+
+});
+</script>
+
+<script>
+
+$('.formulario-finalizar').submit(function(event){
+  event.preventDefault();
+
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  })
+
+  swalWithBootstrapButtons.fire({
+    title: '¿Estás seguro?',
+    text: "¡Esta acción no se puede deshacer!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: '¡Si, finalizar!',
+    cancelButtonText: '¡No, cancelar!',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // swalWithBootstrapButtons.fire(
+      //   '¡Eliminado!',
+      //   '',
+      //   'success'
+      // )
+      this.submit();
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        'Cancelado',
+        '',
+        'error'
+      )
+    }
+  })
+
+});
+</script>
+
 @endsection
