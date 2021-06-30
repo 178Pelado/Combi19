@@ -102,5 +102,16 @@ class PasajeSeeder extends Seeder
             'estado_pago' => '0',
             'comprador_id' => '3',
         ]);
+        Pasaje::create([
+            'viaje_id' => '3',
+            'pasajero_id' => '3',
+            'tarjeta_id' => '1',
+            'precio_viaje' => '300.0',
+            'precio' => '540.0',
+            'estado' => '1',
+            'estado_covid' => '0',
+            'estado_pago' => '0',
+            'comprador_id' => '3',
+        ]);
     }
 }
